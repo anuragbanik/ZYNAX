@@ -1,0 +1,3374 @@
+# -*- coding: utf-8 -*-
+import os
+
+html_code = r'''<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ZYNAX 3.0 — The Ultimate AI Campus Ecosystem & 4-Year Academic Companion</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      --color-gold: #D6B66C;
+      --color-gold-warm: #F0D28B;
+      --color-gold-glow: rgba(214, 182, 108, 0.35);
+      --color-obsidian: #090B0A;
+      --color-charcoal: #121513;
+      --color-purple: #9875FF;
+      --color-blue: #48B8FF;
+      --color-emerald: #51D6A0;
+      --color-white: #F5F5F5;
+      --color-muted: #8E9691;
+
+      --bg-primary: #070908;
+      --bg-surface: #101412;
+      --bg-surface-elevated: #161B18;
+      --text-primary: #F5F5F5;
+      --text-secondary: #87928B;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-color-strong: rgba(214, 182, 108, 0.4);
+      --glass-bg: rgba(16, 20, 18, 0.88);
+      --glass-card: rgba(18, 23, 20, 0.82);
+      --shadow-ambient: 0 16px 40px -10px rgba(0, 0, 0, 0.7);
+      --grid-line: rgba(214, 182, 108, 0.05);
+    }
+
+    html.light-mode {
+      --bg-primary: #F8F7F2;
+      --bg-surface: #FFFFFF;
+      --bg-surface-elevated: #F1EDE4;
+      --text-primary: #121513;
+      --text-secondary: #575F5A;
+      --border-color: rgba(0, 0, 0, 0.09);
+      --border-color-strong: rgba(185, 150, 75, 0.55);
+      --glass-bg: rgba(255, 255, 255, 0.92);
+      --glass-card: rgba(255, 255, 255, 0.95);
+      --shadow-ambient: 0 12px 32px -8px rgba(185, 150, 75, 0.15);
+      --grid-line: rgba(185, 150, 75, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0; padding: 0; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.2s ease;
+    }
+
+    .font-mono-code { font-family: 'Fira Code', monospace; }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-ambient);
+    }
+
+    .glass-card {
+      background: var(--glass-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      transform: translateY(-2px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #D6B66C 0%, #B8964E 100%);
+      color: #090B0A; font-weight: 700;
+      box-shadow: 0 0 16px rgba(214, 182, 108, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-gold:hover { box-shadow: 0 0 24px rgba(214, 182, 108, 0.6); transform: translateY(-1px) scale(1.01); }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #9875FF 0%, #7648F5 100%);
+      color: #FFFFFF; font-weight: 700;
+      box-shadow: 0 0 18px rgba(152, 117, 255, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-purple:hover { box-shadow: 0 0 26px rgba(152, 117, 255, 0.6); transform: translateY(-1px) scale(1.01); }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, #51D6A0 0%, #2FA875 100%);
+      color: #090B0A; font-weight: 700;
+      box-shadow: 0 0 18px rgba(81, 214, 160, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-emerald:hover { box-shadow: 0 0 26px rgba(81, 214, 160, 0.6); transform: translateY(-1px) scale(1.01); }
+
+    /* 3D Rotating ZYNAX Cube */
+    .cube-container { perspective: 900px; width: 130px; height: 130px; }
+    .cube-box { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: spinCube3D 14s infinite linear; }
+    @keyframes spinCube3D {
+      0% { transform: rotateX(18deg) rotateY(0deg); }
+      100% { transform: rotateX(18deg) rotateY(360deg); }
+    }
+    .cube-face {
+      position: absolute; width: 130px; height: 130px;
+      background: rgba(18, 23, 20, 0.92); border: 1.5px solid var(--color-gold);
+      box-shadow: inset 0 0 24px rgba(214, 182, 108, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 38px; font-weight: 900; color: #FFFFFF;
+      text-shadow: 0 0 14px rgba(214, 182, 108, 0.8);
+      backdrop-filter: blur(6px); border-radius: 12px;
+    }
+    .c-face-f { transform: rotateY(0deg) translateZ(65px); }
+    .c-face-b { transform: rotateY(180deg) translateZ(65px); }
+    .c-face-r { transform: rotateY(90deg) translateZ(65px); }
+    .c-face-l { transform: rotateY(-90deg) translateZ(65px); }
+    .c-face-t { transform: rotateX(90deg) translateZ(65px); }
+    .c-face-bt { transform: rotateX(-90deg) translateZ(65px); }
+
+    /* 3D Stats Cube */
+    .cube-stats-container { perspective: 900px; width: 120px; height: 120px; }
+    .cube-stats { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: spinStatsCube 16s infinite linear; }
+    @keyframes spinStatsCube {
+      0% { transform: rotateX(16deg) rotateY(0deg); }
+      100% { transform: rotateX(16deg) rotateY(360deg); }
+    }
+    .cube-stats-face {
+      position: absolute; width: 120px; height: 120px;
+      background: rgba(18, 23, 20, 0.92); border: 1.5px solid var(--color-gold);
+      box-shadow: inset 0 0 22px rgba(214, 182, 108, 0.28); backdrop-filter: blur(8px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 6px; border-radius: 14px;
+    }
+    .face-f  { transform: rotateY(0deg) translateZ(60px); }
+    .face-b  { transform: rotateY(180deg) translateZ(60px); }
+    .face-r  { transform: rotateY(90deg) translateZ(60px); }
+    .face-l  { transform: rotateY(-90deg) translateZ(60px); }
+    .face-t  { transform: rotateX(90deg) translateZ(60px); }
+    .face-bt { transform: rotateX(-90deg) translateZ(60px); }
+
+    /* 3D Flip Card */
+    .flip-card { perspective: 1000px; }
+    .flip-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+    .flip-card:hover .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flip-back { transform: rotateY(180deg); }
+
+    /* Voice Wave Bars */
+    .wave-bar {
+      width: 4px; height: 8px; border-radius: 9999px;
+      background: var(--color-gold); animation: wavePulse 1.2s infinite ease-in-out;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; background: var(--color-purple); }
+    .wave-bar:nth-child(3) { animation-delay: 0.3s; background: var(--color-blue); }
+    .wave-bar:nth-child(4) { animation-delay: 0.45s; background: var(--color-emerald); }
+    .wave-bar:nth-child(5) { animation-delay: 0.6s; background: var(--color-gold); }
+    @keyframes wavePulse { 0%, 100% { height: 8px; } 50% { height: 26px; } }
+
+    /* Progress Bar */
+    .progress-track { background: rgba(0,0,0,0.4); height: 6px; border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 999px; transition: width 0.6s ease; }
+
+    /* Top Nav Two-Line Pill Styling */
+    .nav-tab-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .nav-tab-pill:hover { background: rgba(255, 255, 255, 0.05); }
+    .nav-tab-pill.active {
+      background: #181E1B;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .nav-tab-pill.active .pill-title { color: #FFFFFF; font-weight: 700; }
+    .nav-tab-pill.active .pill-sub { color: #A0ABA4; }
+    .pill-title { font-size: 11px; font-weight: 600; color: #9AA59F; line-height: 1.2; }
+    .pill-sub { font-size: 9px; color: #636D67; line-height: 1.2; margin-top: 1px; }
+
+    /* Reference Screenshot Glass Cards */
+    .ref-card {
+      background: #101412;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 18px;
+      padding: 20px 24px;
+      transition: all 0.2s ease;
+    }
+    .ref-card:hover {
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+    .ref-badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #8C9690;
+      font-weight: 500;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(214, 182, 108, 0.25); border-radius: 999px; }
+  </style>
+</head>
+<body class="relative min-h-screen pb-24 md:pb-12 flex flex-col font-sans">
+
+  <!-- =========================================================
+       CYBERPUNK CODE MATRIX + NEURAL CANVAS BACKDROP
+       ========================================================= -->
+  <canvas id="codeMatrixCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-25"></canvas>
+  <canvas id="neuralCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-30"></canvas>
+
+  <!-- =========================================================
+       TOP NAVIGATION BAR (ZYNAX 3.0 COMPLETE SUITE)
+       ========================================================= -->
+  <header class="sticky top-0 z-40 bg-[#0A0D0B]/90 backdrop-blur-xl border-b border-white/[0.07] px-4 py-2 flex items-center justify-between gap-2">
+    <!-- Left Logo Section -->
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <div onclick="switchTab('dashboard')" class="cursor-pointer flex items-center gap-2 group">
+        <div class="w-9 h-9 rounded-xl bg-[#141A17] border border-[#51D6A0]/40 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+          <span class="font-black text-sm text-[#51D6A0]">Z</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-black text-base tracking-wider text-white">ZYNAX</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider bg-[#51D6A0]/20 text-[#51D6A0] border border-[#51D6A0]/30">3.0</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider bg-[#D6B66C]/20 text-[#D6B66C] border border-[#D6B66C]/30 hidden md:inline">ABES EC</span>
+          </div>
+          <span class="text-[10px] text-[#69746D] hidden lg:block">Your Campus. Your Intelligence. 4-Year Companion.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Nav Tabs (Scrollable Double-Line Pills) -->
+    <nav class="hidden lg:flex items-center gap-0.5 overflow-x-auto py-1 max-w-4xl">
+      <div onclick="switchTab('dashboard')" class="nav-tab-pill active" data-tab="dashboard">
+        <span class="pill-title">Vibe Check</span>
+        <span class="pill-sub">Today</span>
+      </div>
+      <div onclick="switchTab('arena')" class="nav-tab-pill" data-tab="arena">
+        <span class="pill-title text-[#48B8FF]">Code Arena</span>
+        <span class="pill-sub">Contests</span>
+      </div>
+      <div onclick="switchTab('unstop')" class="nav-tab-pill" data-tab="unstop">
+        <span class="pill-title text-[#51D6A0]">Unstop Radar</span>
+        <span class="pill-sub">Hackathons</span>
+      </div>
+      <div onclick="switchTab('journey')" class="nav-tab-pill" data-tab="journey">
+        <span class="pill-title text-[#D6B66C]">4-Year AI</span>
+        <span class="pill-sub">Companion</span>
+      </div>
+      <div onclick="switchTab('resume')" class="nav-tab-pill" data-tab="resume">
+        <span class="pill-title text-[#9875FF]">Resume AI</span>
+        <span class="pill-sub">LinkedIn</span>
+      </div>
+      <div onclick="switchTab('timetable')" class="nav-tab-pill" data-tab="timetable">
+        <span class="pill-title">Daily Grind</span>
+        <span class="pill-sub">Timetable</span>
+      </div>
+      <div onclick="switchTab('attendance')" class="nav-tab-pill" data-tab="attendance">
+        <span class="pill-title">Pull Up</span>
+        <span class="pill-sub">Attendance</span>
+      </div>
+      <div onclick="switchTab('planner')" class="nav-tab-pill" data-tab="planner">
+        <span class="pill-title">Study Arc</span>
+        <span class="pill-sub">Planner</span>
+      </div>
+      <div onclick="openGeminiVoiceModal()" class="nav-tab-pill" data-tab="bestie">
+        <span class="pill-title text-[#9875FF]">Bestie AI</span>
+        <span class="pill-sub">Voice/Chat</span>
+      </div>
+      <div onclick="switchTab('notes')" class="nav-tab-pill" data-tab="notes">
+        <span class="pill-title">Brain Dump</span>
+        <span class="pill-sub">Notes</span>
+      </div>
+      <div onclick="switchTab('quiz')" class="nav-tab-pill" data-tab="quiz">
+        <span class="pill-title">Boss Battle</span>
+        <span class="pill-sub">90m Exam</span>
+      </div>
+      <div onclick="switchTab('tools')" class="nav-tab-pill" data-tab="tools">
+        <span class="pill-title">Virtual Tools</span>
+        <span class="pill-sub">15 Tools</span>
+      </div>
+      <div onclick="switchTab('docs')" class="nav-tab-pill" data-tab="docs">
+        <span class="pill-title">The Stash</span>
+        <span class="pill-sub">PDFs</span>
+      </div>
+      <div onclick="switchTab('showtime')" class="nav-tab-pill" data-tab="showtime">
+        <span class="pill-title">Showtime</span>
+        <span class="pill-sub">Slides</span>
+      </div>
+      <div onclick="switchTab('auth')" class="nav-tab-pill" data-tab="auth">
+        <span class="pill-title text-[#D6B66C]">Lock In</span>
+        <span class="pill-sub">Auth</span>
+      </div>
+    </nav>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <div class="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] font-bold text-orange-400">
+        <span>🔥</span><span>5d</span>
+      </div>
+      <div class="hidden md:flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D6B66C]/10 border border-[#D6B66C]/25 text-[11px] font-bold text-[#D6B66C]">
+        <span>⭐</span><span id="header-xp">1,450 XP</span>
+      </div>
+
+      <!-- TinyFish API Status Badge -->
+      <div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#51D6A0]/10 border border-[#51D6A0]/30 text-[10px] font-mono-code font-bold text-[#51D6A0]" title="TinyFish AI Gateway Connected: sk-tinyfish-shMmh...zaHPEU">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#51D6A0] animate-pulse"></span>
+        <span>TinyFish AI</span>
+      </div>
+
+      <!-- Reminder Bell -->
+      <button onclick="toggleReminderPanel()" class="p-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#8C9690] hover:text-[#D6B66C] transition relative" title="Class Reminders">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#51D6A0] animate-pulse"></span>
+      </button>
+
+      <!-- Theme Switcher -->
+      <button onclick="toggleTheme()" class="p-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#8C9690] hover:text-[#D6B66C] transition" title="Toggle Theme">
+        <span id="theme-icon" class="text-xs">☀️</span>
+      </button>
+
+      <!-- User Profile Pill -->
+      <div onclick="switchTab('auth')" class="cursor-pointer flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#141A17] border border-white/[0.08] hover:border-white/[0.2] transition">
+        <div class="w-7 h-7 rounded-full bg-[#202938] border border-[#48B8FF]/40 flex items-center justify-center text-[10px] text-[#48B8FF] font-black">
+          AB
+        </div>
+        <div class="text-left hidden sm:block">
+          <div class="text-xs font-bold text-white leading-tight">Yo, Anurag</div>
+          <div class="text-[9px] text-[#717D77] leading-tight">CSE (AI/ML) · Sec A</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Left-Side Floating Bestie AI Button -->
+  <div class="fixed left-4 bottom-20 md:bottom-8 z-50 flex items-center gap-2">
+    <button onclick="openGeminiVoiceModal()" class="group relative w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#9875FF] via-[#48B8FF] to-[#D6B66C] p-0.5 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300" title="Ask Bestie AI">
+      <div class="w-full h-full bg-[#090B0A] rounded-full flex items-center justify-center relative overflow-hidden">
+        <span class="absolute inset-0 bg-[#9875FF]/20 animate-ping rounded-full pointer-events-none"></span>
+        <svg class="w-6 h-6 text-[#9875FF] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+        </svg>
+      </div>
+    </button>
+  </div>
+
+  <!-- Workspace Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 md:p-8 z-10 relative">
+
+    <!-- =================================================================
+         TAB 1: VIBE CHECK (MAIN DASHBOARD — 100% MATCHING SCREENSHOT)
+         ================================================================= -->
+    <section id="tab-dashboard" class="tab-content space-y-6">
+      <!-- Greeting Header Row -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+        <div>
+          <div class="text-xs font-semibold text-[#51D6A0]/90 tracking-wide mb-1 font-mono-code">
+            Monday, November 23, 2026
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white flex items-baseline gap-2">
+            <span>Yo,</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#51D6A0] via-[#48B8FF] to-[#9875FF]">ANURAG</span>
+          </h1>
+          <p class="text-xs text-[#7A8680] mt-1 font-medium">
+            CSE (AI/ML) · Section A · ABES Engineering College
+          </p>
+        </div>
+
+        <button onclick="openGeminiVoiceModal()" class="self-start sm:self-center px-5 py-2.5 rounded-2xl bg-gradient-to-r from-[#9875FF] to-[#7648F5] text-white font-bold text-xs shadow-lg shadow-[#9875FF]/25 hover:shadow-[#9875FF]/45 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+          <span>Ask Bestie AI</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        </button>
+      </div>
+
+      <!-- Main 2x2 Cards Grid (Exact Screenshot Design) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- Card 1: NEXT UP -->
+        <div onclick="switchTab('timetable')" class="ref-card cursor-pointer group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#9875FF]">NEXT UP</span>
+            <span class="ref-badge text-[#9875FF] bg-[#9875FF]/10">In 20 mins</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-black text-white group-hover:text-[#48B8FF] transition-colors">
+            Engineering Physics
+          </h3>
+          <p class="text-xs text-[#7F8B85] mt-1">
+            10:00–11:00 · Room 204 · Dr. Verma
+          </p>
+        </div>
+
+        <!-- Card 2: BOSS FIGHT -->
+        <div onclick="switchTab('planner')" class="ref-card cursor-pointer group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#D6B66C]">BOSS FIGHT</span>
+            <span class="ref-badge text-[#D6B66C] bg-[#D6B66C]/10">Priority 1</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-black text-white group-hover:text-red-400 transition-colors">
+            MT-02 Physics Exam
+          </h3>
+          <p class="text-xs text-[#8A958F] mt-1">
+            <span class="text-red-400 font-semibold">12 days to go</span> · Syllabus covered: 51%
+          </p>
+        </div>
+
+        <!-- Card 3: CHAPTERS LEFT -->
+        <div onclick="switchTab('planner')" class="ref-card cursor-pointer group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#51D6A0]">CHAPTERS LEFT</span>
+            <span class="ref-badge">4 Units</span>
+          </div>
+          <div class="text-3xl sm:text-4xl font-black text-white">
+            4
+          </div>
+          <p class="text-xs text-[#7F8B85] mt-2">
+            Nanotechnology · Superconductors · Spintronics · Semiconductors
+          </p>
+        </div>
+
+        <!-- Card 4: DON'T FORGET -->
+        <div onclick="switchTab('attendance')" class="ref-card cursor-pointer group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#51D6A0]">DON'T FORGET</span>
+            <span class="ref-badge">Pro tip</span>
+          </div>
+          <p class="text-xs sm:text-sm text-[#C2CBC6] leading-relaxed mt-1">
+            Attendance in <span class="text-[#F0D28B] font-semibold">Electronics is at 62%</span> and <span class="text-[#F0D28B] font-semibold">Maths is at 68%</span>. Attend the next classes to safely reach the 75% college criteria.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom Metric Row: 4 Metric Cards (Exact Screenshot Design) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div onclick="switchTab('attendance')" class="ref-card cursor-pointer text-center group">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-[#6F7B75] block mb-1">OVERALL ATTENDANCE</span>
+          <div class="text-2xl sm:text-3xl font-black text-[#51D6A0] my-1" id="dash-agg-pct">75.5%</div>
+          <span class="text-[11px] text-[#51D6A0] font-medium block">Above 75% Safe line</span>
+        </div>
+        <div onclick="switchTab('attendance')" class="ref-card cursor-pointer text-center group">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-[#6F7B75] block mb-1">ATTENDANCE BUFFER</span>
+          <div class="text-2xl sm:text-3xl font-black text-[#F0D28B] my-1" id="dash-safe-bunks">+3 classes</div>
+          <span class="text-[11px] text-[#86928C] block">Overall allowance</span>
+        </div>
+        <div class="ref-card text-center">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-[#6F7B75] block mb-1">STUDY STREAK</span>
+          <div class="text-2xl sm:text-3xl font-black text-[#9875FF] my-1">5 Days 🔥</div>
+          <span class="text-[11px] text-[#86928C] block">Keep grinding</span>
+        </div>
+        <div onclick="switchTab('tools')" class="ref-card cursor-pointer text-center group">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-[#6F7B75] block mb-1">TARGET SGPA</span>
+          <div class="text-2xl sm:text-3xl font-black text-white my-1">8.80</div>
+          <span class="text-[11px] text-[#51D6A0] font-medium block">On track</span>
+        </div>
+      </div>
+
+      <!-- NEW ZYNAX 3.0 SECTION: YOUR 4-YEAR JOURNEY ON DASHBOARD -->
+      <div class="ref-card space-y-4 border border-[#D6B66C]/30 bg-gradient-to-br from-[#101412] via-[#141916] to-[#101412]">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold">ZYNAX 3.0</span>
+              <h3 class="text-lg font-black text-white">YOUR 4-YEAR JOURNEY · CSE (AI/ML)</h3>
+            </div>
+            <p class="text-xs text-[#87928B] mt-0.5">Persistent Academic, Technical & Career Roadmap (2026–2030)</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="switchTab('journey')" class="btn-gold px-3.5 py-1.5 rounded-xl text-xs font-bold shadow">
+              Open 4-Year Companion →
+            </button>
+            <button onclick="switchTab('resume')" class="btn-purple px-3.5 py-1.5 rounded-xl text-xs font-bold shadow">
+              AI Resume Builder →
+            </button>
+          </div>
+        </div>
+
+        <!-- 4-Stage Timeline Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="p-3 rounded-xl bg-white/[0.04] border border-[#51D6A0]/40 space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-[#51D6A0]">YEAR 1: FOUNDATION</span>
+              <span class="text-[10px] px-1.5 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code font-bold">ACTIVE · 45%</span>
+            </div>
+            <p class="text-[11px] text-[#C2CBC6]">C++/Python, Physics, Maths, Basic DSA, Git/GitHub, 75% Mandate</p>
+            <div class="progress-track mt-1"><div class="progress-fill bg-[#51D6A0]" style="width: 45%"></div></div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.08] space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-[#48B8FF]">YEAR 2: SKILL DEV</span>
+              <span class="text-[10px] text-[#7F8B85]">Upcoming</span>
+            </div>
+            <p class="text-[11px] text-[#87928B]">Adv DSA, OOPs, DBMS, OS, Computer Networks, Dev Projects</p>
+            <div class="progress-track mt-1"><div class="progress-fill bg-[#48B8FF]" style="width: 0%"></div></div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.08] space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-[#9875FF]">YEAR 3: INDUSTRY READY</span>
+              <span class="text-[10px] text-[#7F8B85]">Future</span>
+            </div>
+            <p class="text-[11px] text-[#87928B]">AI/ML Spec, Generative AI, SIH Hackathons, Summer Internships</p>
+            <div class="progress-track mt-1"><div class="progress-fill bg-[#9875FF]" style="width: 0%"></div></div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-white/[0.02] border border-white/[0.08] space-y-1.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-[#D6B66C]">YEAR 4: CAREER LAUNCH</span>
+              <span class="text-[10px] text-[#7F8B85]">Graduation</span>
+            </div>
+            <p class="text-[11px] text-[#87928B]">Capstone AI Project, Placements, Resume ATS 95+, LinkedIn Brand</p>
+            <div class="progress-track mt-1"><div class="progress-fill bg-[#D6B66C]" style="width: 0%"></div></div>
+          </div>
+        </div>
+
+        <!-- Proactive AI Guidance Banner -->
+        <div class="p-3 rounded-xl bg-[#9875FF]/10 border border-[#9875FF]/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2.5">
+            <span class="text-xl">🤖</span>
+            <div>
+              <strong class="text-white">Proactive AI Insight for Anurag:</strong>
+              <span class="text-[#C2B5FF] block sm:inline">"You have solved 97 LeetCode problems with Python. SIH 2026 hackathon registration closes in 6 days. Team registration is open on Unstop!"</span>
+            </div>
+          </div>
+          <button onclick="switchTab('unstop')" class="px-3 py-1 rounded-lg bg-[#9875FF] text-white font-bold text-[11px] whitespace-nowrap shadow">
+            View SIH on Unstop ↗
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Action Dongles & 3D Stats Cube Section -->
+      <div class="ref-card flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 text-center md:text-left">
+          <span class="text-[10px] font-mono-code font-bold uppercase text-[#D6B66C] tracking-wider block">
+            ⚡ QUICK MODULE LAUNCHPAD
+          </span>
+          <h4 class="text-lg font-black text-white">Full ZYNAX 3.0 Ecosystem Active</h4>
+          <p class="text-xs text-[#7F8B85] max-w-lg">
+            Global coding competitions, Unstop hackathon radar, 4-year AI memory, resume builder, LeetCode playground, 90-min exams, and multilingual voice assistant.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-2 justify-center md:justify-start">
+            <button onclick="switchTab('arena')" class="btn-gold px-3.5 py-1.5 rounded-xl text-xs font-bold">👾 Next LeetCode Contest (05d)</button>
+            <button onclick="switchTab('unstop')" class="btn-emerald px-3.5 py-1.5 rounded-xl text-xs font-bold">🚀 Unstop Hackathons</button>
+            <button onclick="switchTab('journey')" class="glass-card px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#D6B66C]">🎓 4-Year Academic AI</button>
+            <button onclick="switchTab('resume')" class="glass-card px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#9875FF]">📄 AI Resume Builder</button>
+            <button onclick="switchTab('auth')" class="glass-card px-3.5 py-1.5 rounded-xl text-xs font-bold text-white">🔒 Lock In / Auth</button>
+          </div>
+        </div>
+
+        <!-- 3D Rotating Stats Cube -->
+        <div class="cube-stats-container flex-shrink-0">
+          <div class="cube-stats">
+            <div class="cube-stats-face face-f">
+              <span class="text-[9px] uppercase font-bold text-[#51D6A0]">ATTENDANCE</span>
+              <span class="text-xl font-black text-white mt-1">75.5%</span>
+              <span class="text-[9px] text-[#51D6A0]">+3 Safe</span>
+            </div>
+            <div class="cube-stats-face face-b">
+              <span class="text-[9px] uppercase font-bold text-[#9875FF]">STREAK</span>
+              <span class="text-xl font-black text-white mt-1">🔥 5d</span>
+              <span class="text-[9px] text-[#7F8B85]">Secured</span>
+            </div>
+            <div class="cube-stats-face face-r">
+              <span class="text-[9px] uppercase font-bold text-[#D6B66C]">TOTAL XP</span>
+              <span class="text-xl font-black text-[#D6B66C] mt-1">1,450</span>
+              <span class="text-[9px] text-[#7F8B85]">Prodigy</span>
+            </div>
+            <div class="cube-stats-face face-l">
+              <span class="text-[9px] uppercase font-bold text-[#48B8FF]">CLASSES</span>
+              <span class="text-xl font-black text-white mt-1">4 Today</span>
+              <span class="text-[9px] text-[#7F8B85]">Phys 204</span>
+            </div>
+            <div class="cube-stats-face face-t">
+              <span class="text-[9px] uppercase font-bold text-red-400">MT-02</span>
+              <span class="text-lg font-black text-red-400 mt-1">12 Days</span>
+              <span class="text-[9px] text-[#7F8B85]">Physics</span>
+            </div>
+            <div class="cube-stats-face face-bt">
+              <span class="text-[9px] uppercase font-bold text-[#D6B66C]">ZYNAX</span>
+              <span class="text-lg font-black text-[#D6B66C] mt-1">3.0</span>
+              <span class="text-[9px] text-[#7F8B85]">ABES EC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB: CODE ARENA — GLOBAL CODING COMPETITIONS HUB (ZYNAX 3.0)
+         ================================================================= -->
+    <section id="tab-arena" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>👾 DAILY CODE ARENA</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#48B8FF]/20 text-[#48B8FF] font-mono-code">GLOBAL COMPETITIONS</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">LeetCode Weekly Contests, Codeforces, CodeChef, HackerRank & ABES Leaderboards</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs px-3 py-1 rounded-full bg-[#D6B66C]/15 text-[#D6B66C] font-bold border border-[#D6B66C]/30">🏆 ABES Coding Hub</span>
+        </div>
+      </div>
+
+      <!-- A. DEDICATED CARD: NEXT LEETCODE CONTEST -->
+      <div class="ref-card border-2 border-[#D6B66C]/40 bg-gradient-to-r from-[#101412] via-[#1A1813] to-[#101412] space-y-4 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-black px-2.5 py-0.5 rounded-full bg-[#D6B66C] text-black">NEXT LEETCODE CONTEST</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 font-bold font-mono-code">Weekly Contest 438</span>
+            </div>
+            <h3 class="text-2xl font-black text-white">LeetCode Weekly Contest 438</h3>
+            <p class="text-xs text-[#87928B]">
+              📅 <strong class="text-white">Sunday, 08:00 AM IST</strong> · Duration: 90 Minutes · 4 Algorithmic Problems · Rated for All
+            </p>
+          </div>
+
+          <!-- Countdown Widget -->
+          <div class="flex items-center gap-3 bg-black/50 p-3.5 rounded-2xl border border-white/[0.08]">
+            <div class="text-center">
+              <span class="text-xs uppercase font-bold text-[#D6B66C] block">STARTS IN</span>
+              <div class="text-2xl sm:text-3xl font-black font-mono-code text-white mt-1" id="leetcode-contest-timer">
+                05d 14h 22m 18s
+              </div>
+            </div>
+            <a href="https://leetcode.com/contest/" target="_blank" rel="noopener noreferrer" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
+              <span>Join Competition ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Biweekly & Secondary Tracker -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-white/[0.08] text-xs">
+          <div class="p-2.5 rounded-xl glass-card flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-[#48B8FF] font-bold block">BIWEEKLY CONTEST 151</span>
+              <strong class="text-white">Saturday, 08:00 PM IST</strong>
+            </div>
+            <a href="https://leetcode.com/contest/" target="_blank" class="text-[#48B8FF] font-semibold text-[11px] underline">Details ↗</a>
+          </div>
+          <div class="p-2.5 rounded-xl glass-card flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-[#51D6A0] font-bold block">ANURAG'S CONTEST STATS</span>
+              <strong class="text-white">Rating: 1,642 (Knight) · 8 Contests</strong>
+            </div>
+            <span class="text-[#51D6A0] font-bold">Top 12%</span>
+          </div>
+          <div class="p-2.5 rounded-xl glass-card flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-orange-400 font-bold block">CONTEST REMINDER ALARM</span>
+              <strong class="text-white">Active (30m Before)</strong>
+            </div>
+            <button onclick="alert('🔔 Contest alarm enabled! You will receive notifications 30 mins before Weekly 438.')" class="px-2 py-0.5 rounded bg-white/10 text-white font-bold text-[10px]">Test Alert</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. GLOBAL CODING COMPETITIONS DIRECTORY -->
+      <div class="ref-card space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="font-black text-base text-white">GLOBAL COMPETITIONS DIRECTORY</h3>
+            <p class="text-xs text-[#7F8B85]">Codeforces, CodeChef, HackerRank, GeeksforGeeks, AtCoder & LeetCode</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-[#7F8B85]">Saved: <strong class="text-[#D6B66C]" id="saved-contest-count">2</strong></span>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex gap-1.5 overflow-x-auto pb-1 text-xs">
+          <button onclick="filterContests('all')" class="contest-filter-btn px-3 py-1.5 rounded-xl bg-[#D6B66C] text-black font-bold">All</button>
+          <button onclick="filterContests('beginner')" class="contest-filter-btn px-3 py-1.5 rounded-xl glass-card text-white">Beginner</button>
+          <button onclick="filterContests('intermediate')" class="contest-filter-btn px-3 py-1.5 rounded-xl glass-card text-white">Intermediate</button>
+          <button onclick="filterContests('advanced')" class="contest-filter-btn px-3 py-1.5 rounded-xl glass-card text-white">Advanced</button>
+          <button onclick="filterContests('dsa')" class="contest-filter-btn px-3 py-1.5 rounded-xl glass-card text-white">DSA</button>
+          <button onclick="filterContests('cp')" class="contest-filter-btn px-3 py-1.5 rounded-xl glass-card text-white">Competitive Programming</button>
+          <button onclick="filterContests('aiml')" class="contest-filter-btn px-3 py-1.5 rounded-xl glass-card text-white">AI/ML</button>
+        </div>
+
+        <!-- Contest Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" id="global-contests-grid"></div>
+      </div>
+
+      <!-- Daily DSA Challenge & In-Browser Playground -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-5 space-y-4">
+          <div class="ref-card space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 font-bold">Daily Challenge</span>
+              <span class="text-xs text-[#D6B66C] font-bold">+100 XP Points</span>
+            </div>
+            <h3 class="text-lg font-black text-white">Subarray Sum Equals K</h3>
+            <p class="text-xs text-[#87928B] leading-relaxed">Given an array of integers <code class="text-[#D6B66C] font-mono-code">nums</code> and an integer <code class="text-[#D6B66C] font-mono-code">k</code>, return the total number of continuous subarrays whose sum equals to <code class="text-[#D6B66C] font-mono-code">k</code>.</p>
+            <div class="p-2.5 rounded-lg bg-black/40 font-mono-code text-[11px] space-y-1">
+              <span class="text-white block">Input: nums = [1,1,1], k = 2</span>
+              <span class="text-[#51D6A0] block">Output: 2</span>
+              <span class="text-[#7F8B85] block">Constraints: 1 ≤ n ≤ 2×10⁴</span>
+            </div>
+            <div class="pt-2 border-t border-white/[0.08]">
+              <button onclick="toggleArenaExplanation()" class="w-full flex items-center justify-between text-xs font-bold text-[#D6B66C]">
+                <span>💡 Algorithm & Video Breakdown</span><span id="arena-exp-arrow">▼</span>
+              </button>
+              <div id="arena-exp-content" class="hidden text-xs text-[#87928B] space-y-2 pt-3">
+                <p><strong class="text-white">Approach:</strong> Hash Map + Prefix Sum → O(N) Time, O(N) Space</p>
+                <p>Keep running sum. Store frequency of each prefix sum. For each index, check if (sum - k) exists in map.</p>
+                <a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank" rel="noopener noreferrer" class="text-[#48B8FF] underline">Official LeetCode Problem ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ABES Leaderboard -->
+          <div class="ref-card space-y-3">
+            <h4 class="text-xs font-bold text-[#D6B66C] uppercase tracking-wider">🏆 ABES Daily Leaderboard</h4>
+            <div class="space-y-2 text-xs" id="leaderboard-list"></div>
+          </div>
+        </div>
+
+        <!-- In-Browser Code Editor -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="ref-card space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <select id="code-lang-selector" class="px-2 py-1 rounded bg-black/40 border border-white/[0.1] text-xs text-white" onchange="changeCodeTemplate(this.value)">
+                <option value="python">Python 3</option>
+                <option value="javascript">JavaScript (ES6)</option>
+                <option value="cpp">C++ (GCC 12)</option>
+                <option value="java">Java 17</option>
+              </select>
+              <div class="flex gap-2">
+                <button onclick="resetCodeTemplate()" class="px-3 py-1 rounded-lg glass-card text-xs">Reset</button>
+                <button onclick="runCodeTests()" class="btn-gold px-4 py-1 rounded-lg text-xs font-bold">▶ Run</button>
+                <button onclick="submitCodeSolution()" class="btn-emerald px-4 py-1 rounded-lg text-xs font-bold">🚀 Submit</button>
+              </div>
+            </div>
+            <textarea id="arena-code-editor" class="w-full h-56 p-3 rounded-xl bg-black/60 border border-white/[0.08] text-xs text-white font-mono-code focus:outline-none resize-none" spellcheck="false"></textarea>
+            <div class="p-3 rounded-xl bg-black/70 border border-white/[0.08] font-mono-code text-xs min-h-[40px]" id="arena-console-output">
+              <span class="text-[#7F8B85]">Click ▶ Run to validate test cases...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 11: UNSTOP × ZYNAX — HACKATHON RADAR (ZYNAX 3.0)
+         ================================================================= -->
+    <section id="tab-unstop" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>🚀 UNSTOP × ZYNAX</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">HACKATHON RADAR</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Discover upcoming college, national & international hackathons, AI challenges and internships</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="https://unstop.com/hackathons" target="_blank" rel="noopener noreferrer" class="btn-emerald px-4 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1.5">
+            <span>Explore on Unstop.com ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Registration Alert Banner -->
+      <div class="p-4 rounded-2xl bg-[#51D6A0]/10 border border-[#51D6A0]/30 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🔥</span>
+          <div>
+            <span class="text-[10px] uppercase font-bold text-[#51D6A0] tracking-wider block">CLOSING SOON ALERT</span>
+            <strong class="text-white text-sm">Smart India Hackathon (SIH 2026) & InnoHacks 4.0</strong>
+            <p class="text-xs text-[#A0ABA4]">Registrations close this week! Form your 6-member team for SIH now.</p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="filterHackathons('college')" class="btn-gold px-3.5 py-1.5 rounded-xl text-xs font-bold">ABES InnoHacks</button>
+          <button onclick="filterHackathons('national')" class="btn-emerald px-3.5 py-1.5 rounded-xl text-xs font-bold">SIH 2026</button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex gap-1.5 overflow-x-auto pb-1 text-xs">
+        <button onclick="filterHackathons('all')" class="hackathon-btn px-3 py-1.5 rounded-xl bg-[#51D6A0] text-black font-bold">All Opportunities</button>
+        <button onclick="filterHackathons('college')" class="hackathon-btn px-3 py-1.5 rounded-xl glass-card text-white">College-Level</button>
+        <button onclick="filterHackathons('national')" class="hackathon-btn px-3 py-1.5 rounded-xl glass-card text-white">National Flagship</button>
+        <button onclick="filterHackathons('international')" class="hackathon-btn px-3 py-1.5 rounded-xl glass-card text-white">International Online</button>
+        <button onclick="filterHackathons('aiml')" class="hackathon-btn px-3 py-1.5 rounded-xl glass-card text-white">AI/ML & GenAI</button>
+        <button onclick="filterHackathons('webdev')" class="hackathon-btn px-3 py-1.5 rounded-xl glass-card text-white">Web & App</button>
+        <button onclick="filterHackathons('internship')" class="hackathon-btn px-3 py-1.5 rounded-xl glass-card text-white">Internships</button>
+      </div>
+
+      <!-- Hackathons Feed Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="hackathons-grid"></div>
+
+      <!-- Team Formation & Application Tracker Drawer -->
+      <div class="ref-card space-y-3">
+        <div class="flex justify-between items-center">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>👥 ABES Squad Team Formation Tracker</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-white/10 text-[#51D6A0]">2 Open Teams</span>
+          </h4>
+          <button onclick="createTeamReq()" class="btn-gold px-3 py-1 rounded-lg text-xs font-bold">+ Post Team Req</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs" id="team-requests-list">
+          <div class="p-3 rounded-xl glass-card space-y-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-white">SIH 2026 AI/ML Team</strong>
+              <span class="text-[10px] text-[#51D6A0] font-bold">4/6 Members</span>
+            </div>
+            <p class="text-[11px] text-[#87928B]">Looking for 1 Backend Dev (FastAPI) and 1 UI/UX designer from CSE/IT.</p>
+            <button onclick="alert('Request sent to team leader Anurag Banik!')" class="px-2.5 py-1 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-bold text-[10px]">Request to Join</button>
+          </div>
+          <div class="p-3 rounded-xl glass-card space-y-1">
+            <div class="flex justify-between items-center">
+              <strong class="text-white">Flipkart GRiD 7.0 Robotics</strong>
+              <span class="text-[10px] text-[#48B8FF] font-bold">2/3 Members</span>
+            </div>
+            <p class="text-[11px] text-[#87928B]">Looking for Computer Vision / OpenCV enthusiast from Sec A/B.</p>
+            <button onclick="alert('Request sent to team lead!')" class="px-2.5 py-1 rounded bg-[#48B8FF]/20 text-[#48B8FF] font-bold text-[10px]">Request to Join</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 12: MY ZYNAX AI — 4-YEAR ACADEMIC COMPANION (ZYNAX 3.0)
+         ================================================================= -->
+    <section id="tab-journey" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>🎓 MY ZYNAX AI</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code">4-YEAR ACADEMIC COMPANION</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Long-term academic memory, degree progression, skill milestones, and personalized career mentoring</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="exportAiMemory()" class="glass-card px-3 py-1.5 rounded-xl text-xs text-white">Export Memory</button>
+          <button onclick="openMemorySettings()" class="glass-card px-3 py-1.5 rounded-xl text-xs text-[#D6B66C]">⚙️ Privacy & Data</button>
+        </div>
+      </div>
+
+      <!-- Student Profile Card with Persistent Memory -->
+      <div class="ref-card border border-[#D6B66C]/30 space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#D6B66C] via-[#9875FF] to-[#48B8FF] p-0.5 shadow-xl">
+              <div class="w-full h-full bg-[#090B0A] rounded-[14px] flex items-center justify-center font-black text-xl text-white">
+                AB
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-xl font-black text-white">Anurag Banik</h3>
+                <span class="text-xs px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold">Year 1 · Sem 1</span>
+              </div>
+              <p class="text-xs text-[#7F8B85]">ABES Engineering College · CSE (AI/ML) · Roll: 2026ABES042</p>
+              <div class="flex items-center gap-2 text-[11px] text-[#A0ABA4] mt-1 font-mono-code">
+                <span>Target: 8.80 SGPA</span> · <span>97 LeetCode</span> · <span>75.5% Att</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <button onclick="queryAiCompanion('progress')" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-bold">Ask AI Summary</button>
+            <button onclick="queryAiCompanion('next')" class="btn-purple px-3.5 py-2 rounded-xl text-xs font-bold">What to Learn Next</button>
+          </div>
+        </div>
+
+        <!-- Four-Year Interactive Roadmap Stages -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+          <!-- Year 1 -->
+          <div class="p-4 rounded-xl ref-card border-l-4 border-l-[#51D6A0] space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <strong class="text-white">YEAR 1: FOUNDATION</strong>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold">ACTIVE · 45%</span>
+            </div>
+            <ul class="text-[11px] text-[#A0ABA4] space-y-1">
+              <li class="text-[#51D6A0]">✓ Python & C++ fundamentals</li>
+              <li class="text-[#51D6A0]">✓ Engineering Maths & Physics</li>
+              <li class="text-[#F0D28B]">⏳ Basic DSA (Hash Map, Prefix Sum)</li>
+              <li class="text-[#7F8B85]">○ Git/GitHub & Web basics</li>
+              <li class="text-[#7F8B85]">○ College 75% attendance armor</li>
+            </ul>
+          </div>
+
+          <!-- Year 2 -->
+          <div class="p-4 rounded-xl ref-card border-l-4 border-l-[#48B8FF] space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <strong class="text-white">YEAR 2: SKILL DEV</strong>
+              <span class="text-[10px] text-[#7F8B85]">Upcoming</span>
+            </div>
+            <ul class="text-[11px] text-[#7F8B85] space-y-1">
+              <li>○ Advanced DSA (Trees, Graphs, DP)</li>
+              <li>○ OOPs, DBMS (SQL/NoSQL)</li>
+              <li>○ Operating Systems & Networks</li>
+              <li>○ Full-stack dev projects (React/Node)</li>
+              <li>○ Competitive programming rounds</li>
+            </ul>
+          </div>
+
+          <!-- Year 3 -->
+          <div class="p-4 rounded-xl ref-card border-l-4 border-l-[#9875FF] space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <strong class="text-white">YEAR 3: INDUSTRY READY</strong>
+              <span class="text-[10px] text-[#7F8B85]">Future</span>
+            </div>
+            <ul class="text-[11px] text-[#7F8B85] space-y-1">
+              <li>○ AI/ML Specialization & Neural Nets</li>
+              <li>○ Generative AI & Transformers</li>
+              <li>○ Smart India Hackathon (SIH)</li>
+              <li>○ Summer Tech Internships</li>
+              <li>○ Technical Mock Interviews</li>
+            </ul>
+          </div>
+
+          <!-- Year 4 -->
+          <div class="p-4 rounded-xl ref-card border-l-4 border-l-[#D6B66C] space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <strong class="text-white">YEAR 4: CAREER LAUNCH</strong>
+              <span class="text-[10px] text-[#7F8B85]">Graduation</span>
+            </div>
+            <ul class="text-[11px] text-[#7F8B85] space-y-1">
+              <li>○ Capstone Major AI Project</li>
+              <li>○ Resume ATS Polish (95+)</li>
+              <li>○ Campus Placement Drives</li>
+              <li>○ Off-Campus Referrals & PPOs</li>
+              <li>○ Higher Education (GATE/GRE)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick AI Memory Query Buttons -->
+      <div class="ref-card space-y-3">
+        <h4 class="text-xs font-bold text-[#D6B66C] uppercase tracking-wider">
+          🧠 TEST LONG-TERM COMPANION MEMORY (CLICK ANY QUERY)
+        </h4>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <button onclick="queryAiCompanion('last_month')" class="px-3 py-1.5 rounded-xl glass-card text-white hover:border-[#D6B66C]">"What was I learning last month?"</button>
+          <button onclick="queryAiCompanion('projects')" class="px-3 py-1.5 rounded-xl glass-card text-white hover:border-[#D6B66C]">"Which projects have I completed?"</button>
+          <button onclick="queryAiCompanion('dsa')" class="px-3 py-1.5 rounded-xl glass-card text-white hover:border-[#D6B66C]">"Which DSA topics have I finished?"</button>
+          <button onclick="queryAiCompanion('next')" class="px-3 py-1.5 rounded-xl glass-card text-white hover:border-[#D6B66C]">"What should I learn next?"</button>
+          <button onclick="queryAiCompanion('hackathons')" class="px-3 py-1.5 rounded-xl glass-card text-white hover:border-[#D6B66C]">"Which hackathons should I consider?"</button>
+          <button onclick="queryAiCompanion('exams')" class="px-3 py-1.5 rounded-xl glass-card text-white hover:border-[#D6B66C]">"What should I prepare for this semester?"</button>
+        </div>
+
+        <!-- AI Companion Memory Response Box -->
+        <div id="ai-memory-output" class="p-4 rounded-xl bg-black/50 border border-white/[0.08] text-xs text-[#C2CBC6] space-y-2 leading-relaxed">
+          <strong class="text-[#D6B66C] block">My ZYNAX AI Memory Response:</strong>
+          <span>Welcome Anurag! As your 4-year companion, I remember you are in Year 1 CSE (AI/ML) at ABES EC. You have completed Python basics and 97 LeetCode problems (focusing on Prefix Sums). Your MT-02 Physics exam is in 12 days and Basic Electronics attendance is at 62%. Ask me anything to retrieve your saved degree roadmap!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 13: AI RESUME BUILDER & LINKEDIN HUB (ZYNAX 3.0)
+         ================================================================= -->
+    <section id="tab-resume" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>📄 AI RESUME BUILDER</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#9875FF]/20 text-[#9875FF] font-mono-code">LINKEDIN READY</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Live ATS score optimization, Harvard-standard formatting, and one-click LinkedIn sync</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="printResume()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold shadow">
+            🖨️ Download PDF / ATS Resume
+          </button>
+          <button onclick="syncLinkedIn()" id="linkedin-sync-btn" class="btn-purple px-4 py-2 rounded-xl text-xs font-bold shadow flex items-center gap-1.5">
+            <span>Sync to LinkedIn</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ATS Score Gauge & LinkedIn Connection Card -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- ATS Score -->
+        <div class="ref-card space-y-1.5 text-center">
+          <span class="text-[10px] font-bold text-[#51D6A0] uppercase block">LIVE AI ATS SCORE</span>
+          <div class="text-4xl font-black font-mono-code text-[#51D6A0]" id="resume-ats-score">92 / 100</div>
+          <span class="text-xs text-[#C2CBC6] block">✓ Strong action verbs · Tech keywords matched</span>
+        </div>
+
+        <!-- LinkedIn Status -->
+        <div class="ref-card space-y-2 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-[#48B8FF]">LINKEDIN INTEGRATION</span>
+              <span class="text-[10px] px-1.5 rounded bg-blue-500/20 text-[#48B8FF] font-bold" id="linkedin-status-badge">CONNECTED</span>
+            </div>
+            <p class="text-xs text-[#87928B] mt-1">Logged in as Anurag Banik. Profile auto-syncs skills & projects.</p>
+          </div>
+          <button onclick="toggleLinkedInLogin()" class="w-full py-1.5 rounded-lg glass-card text-xs text-white font-semibold hover:border-[#48B8FF]">
+            Re-authenticate LinkedIn
+          </button>
+        </div>
+
+        <!-- AI Resume Recommendations -->
+        <div class="ref-card space-y-1.5">
+          <span class="text-[10px] font-bold text-[#D6B66C] uppercase block">AI RESUME MENTOR TIP</span>
+          <p class="text-xs text-[#C2CBC6] leading-relaxed">
+            "Include your 'Subarray Sum Equals K' O(N) optimization metrics and your SIH 2026 participation for high ATS rating."
+          </p>
+        </div>
+      </div>
+
+      <!-- Resume Builder Interface: Form on Left, Formatted Preview on Right -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Form Inputs (Left) -->
+        <div class="lg:col-span-5 space-y-3">
+          <div class="ref-card space-y-3">
+            <h4 class="font-bold text-xs text-[#D6B66C] uppercase">1. Student Details</h4>
+            <input type="text" id="res-name" value="Anurag Banik" class="w-full px-3 py-2 rounded-xl glass-card text-xs text-white" placeholder="Full Name" oninput="updateResumePreview()" />
+            <input type="text" id="res-headline" value="BTech CSE (AI/ML) · ABES Engineering College" class="w-full px-3 py-2 rounded-xl glass-card text-xs text-white" placeholder="Headline" oninput="updateResumePreview()" />
+            <input type="email" id="res-email" value="anurag.banik@abes.ac.in" class="w-full px-3 py-2 rounded-xl glass-card text-xs text-white" placeholder="Email" oninput="updateResumePreview()" />
+            <input type="text" id="res-phone" value="+91 98765 43210" class="w-full px-3 py-2 rounded-xl glass-card text-xs text-white" placeholder="Phone" oninput="updateResumePreview()" />
+          </div>
+
+          <div class="ref-card space-y-3">
+            <h4 class="font-bold text-xs text-[#48B8FF] uppercase">2. Technical Skills</h4>
+            <textarea id="res-skills" class="w-full h-20 p-2.5 rounded-xl bg-black/50 border border-white/[0.08] text-xs text-white font-mono-code focus:outline-none" oninput="updateResumePreview()">Python, C++, JavaScript, React, Tailwind CSS, DSA, Hash Maps, Web Audio API, Git, GitHub</textarea>
+          </div>
+
+          <div class="ref-card space-y-3">
+            <h4 class="font-bold text-xs text-[#51D6A0] uppercase">3. Featured Projects</h4>
+            <textarea id="res-projects" class="w-full h-24 p-2.5 rounded-xl bg-black/50 border border-white/[0.08] text-xs text-white font-mono-code focus:outline-none" oninput="updateResumePreview()">• ZYNAX 3.0: Built AI campus operating system with attendance simulation & LeetCode arena
+• DSA Problem Engine: Implemented O(N) prefix sum algorithms for continuous array problems</textarea>
+          </div>
+        </div>
+
+        <!-- Formatted ATS Resume Preview (Right) -->
+        <div class="lg:col-span-7">
+          <div class="bg-white text-black p-6 rounded-2xl shadow-2xl font-sans space-y-3 text-xs leading-relaxed" id="resume-sheet">
+            <div class="text-center border-b pb-2 border-gray-300">
+              <h1 class="text-xl font-bold uppercase tracking-wide text-gray-900" id="res-p-name">ANURAG BANIK</h1>
+              <p class="text-[11px] text-gray-600" id="res-p-headline">BTech Computer Science & Engineering (AI/ML) · ABES Engineering College</p>
+              <p class="text-[10px] text-gray-500" id="res-p-contact">anurag.banik@abes.ac.in · +91 98765 43210 · Ghaziabad, UP · linkedin.com/in/anurag-banik · github.com/anuragbanik</p>
+            </div>
+
+            <div>
+              <h2 class="text-xs font-bold uppercase border-b border-gray-300 text-gray-900 pb-0.5">Education</h2>
+              <div class="flex justify-between font-semibold pt-1 text-[11px]">
+                <span>ABES Engineering College, Ghaziabad (AKTU)</span>
+                <span>2026 – 2030</span>
+              </div>
+              <p class="text-[11px] text-gray-700">Bachelor of Technology — Computer Science & Engineering (AI/ML) · Current SGPA: <strong>8.80 / 10.0</strong></p>
+            </div>
+
+            <div>
+              <h2 class="text-xs font-bold uppercase border-b border-gray-300 text-gray-900 pb-0.5">Technical Skills</h2>
+              <p class="pt-1 text-[11px] text-gray-800" id="res-p-skills">
+                <strong>Languages & Frameworks:</strong> Python, C++, JavaScript, React, Tailwind CSS<br />
+                <strong>Core CS:</strong> Data Structures & Algorithms, Object-Oriented Programming, Git, Linux
+              </p>
+            </div>
+
+            <div>
+              <h2 class="text-xs font-bold uppercase border-b border-gray-300 text-gray-900 pb-0.5">Projects & Engineering Experience</h2>
+              <div class="pt-1 text-[11px] text-gray-800 whitespace-pre-line" id="res-p-projects">
+                • <strong>ZYNAX 3.0 Campus Ecosystem:</strong> Engineered end-to-end college intelligence platform with LeetCode contest tracker, attendance math engine, and multilingual speech assistant.
+                • <strong>Subarray Sum Algorithm Solver:</strong> Implemented optimal prefix sum hash-map algorithm handling 2×10⁴ constraints in 48ms.
+              </div>
+            </div>
+
+            <div>
+              <h2 class="text-xs font-bold uppercase border-b border-gray-300 text-gray-900 pb-0.5">Competitions & Achievements</h2>
+              <p class="pt-1 text-[11px] text-gray-800">
+                • <strong>LeetCode:</strong> 97 problems solved, Knight rank (Rating 1642), 5-day active streak<br />
+                • <strong>Hackathons:</strong> Shortlisted for Smart India Hackathon (SIH 2026) & ABES InnoHacks 4.0<br />
+                • <strong>ABES EC Arena:</strong> Rank #3 on College Daily Leaderboard
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 0: LOCK IN — LOGIN & LANDING (EARLIER DONGLES RETAINED)
+         ================================================================= -->
+    <section id="tab-auth" class="tab-content hidden space-y-6 py-2">
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl relative overflow-hidden border border-white/[0.08]">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div class="space-y-3 text-center lg:text-left max-w-xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D6B66C]/15 border border-[#D6B66C]/30 text-xs font-mono-code font-bold text-[#D6B66C]">
+              🔥 GEN-Z CAMPUS OPERATING SYSTEM
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+              YOUR CAMPUS.<br/>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#D6B66C] via-[#F0D28B] to-[#9875FF]">YOUR INTELLIGENCE.</span><br/>
+              YOUR FUTURE.
+            </h1>
+            <p class="text-xs sm:text-sm text-[#87928B] leading-relaxed">
+              Welcome to <strong class="text-[#D6B66C]">ZYNAX 3.0</strong> — Built for <strong class="text-white">Anurag Banik</strong> &amp; the ABES Engineering College squad. Unified attendance maths, live timetable countdowns, daily LeetCode arena, 90-min mock exams, and multilingual Gemini voice AI.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-2.5 justify-center lg:justify-start">
+              <button onclick="switchTab('dashboard')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">⚡ Enter Workspace</button>
+              <button onclick="switchTab('arena')" class="btn-purple px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5">👾 Next LeetCode Contest</button>
+              <button onclick="switchTab('unstop')" class="btn-emerald px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5">🚀 Unstop Hackathons</button>
+              <button onclick="switchTab('attendance')" class="glass-card px-4 py-2.5 rounded-xl text-xs font-bold text-[#51D6A0] flex items-center gap-1.5">🛡️ Pull Up</button>
+            </div>
+          </div>
+          <!-- 3D Rotating Z-Y-N-A-X Cube -->
+          <div class="flex flex-col items-center gap-3 flex-shrink-0">
+            <div class="cube-container">
+              <div class="cube-box">
+                <div class="cube-face c-face-f">Z</div>
+                <div class="cube-face c-face-b">Y</div>
+                <div class="cube-face c-face-r">N</div>
+                <div class="cube-face c-face-l">A</div>
+                <div class="cube-face c-face-t">X</div>
+                <div class="cube-face c-face-bt" style="font-size:22px">3.0</div>
+              </div>
+            </div>
+            <span class="text-[10px] text-[#D6B66C] font-mono-code tracking-widest uppercase font-bold">ZYNAX 3D CORE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Squad Login Box -->
+      <div class="max-w-xl mx-auto ref-card p-6 sm:p-8 space-y-5">
+        <div class="text-center space-y-1">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#D6B66C] via-[#9875FF] to-[#48B8FF] mx-auto flex items-center justify-center text-xl font-black text-black mb-2 shadow-lg">Z</div>
+          <h2 class="text-2xl font-black text-white">Squad Login &amp; Credentials</h2>
+          <p class="text-xs text-[#7F8B85]">Client verification mode active — your OTP is generated below.</p>
+        </div>
+        <div class="space-y-3.5">
+          <div>
+            <label class="text-xs text-[#7F8B85] block mb-1">Student Full Name</label>
+            <input type="text" id="auth-name" value="Anurag Banik" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
+          </div>
+          <div>
+            <label class="text-xs text-[#7F8B85] block mb-1">College Email</label>
+            <input type="email" id="auth-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-[#7F8B85] block mb-1">Admission / Roll No</label>
+              <input type="text" id="auth-roll" value="2026ABES042" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
+            </div>
+            <div>
+              <label class="text-xs text-[#7F8B85] block mb-1">Branch &amp; Section</label>
+              <input type="text" id="auth-branch" value="CSE (AI/ML) Sec A" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
+            </div>
+          </div>
+          <div class="pt-2 flex flex-col gap-2">
+            <button onclick="requestOtp()" class="w-full btn-gold py-2.5 rounded-xl text-xs font-bold">Generate Verification OTP</button>
+            <button onclick="switchTab('dashboard')" class="w-full btn-emerald py-2.5 rounded-xl text-xs font-bold">⚡ Instant Enter Workspace</button>
+            <button onclick="simulateLinkedInLogin()" class="w-full glass-card py-2.5 rounded-xl text-xs font-bold text-white hover:border-[#48B8FF] flex items-center justify-center gap-2">
+              <span class="text-[#48B8FF]">in</span> Sign in with LinkedIn
+            </button>
+          </div>
+        </div>
+        <!-- OTP Box -->
+        <div id="auth-otp-box" class="p-3.5 rounded-xl bg-[#D6B66C]/10 border border-[#D6B66C]/30 text-center space-y-2">
+          <span class="text-[10px] text-[#D6B66C] font-bold uppercase tracking-wider block">Verification OTP (Preview Mode)</span>
+          <span id="displayed-otp" class="text-2xl font-mono-code font-black text-white tracking-widest">849201</span>
+          <div class="flex gap-2 pt-1">
+            <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" maxlength="6" value="849201" class="w-full px-3 py-1.5 rounded-lg glass-card text-center font-mono-code text-xs text-white" />
+            <button onclick="verifyOtpNow()" class="btn-emerald px-4 py-1.5 rounded-lg text-xs font-bold">Verify &amp; Enter</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 2: DAILY GRIND (TIMETABLE)
+         ================================================================= -->
+    <section id="tab-timetable" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>⏰ DAILY GRIND</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code">CSE AI/ML · SEC A</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Smart timetable with live class countdowns and room mappings</p>
+        </div>
+        <div class="flex gap-1.5 overflow-x-auto pb-1" id="timetable-day-selector">
+          <button onclick="selectDay('Mon')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Mon">Mon</button>
+          <button onclick="selectDay('Tue')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Tue">Tue</button>
+          <button onclick="selectDay('Wed')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Wed">Wed</button>
+          <button onclick="selectDay('Thu')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold btn-gold" data-day="Thu">Thu</button>
+          <button onclick="selectDay('Fri')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Fri">Fri</button>
+          <button onclick="selectDay('Sat')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Sat">Sat</button>
+        </div>
+      </div>
+
+      <div class="ref-card border border-[#48B8FF]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#48B8FF]/20 border border-[#48B8FF]/40 flex items-center justify-center text-[#48B8FF] text-xl">⏰</div>
+          <div>
+            <span class="text-[10px] uppercase font-bold text-[#48B8FF] tracking-wider block">NEXT CLASS COUNTDOWN</span>
+            <h3 class="font-bold text-base text-white">Engineering Physics · Room 204</h3>
+            <span class="text-xs text-[#7F8B85]">Faculty: Dr. Verma · 10:00 - 11:00 AM</span>
+          </div>
+        </div>
+        <div class="text-center sm:text-right">
+          <span class="text-2xl font-mono-code font-black text-[#D6B66C]" id="class-countdown-display">00:19:42</span>
+          <span class="text-[10px] text-[#7F8B85] block">Starts shortly</span>
+        </div>
+      </div>
+
+      <div class="space-y-3" id="timetable-slots-list"></div>
+
+      <div class="ref-card border-dashed text-center space-y-2">
+        <span class="text-2xl">📄</span>
+        <h4 class="text-xs font-bold text-white">Import College Timetable PDF</h4>
+        <p class="text-[11px] text-[#7F8B85]">Upload official ABES schedule PDF to auto-populate all slots</p>
+        <button onclick="triggerPdfUpload()" class="btn-gold px-4 py-1.5 rounded-lg text-xs font-bold">Upload Timetable PDF</button>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 3: PULL UP (ATTENDANCE TRACKER)
+         ================================================================= -->
+    <section id="tab-attendance" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>🛡️ PULL UP</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">TARGET 75% MANDATE</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Real-time attendance calculations, safe bunks, and deficit recovery simulator</p>
+        </div>
+        <div class="flex items-center gap-3 ref-card px-4 py-2">
+          <span class="text-xs text-[#7F8B85]">Aggregate:</span>
+          <span class="text-xl font-black text-[#51D6A0]" id="att-aggregate-pill">75.5%</span>
+        </div>
+      </div>
+
+      <div class="ref-card space-y-4">
+        <h3 class="text-xs uppercase font-bold text-[#D6B66C] tracking-wider">⚡ Simulation Engine</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="glass-card p-3 rounded-xl border-l-2 border-l-[#51D6A0]">
+            <span class="text-[10px] text-[#7F8B85] uppercase block">Safe Bunk Allowance</span>
+            <span class="text-2xl font-black text-[#51D6A0]" id="sim-safe-bunks">3 Classes</span>
+            <p class="text-[10px] text-[#7F8B85] mt-1">Total classes you can skip while staying above target.</p>
+          </div>
+          <div class="glass-card p-3 rounded-xl border-l-2 border-l-red-400">
+            <span class="text-[10px] text-[#7F8B85] uppercase block">Critical Shortfall</span>
+            <span class="text-2xl font-black text-red-400" id="sim-deficit">11 Classes</span>
+            <p class="text-[10px] text-[#7F8B85] mt-1">Electronics needs 11 consecutive to cross 75%.</p>
+          </div>
+          <div class="glass-card p-3 rounded-xl border-l-2 border-l-[#D6B66C]">
+            <span class="text-[10px] text-[#7F8B85] uppercase block">Target Criteria</span>
+            <div class="flex items-center justify-between mt-1">
+              <span class="text-xl font-black text-[#D6B66C]" id="target-att-label">75%</span>
+              <input type="range" id="target-slider" min="70" max="90" value="75" class="w-24 accent-[#D6B66C]" oninput="updateTargetThreshold(this.value)" />
+            </div>
+            <p class="text-[10px] text-[#7F8B85] mt-1">Slide to simulate different attendance thresholds.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-3" id="attendance-subject-list"></div>
+    </section>
+
+    <!-- =================================================================
+         TAB 5: STUDY ARC (AI STUDY PLANNER)
+         ================================================================= -->
+    <section id="tab-planner" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>📚 STUDY ARC</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#9875FF]/20 text-[#9875FF] font-mono-code">EXAM COUNTDOWN</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Chapter-by-chapter progression tracker and AI study roadmap</p>
+        </div>
+        <button onclick="generateStudyRoadmap()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold">⚡ Generate 12-Day Study Plan</button>
+      </div>
+
+      <div class="ref-card border border-red-500/30 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase text-red-400">TARGET EXAMINATION</span>
+          <h3 class="text-xl font-black text-white">Mid-Term Exam 02 (MT-02) — Engineering Physics</h3>
+          <p class="text-xs text-[#7F8B85]">Venue: Exam Hall 2 · Units 1, 2, 3 &amp; 4</p>
+        </div>
+        <div class="ref-card p-3 text-center">
+          <span class="text-3xl font-black font-mono-code text-red-400">12</span>
+          <span class="text-[9px] uppercase font-bold text-[#7F8B85] block">Days Left</span>
+        </div>
+      </div>
+
+      <div class="space-y-3" id="chapter-progress-list"></div>
+
+      <div id="study-roadmap-display" class="hidden ref-card border border-[#9875FF]/30 space-y-3">
+        <h4 class="text-sm font-bold text-[#9875FF]">🗺️ AI-Generated 12-Day Study Plan</h4>
+        <div class="text-xs text-[#7F8B85] space-y-1 leading-relaxed" id="roadmap-content"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 6: BRAIN DUMP (SMART NOTES & 12 AI TOOLS)
+         ================================================================= -->
+    <section id="tab-notes" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>🧠 BRAIN DUMP</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">12 AI TOOLS</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Upload notes, extract formulas, generate flashcards, download PDFs</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="triggerNoteUpload()" class="glass-card px-4 py-2 rounded-xl text-xs font-bold">📁 Upload Doc</button>
+          <button onclick="generateSmartNotes()" class="btn-emerald px-4 py-2 rounded-xl text-xs font-bold">✨ GENERATE SMART NOTES</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-4 space-y-3">
+          <div class="ref-card space-y-2">
+            <span class="text-xs uppercase font-bold text-[#D6B66C] tracking-wide block">Saved Documents</span>
+            <div class="space-y-1.5" id="saved-notes-list"></div>
+          </div>
+          <div class="ref-card border-dashed text-center space-y-1">
+            <p class="text-xs text-[#7F8B85]">Supported: PDF, DOCX, TXT, PPT, Images</p>
+            <button onclick="triggerNoteUpload()" class="text-[11px] text-[#51D6A0] font-semibold">+ Drop Files Here</button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-8 space-y-4">
+          <div class="ref-card space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+              <h3 class="font-bold text-base text-white" id="active-note-title">Physics: Unit 3 — Semiconductors</h3>
+              <button onclick="downloadNotesPdf()" class="btn-gold px-3.5 py-1.5 rounded-lg text-xs font-bold">🖨️ PDF</button>
+            </div>
+            <div class="flex gap-1.5 overflow-x-auto pb-1 text-xs flex-wrap">
+              <button onclick="showNoteFeature('summary')" id="nft-summary" class="px-3 py-1 rounded-lg bg-[#D6B66C] text-black font-bold">1. Summary</button>
+              <button onclick="showNoteFeature('formulas')" id="nft-formulas" class="px-3 py-1 rounded-lg glass-card text-[#7F8B85]">2. Formulas</button>
+              <button onclick="showNoteFeature('mcqs')" id="nft-mcqs" class="px-3 py-1 rounded-lg glass-card text-[#7F8B85]">3. MCQs</button>
+              <button onclick="showNoteFeature('flashcards')" id="nft-flashcards" class="px-3 py-1 rounded-lg glass-card text-[#7F8B85]">4. Flashcards</button>
+              <button onclick="showNoteFeature('exam')" id="nft-exam" class="px-3 py-1 rounded-lg glass-card text-[#7F8B85]">5. Exam Qs</button>
+            </div>
+            <div id="smart-note-display" class="p-4 rounded-xl bg-black/40 border border-white/[0.08] text-xs text-[#C2CBC6] space-y-2 leading-relaxed whitespace-pre-line max-h-72 overflow-y-auto font-mono-code"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 7: BOSS BATTLE (QUIZ + 90-MIN EXAM SIMULATOR)
+         ================================================================= -->
+    <section id="tab-quiz" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>⚔️ BOSS BATTLE</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#9875FF]/20 text-[#9875FF] font-mono-code">MOCK TEST LAB</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Curriculum-grounded quizzes and 90-Minute Examination Simulator</p>
+        </div>
+        <button onclick="start90MinExamMode()" class="btn-purple px-4 py-2 rounded-xl text-xs font-bold shadow-lg">⚔️ 90-MIN EXAM MODE</button>
+      </div>
+
+      <div id="quiz-standard-container" class="ref-card space-y-4">
+        <div class="flex items-center justify-between text-xs pb-2 border-b border-white/[0.08]">
+          <span class="text-[#D6B66C] font-mono-code" id="quiz-progress-text">Question 1 of 5</span>
+          <span class="text-[#7F8B85]" id="quiz-score-text">Score: 0</span>
+        </div>
+        <h3 class="text-base font-bold text-white" id="quiz-question-title">Loading...</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="quiz-options-container"></div>
+        <div id="quiz-explanation-box" class="hidden p-3 rounded-xl bg-[#51D6A0]/15 border border-[#51D6A0]/30 text-xs text-[#51D6A0]"></div>
+      </div>
+
+      <div id="exam-mode-container" class="hidden ref-card border-2 border-[#9875FF]/50 space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+          <div>
+            <h3 class="text-base font-black text-white">🎓 90-Minute Official Mock Exam</h3>
+            <p class="text-xs text-[#7F8B85]">Engineering Physics · MT-02 Simulation</p>
+          </div>
+          <div class="text-right">
+            <span class="text-2xl font-mono-code font-black text-red-400" id="exam-timer-display">90:00</span>
+            <span class="text-[10px] text-[#7F8B85] block">Time Remaining</span>
+          </div>
+        </div>
+        <div class="p-4 rounded-xl glass-card space-y-3">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-[#9875FF] font-mono-code" id="exam-q-num">Q1 / 10</span>
+            <span class="text-[#7F8B85]">Mark for Review: <button onclick="markReview()" class="text-[#D6B66C] font-bold">⚑</button></span>
+          </div>
+          <h4 class="text-sm font-bold text-white" id="exam-q-text">Loading...</h4>
+          <div class="space-y-2" id="exam-options-list"></div>
+        </div>
+        <div class="flex justify-between items-center pt-2 flex-wrap gap-2">
+          <button onclick="prevExamQ()" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-white">← Previous</button>
+          <div class="flex gap-2">
+            <button onclick="nextExamQ()" class="btn-purple px-4 py-2 rounded-xl text-xs font-bold">Next →</button>
+            <button onclick="submitExamNow()" class="btn-emerald px-5 py-2 rounded-xl text-xs font-bold">Submit Exam</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 8: 15 VIRTUAL TOOLS SUITE
+         ================================================================= -->
+    <section id="tab-tools" class="tab-content hidden space-y-6">
+      <div>
+        <h2 class="text-xl font-black flex items-center gap-2 text-white">
+          <span>🔧 15 VIRTUAL STUDENT TOOLS</span>
+          <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code">FUNCTIONAL</span>
+        </h2>
+        <p class="text-xs text-[#7F8B85]">Scientific calculator, CGPA calc, Pomodoro timer, ambient noise, unit converter &amp; more</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- 1. Scientific Calculator -->
+        <div class="ref-card space-y-3">
+          <h4 class="font-bold text-xs text-[#D6B66C]">🧮 1. Scientific Calculator</h4>
+          <input type="text" id="calc-display" readonly value="0" class="w-full text-right font-mono-code text-lg font-black px-3 py-2 rounded-lg bg-black/50 text-white border border-white/10" />
+          <div class="grid grid-cols-5 gap-1 text-xs font-mono-code">
+            <button onclick="calcKey('Math.sin(')" class="p-1.5 rounded bg-white/5 hover:bg-white/10">sin</button>
+            <button onclick="calcKey('Math.cos(')" class="p-1.5 rounded bg-white/5 hover:bg-white/10">cos</button>
+            <button onclick="calcKey('Math.tan(')" class="p-1.5 rounded bg-white/5 hover:bg-white/10">tan</button>
+            <button onclick="calcKey('Math.log10(')" class="p-1.5 rounded bg-white/5 hover:bg-white/10">log</button>
+            <button onclick="calcClear()" class="p-1.5 rounded bg-red-500/20 text-red-400 font-bold">C</button>
+            <button onclick="calcKey('Math.sqrt(')" class="p-1.5 rounded bg-white/5">√</button>
+            <button onclick="calcKey('Math.PI')" class="p-1.5 rounded bg-white/5">π</button>
+            <button onclick="calcKey('**')" class="p-1.5 rounded bg-white/5">^</button>
+            <button onclick="calcKey('(')" class="p-1.5 rounded bg-white/5">(</button>
+            <button onclick="calcKey(')')" class="p-1.5 rounded bg-white/5">)</button>
+            <button onclick="calcKey('7')" class="p-1.5 rounded glass-card">7</button>
+            <button onclick="calcKey('8')" class="p-1.5 rounded glass-card">8</button>
+            <button onclick="calcKey('9')" class="p-1.5 rounded glass-card">9</button>
+            <button onclick="calcBackspace()" class="p-1.5 rounded bg-orange-500/20 text-orange-400">⌫</button>
+            <button onclick="calcKey('/')" class="p-1.5 rounded bg-[#D6B66C]/20 text-[#D6B66C]">÷</button>
+            <button onclick="calcKey('4')" class="p-1.5 rounded glass-card">4</button>
+            <button onclick="calcKey('5')" class="p-1.5 rounded glass-card">5</button>
+            <button onclick="calcKey('6')" class="p-1.5 rounded glass-card">6</button>
+            <button onclick="calcKey('*')" class="p-1.5 rounded bg-[#D6B66C]/20 text-[#D6B66C]">×</button>
+            <button onclick="calcKey('-')" class="p-1.5 rounded bg-[#D6B66C]/20 text-[#D6B66C]">−</button>
+            <button onclick="calcKey('1')" class="p-1.5 rounded glass-card">1</button>
+            <button onclick="calcKey('2')" class="p-1.5 rounded glass-card">2</button>
+            <button onclick="calcKey('3')" class="p-1.5 rounded glass-card">3</button>
+            <button onclick="calcKey('+')" class="p-1.5 rounded bg-[#D6B66C]/20 text-[#D6B66C]">+</button>
+            <button onclick="calcEquals()" class="p-1.5 rounded btn-gold font-bold">=</button>
+            <button onclick="calcKey('0')" class="col-span-2 p-1.5 rounded glass-card">0</button>
+            <button onclick="calcKey('.')" class="p-1.5 rounded glass-card">.</button>
+            <button onclick="calcKey('%')" class="p-1.5 rounded bg-white/5">%</button>
+          </div>
+        </div>
+
+        <!-- 2. CGPA Calculator -->
+        <div class="ref-card space-y-3">
+          <h4 class="font-bold text-xs text-[#9875FF]">📊 2. CGPA / GPA Calculator</h4>
+          <div class="space-y-2 max-h-48 overflow-y-auto" id="cgpa-subjects-list">
+            <div class="flex gap-2">
+              <input placeholder="Subject" class="flex-1 px-2 py-1 rounded-lg glass-card text-xs text-white" />
+              <input type="number" placeholder="Grade (10)" min="0" max="10" step="0.1" class="w-20 px-2 py-1 rounded-lg glass-card text-xs text-white cgpa-grade" />
+              <input type="number" placeholder="Credits" min="1" max="6" class="w-16 px-2 py-1 rounded-lg glass-card text-xs text-white cgpa-credit" />
+            </div>
+          </div>
+          <button onclick="addCgpaRow()" class="glass-card px-3 py-1.5 rounded-lg text-xs text-[#D6B66C] font-semibold w-full">+ Add Subject</button>
+          <button onclick="calcCGPA()" class="btn-purple w-full py-2 rounded-xl text-xs font-bold">Calculate CGPA</button>
+          <div id="cgpa-result" class="text-center text-lg font-black text-[#D6B66C] hidden"></div>
+        </div>
+
+        <!-- 3. Pomodoro Timer -->
+        <div class="ref-card space-y-3 text-center">
+          <h4 class="font-bold text-xs text-[#51D6A0]">⏱️ 3. Pomodoro Focus Timer</h4>
+          <div class="text-4xl font-mono-code font-black text-[#51D6A0] py-2" id="pomodoro-timer-num">25:00</div>
+          <div class="flex gap-2 text-xs justify-center flex-wrap">
+            <button onclick="setPomodoroMode('focus')" class="glass-card px-3 py-1 rounded-lg text-[#51D6A0] font-semibold">25m Focus</button>
+            <button onclick="setPomodoroMode('short')" class="glass-card px-3 py-1 rounded-lg text-[#48B8FF] font-semibold">5m Break</button>
+            <button onclick="setPomodoroMode('long')" class="glass-card px-3 py-1 rounded-lg text-[#9875FF] font-semibold">15m Long</button>
+          </div>
+          <div class="flex justify-center gap-2 text-xs">
+            <button onclick="togglePomodoro()" id="pomo-toggle-btn" class="btn-emerald px-6 py-2 rounded-lg font-bold">▶ Start</button>
+            <button onclick="resetPomodoro()" class="glass-card px-4 py-2 rounded-lg">Reset</button>
+          </div>
+          <div class="text-[11px] text-[#7F8B85]" id="pomo-session-label">Focus Session</div>
+        </div>
+
+        <!-- 4. Ambient Focus Sound -->
+        <div class="ref-card space-y-3">
+          <h4 class="font-bold text-xs text-[#48B8FF]">🎵 4. Ambient Focus Audio</h4>
+          <p class="text-[11px] text-[#7F8B85]">Web Audio API synthesized ambient noise for deep concentration.</p>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button onclick="toggleAmbientSound('rain')" id="btn-rain" class="py-2 rounded-lg glass-card font-semibold hover:border-[#48B8FF]">🌧️ Rain</button>
+            <button onclick="toggleAmbientSound('whitenoise')" id="btn-noise" class="py-2 rounded-lg glass-card font-semibold hover:border-[#9875FF]">📻 Lo-Fi</button>
+            <button onclick="toggleAmbientSound('cafe')" id="btn-cafe" class="py-2 rounded-lg glass-card font-semibold hover:border-[#D6B66C]">☕ Café</button>
+            <button onclick="stopAmbient()" class="py-2 rounded-lg glass-card font-semibold text-red-400 hover:border-red-400">⏹ Stop</button>
+          </div>
+          <div class="text-[10px] text-[#7F8B85] text-center font-mono-code" id="ambient-status">Not Playing</div>
+        </div>
+
+        <!-- 5. Attendance Calculator -->
+        <div class="ref-card space-y-3">
+          <h4 class="font-bold text-xs text-[#51D6A0]">📋 5. Attendance Calculator</h4>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center gap-2">
+              <label class="text-[#7F8B85] w-28">Attended:</label>
+              <input type="number" id="att-calc-attended" value="41" class="w-full px-2 py-1.5 rounded-lg glass-card text-white" />
+            </div>
+            <div class="flex items-center gap-2">
+              <label class="text-[#7F8B85] w-28">Total Classes:</label>
+              <input type="number" id="att-calc-total" value="50" class="w-full px-2 py-1.5 rounded-lg glass-card text-white" />
+            </div>
+            <div class="flex items-center gap-2">
+              <label class="text-[#7F8B85] w-28">Required %:</label>
+              <input type="number" id="att-calc-req" value="75" class="w-full px-2 py-1.5 rounded-lg glass-card text-white" />
+            </div>
+          </div>
+          <button onclick="calcAttendance()" class="btn-emerald w-full py-2 rounded-xl text-xs font-bold">Calculate</button>
+          <div id="att-calc-result" class="text-xs text-white leading-relaxed hidden"></div>
+        </div>
+
+        <!-- 6. Unit Converter -->
+        <div class="ref-card space-y-3">
+          <h4 class="font-bold text-xs text-[#F0D28B]">🔄 6. Unit Converter</h4>
+          <div class="space-y-2 text-xs">
+            <select id="unit-category" class="w-full px-2 py-1.5 rounded-lg glass-card text-xs text-white" onchange="updateUnitOptions()">
+              <option value="length">Length</option>
+              <option value="mass">Mass</option>
+              <option value="temp">Temperature</option>
+              <option value="energy">Energy</option>
+            </select>
+            <div class="flex gap-2">
+              <input type="number" id="unit-input-val" value="1" class="w-full px-2 py-1.5 rounded-lg glass-card text-white" />
+              <select id="unit-from" class="w-full px-2 py-1 rounded-lg glass-card text-xs text-white"></select>
+            </div>
+            <div class="flex items-center justify-center text-[#D6B66C] text-sm font-bold">→</div>
+            <select id="unit-to" class="w-full px-2 py-1 rounded-lg glass-card text-xs text-white"></select>
+          </div>
+          <button onclick="convertUnit()" class="btn-gold w-full py-2 rounded-xl text-xs font-bold">Convert</button>
+          <div id="unit-result" class="text-center text-sm font-black text-[#F0D28B] font-mono-code"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         TAB 9: THE STASH (DOCUMENT & SYLLABUS VAULT)
+         ================================================================= -->
+    <section id="tab-docs" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>📁 THE STASH</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code">COLLEGE VAULT</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Preloaded ABES syllabi, timetables, PYQs, and your uploaded docs</p>
+        </div>
+        <button onclick="triggerPdfUpload()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold">+ Upload Document</button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="docs-vault-grid"></div>
+    </section>
+
+    <!-- =================================================================
+         TAB 10: SHOWTIME (PITCH & SLIDE DECK)
+         ================================================================= -->
+    <section id="tab-showtime" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2 text-white">
+            <span>🎬 SHOWTIME</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#9875FF] font-mono-code">PITCH DECK</span>
+          </h2>
+          <p class="text-xs text-[#7F8B85]">Interactive presentation extracted from the official ZYNAX pitch</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="prevSlide()" class="px-3 py-1.5 rounded-xl glass-card text-xs font-bold">← Prev</button>
+          <span class="text-xs font-mono-code font-bold text-[#D6B66C]" id="slide-indicator">Slide 1 / 5</span>
+          <button onclick="nextSlide()" class="px-3 py-1.5 rounded-xl btn-gold text-xs font-bold">Next →</button>
+        </div>
+      </div>
+      <div class="ref-card min-h-64" id="slide-stage-content"></div>
+      <div class="flex gap-2 overflow-x-auto pb-1" id="slide-thumbnails"></div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       MODALS: GEMINI / BESTIE AI ASSISTANT
+       ===================================================================== -->
+  <div id="gemini-voice-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="ref-card w-full max-w-lg rounded-2xl border border-white/[0.12] p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="font-bold text-sm text-white">🎙️ Bestie AI — Gemini Campus Companion</h3>
+            <span class="text-[9px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code font-bold">TinyFish API</span>
+          </div>
+          <p class="text-[11px] text-[#7F8B85]">Connected: sk-tinyfish-shMmh...zaHPEU · EN/HI/BN</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <select id="gemini-lang-select" class="px-2 py-1 rounded bg-black/50 border border-white/[0.1] text-xs text-white" onchange="changeAssistantLang(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+          </select>
+          <button onclick="closeGeminiVoiceModal()" class="w-7 h-7 rounded-lg glass-card flex items-center justify-center text-xs hover:border-red-400">✕</button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center h-10 gap-1.5" id="voice-wave-container">
+        <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+      </div>
+
+      <div id="gemini-chat-log" class="h-44 overflow-y-auto space-y-2 p-3 rounded-xl bg-black/40 border border-white/5 text-xs font-sans">
+        <div class="p-2.5 rounded-xl bg-[#9875FF]/20 text-[#C2B5FF]">
+          <strong>Bestie AI:</strong> Yo Anurag! Ask me anything in English, Hindi, or Bengali about your attendance, next LeetCode contest, SIH hackathons, or your 4-year degree roadmap!
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="startVoiceInput()" id="mic-btn" class="w-10 h-10 rounded-xl bg-[#9875FF]/20 border border-[#9875FF]/40 flex items-center justify-center text-sm flex-shrink-0 hover:bg-[#9875FF]/30" title="Voice Input">🎤</button>
+        <input type="text" id="gemini-chat-input" placeholder="Ask Bestie AI anything..." class="flex-1 px-3 py-2 rounded-xl bg-black/50 border border-white/[0.1] text-xs text-white" onkeydown="if(event.key==='Enter')sendGeminiMsg()" />
+        <button onclick="sendGeminiMsg()" class="btn-purple px-4 py-2 rounded-xl text-xs font-bold">Ask</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Class Reminder Hub -->
+  <div id="reminder-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="ref-card w-full max-w-md rounded-2xl border border-white/[0.12] p-5 space-y-4 shadow-2xl">
+      <h3 class="font-bold text-sm text-white">🔔 Class Reminder Hub</h3>
+      <div class="p-3.5 rounded-xl bg-[#48B8FF]/10 border border-[#48B8FF]/30 space-y-1">
+        <span class="text-[10px] text-[#48B8FF] font-bold uppercase block">Next Class Alert</span>
+        <p class="text-xs text-white font-semibold">Engineering Physics starts in 20 minutes in Room 204 with Dr. Verma.</p>
+      </div>
+      <div class="p-3.5 rounded-xl bg-[#D6B66C]/10 border border-[#D6B66C]/30 space-y-2">
+        <span class="text-[10px] text-[#D6B66C] font-bold uppercase block">Reminder Settings</span>
+        <div class="flex items-center gap-3 text-xs">
+          <label class="flex items-center gap-1.5 text-[#C2CBC6]"><input type="checkbox" checked class="accent-[#D6B66C]" /> Browser Notifications</label>
+          <label class="flex items-center gap-1.5 text-[#C2CBC6]"><input type="checkbox" checked class="accent-[#D6B66C]" /> Sound Alert</label>
+        </div>
+        <button onclick="requestBrowserNotification()" class="btn-gold w-full py-1.5 rounded-lg text-xs font-bold">Enable Browser Notifications</button>
+      </div>
+      <button onclick="toggleReminderPanel()" class="glass-card w-full py-2 rounded-xl text-xs font-bold text-white">Close Hub</button>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0A0D0B]/95 backdrop-blur-lg border-t border-white/[0.08] px-2 py-1.5 flex items-center justify-around">
+    <button onclick="switchTab('dashboard')" class="mobile-tab-btn flex flex-col items-center py-1 text-[#51D6A0]" data-tab="dashboard">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Vibes</span>
+    </button>
+    <button onclick="switchTab('arena')" class="mobile-tab-btn flex flex-col items-center py-1 text-[#7F8B85]" data-tab="arena">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Contests</span>
+    </button>
+    <button onclick="switchTab('unstop')" class="mobile-tab-btn flex flex-col items-center py-1 text-[#7F8B85]" data-tab="unstop">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Unstop</span>
+    </button>
+    <button onclick="switchTab('journey')" class="mobile-tab-btn flex flex-col items-center py-1 text-[#7F8B85]" data-tab="journey">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">4-Year AI</span>
+    </button>
+    <button onclick="switchTab('resume')" class="mobile-tab-btn flex flex-col items-center py-1 text-[#7F8B85]" data-tab="resume">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Resume</span>
+    </button>
+  </nav>
+
+  <input type="file" id="pdf-file-input" class="hidden" accept=".pdf,.txt,.docx,.pptx,.png,.jpg" onchange="handleFileSelected(event)" />
+
+  <!-- =====================================================================
+       JAVASCRIPT ENGINE — ZYNAX 3.0 COMPLETE SUITE
+       ===================================================================== -->
+  <script>
+    "use strict";
+    // =================== APP STATE ===================
+    const APP = {
+      apiKey: "sk-tinyfish-shMmhJxyGQgYF6wwU2gJsGdfFBzaHPEU",
+      currentTab: "dashboard",
+      activeDay: "Thu",
+      targetAttCriteria: 75,
+      activeLang: "en",
+      examTimerInterval: null,
+      examSecondsLeft: 90 * 60,
+      examCurrentQ: 0,
+      examAnswers: {},
+      pomoTime: 25 * 60,
+      pomoRunning: false,
+      pomoInterval: null,
+      pomoMode: "focus",
+      ambientNode: null,
+      ambientCtx: null,
+      calcVal: "0",
+      currentSlide: 1,
+      quizIndex: 0,
+      quizScore: 0,
+      activeHackFilter: "all",
+      activeContestFilter: "all",
+      linkedInConnected: true,
+
+      // Student Profile & 4-Year Academic Journey Memory
+      studentProfile: {
+        name: "Anurag Banik",
+        email: "anurag.banik@abes.ac.in",
+        roll: "2026ABES042",
+        college: "ABES Engineering College, Ghaziabad",
+        branch: "Computer Science & Engineering (AI/ML)",
+        section: "Sec A",
+        currentYear: 1,
+        currentSem: 1,
+        targetSGPA: 8.80,
+        currentSGPA: 8.80,
+        leetCodeSolved: 97,
+        contestRating: 1642,
+        streakDays: 5,
+        aggregateAttendance: 75.5,
+        languages: ["Python", "C++", "JavaScript", "SQL"],
+        completedTopics: ["Prefix Sums", "Two Pointers", "Binary Search Basics", "Recursion", "Unit 1 Optics", "Unit 2 Nanomaterials"],
+        currentTopics: ["Unit 3 Semiconductors", "Hash Map Optimizations"],
+        completedProjects: ["ZYNAX 3.0 Campus AI", "Subarray Sum Optimizer"],
+        savedHackathons: ["Smart India Hackathon (SIH 2026)", "ABES InnoHacks 4.0"],
+        savedContests: ["LeetCode Weekly Contest 438", "Codeforces Round 1002 (Div. 2)"]
+      },
+
+      subjects: [
+        { id: "maths", name: "Mathematics", attended: 34, total: 50, faculty: "Prof. Sharma", room: "Room 101" },
+        { id: "physics", name: "Engineering Physics", attended: 41, total: 50, faculty: "Dr. Verma", room: "Room 204" },
+        { id: "prog", name: "Programming in Python", attended: 45, total: 49, faculty: "Prof. Gupta", room: "Lab 1" },
+        { id: "english", name: "English & Soft Skills", attended: 37, total: 50, faculty: "Dr. Sen", room: "Room 305" },
+        { id: "electronics", name: "Basic Electronics", attended: 31, total: 50, faculty: "Prof. Mehta", room: "Room 108" }
+      ],
+
+      timetable: {
+        Mon: [
+          { time: "09:00–10:00", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" },
+          { time: "10:00–11:00", subject: "Engineering Physics", room: "Room 204", faculty: "Dr. Verma" },
+          { time: "02:00–03:00", subject: "Basic Electronics", room: "Room 108", faculty: "Prof. Mehta" }
+        ],
+        Tue: [
+          { time: "09:00–10:00", subject: "English & Soft Skills", room: "Room 305", faculty: "Dr. Sen" },
+          { time: "10:00–12:00", subject: "Python Lab", room: "Lab 1", faculty: "Prof. Gupta" }
+        ],
+        Wed: [
+          { time: "09:00–10:00", subject: "Basic Electronics", room: "Room 108", faculty: "Prof. Mehta" },
+          { time: "11:15–01:15", subject: "Electronics Lab", room: "Lab 2", faculty: "Prof. Mehta" }
+        ],
+        Thu: [
+          { time: "09:00–10:00", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" },
+          { time: "10:00–11:00", subject: "Engineering Physics", room: "Room 204", faculty: "Dr. Verma", isNext: true },
+          { time: "11:15–01:15", subject: "Physics Lab", room: "Lab 3", faculty: "Dr. Verma" },
+          { time: "02:00–03:00", subject: "English & Soft Skills", room: "Room 305", faculty: "Dr. Sen" }
+        ],
+        Fri: [
+          { time: "09:00–10:00", subject: "Programming in Python", room: "Lab 1", faculty: "Prof. Gupta" },
+          { time: "10:00–11:00", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" }
+        ],
+        Sat: [
+          { time: "10:00–12:00", subject: "Hackathon Prep / Self Study", room: "CS Hub", faculty: "Self-Directed" }
+        ]
+      },
+
+      chapters: [
+        { unit: "Unit 1", name: "Optics & Interference", progress: 100, topics: "Thin films, Newton rings, Michelson interferometer" },
+        { unit: "Unit 2", name: "Nanomaterials", progress: 70, topics: "Fullerenes, CNTs, quantum confinement" },
+        { unit: "Unit 3", name: "Semiconductors", progress: 35, topics: "Fermi level, Hall effect, p-n junction" },
+        { unit: "Unit 4", name: "Lasers & Fiber Optics", progress: 0, topics: "Stimulated emission, optical fiber, numerical aperture" }
+      ],
+
+      // Global Competitions Database (LeetCode, Codeforces, CodeChef, HackerRank, GfG, AtCoder)
+      globalContests: [
+        {
+          id: "lc-w-438",
+          platform: "LeetCode",
+          badgeColor: "#F0D28B",
+          title: "LeetCode Weekly Contest 438",
+          date: "Sunday, 08:00 AM IST",
+          duration: "90 mins",
+          difficulty: "intermediate",
+          type: "dsa",
+          url: "https://leetcode.com/contest/",
+          saved: true,
+          countdown: "05d 14h 22m"
+        },
+        {
+          id: "lc-bw-151",
+          platform: "LeetCode",
+          badgeColor: "#F0D28B",
+          title: "LeetCode Biweekly Contest 151",
+          date: "Saturday, 08:00 PM IST",
+          duration: "90 mins",
+          difficulty: "intermediate",
+          type: "dsa",
+          url: "https://leetcode.com/contest/",
+          saved: false,
+          countdown: "04d 21h 10m"
+        },
+        {
+          id: "cf-1002",
+          platform: "Codeforces",
+          badgeColor: "#48B8FF",
+          title: "Codeforces Round 1002 (Div. 2)",
+          date: "Friday, 08:05 PM IST",
+          duration: "120 mins",
+          difficulty: "advanced",
+          type: "cp",
+          url: "https://codeforces.com/contests",
+          saved: true,
+          countdown: "03d 18h 45m"
+        },
+        {
+          id: "cc-start-174",
+          platform: "CodeChef",
+          badgeColor: "#9875FF",
+          title: "CodeChef Starters 174 (Rated for Div 2, 3, 4)",
+          date: "Wednesday, 08:00 PM IST",
+          duration: "120 mins",
+          difficulty: "beginner",
+          type: "cp",
+          url: "https://www.codechef.com/contests",
+          saved: false,
+          countdown: "01d 16h 30m"
+        },
+        {
+          id: "atc-abc-394",
+          platform: "AtCoder",
+          badgeColor: "#51D6A0",
+          title: "AtCoder Beginner Contest 394 (ABC)",
+          date: "Saturday, 05:30 PM IST",
+          duration: "100 mins",
+          difficulty: "beginner",
+          type: "dsa",
+          url: "https://atcoder.jp/contests/",
+          saved: false,
+          countdown: "04d 18h 00m"
+        },
+        {
+          id: "gfg-weekly-188",
+          platform: "GeeksforGeeks",
+          badgeColor: "#51D6A0",
+          title: "GFG Weekly Coding Contest 188",
+          date: "Sunday, 07:00 PM IST",
+          duration: "90 mins",
+          difficulty: "intermediate",
+          type: "dsa",
+          url: "https://practice.geeksforgeeks.org/events",
+          saved: false,
+          countdown: "05d 23h 30m"
+        },
+        {
+          id: "kaggle-ai-challenge",
+          platform: "Kaggle",
+          badgeColor: "#48B8FF",
+          title: "LLM Science & AI Reasoning Challenge",
+          date: "Ongoing · Closes Dec 15",
+          duration: "30 Days",
+          difficulty: "advanced",
+          type: "aiml",
+          url: "https://www.kaggle.com/competitions",
+          saved: false,
+          countdown: "21d 04h 00m"
+        }
+      ],
+
+      // Unstop Hackathons Database
+      unstopEvents: [
+        {
+          id: "sih-2026",
+          title: "Smart India Hackathon (SIH 2026)",
+          org: "Ministry of Education & AICTE",
+          category: "national",
+          type: "Hardware & Software",
+          format: "Hybrid (Grand Finale On-Site)",
+          location: "Pan-India Centers",
+          deadline: "30 Nov 2026",
+          date: "Jan 2027",
+          teamSize: "6 Members (Min 1 Female)",
+          prize: "₹1,00,000 per Problem Statement + PPIs",
+          url: "https://unstop.com/hackathons/smart-india-hackathon-2026",
+          badge: "Closing in 6 Days",
+          saved: true
+        },
+        {
+          id: "innohacks-4",
+          title: "ABES InnoHacks 4.0",
+          org: "ABES Engineering College, Ghaziabad",
+          category: "college",
+          type: "AI/ML, Web3 & Open Innovation",
+          format: "Offline (Campus Hackathon)",
+          location: "Bhabha Block, ABES EC",
+          deadline: "05 Dec 2026",
+          date: "12-13 Dec 2026 (36 Hours)",
+          teamSize: "2 - 4 Members",
+          prize: "₹75,000 Cash + Swag Kits + Cloud Credits",
+          url: "https://unstop.com/hackathons/innohacks-40-abes",
+          badge: "Campus Flagship",
+          saved: true
+        },
+        {
+          id: "flipkart-grid-7",
+          title: "Flipkart GRiD 7.0 — Robotics & Tech Track",
+          org: "Flipkart",
+          category: "national",
+          type: "E-Commerce Tech & Algorithms",
+          format: "Online Rounds + Finale in Bengaluru",
+          location: "Online / Bengaluru",
+          deadline: "10 Dec 2026",
+          date: "Dec 2026 - Jan 2027",
+          teamSize: "2 - 3 Members",
+          prize: "₹1,50,000 + SDE Pre-Placement Interviews (PPIs)",
+          url: "https://unstop.com/hackathons/flipkart-grid-70",
+          badge: "PPI Opportunity",
+          saved: false
+        },
+        {
+          id: "google-solution-26",
+          title: "Google Solution Challenge 2026",
+          org: "Google Developer Student Clubs (GDSC)",
+          category: "international",
+          type: "UN 17 Sustainable Goals with Google Cloud / Flutter",
+          format: "100% Online Global",
+          location: "Global Remote",
+          deadline: "15 Jan 2027",
+          date: "Feb 2027",
+          teamSize: "1 - 4 Members",
+          prize: "$12,000 USD + Google Mentorship",
+          url: "https://unstop.com/hackathons/google-solution-challenge-2026",
+          badge: "Global",
+          saved: false
+        },
+        {
+          id: "msft-imagine-cup",
+          title: "Microsoft Imagine Cup 2026 — AI Track",
+          org: "Microsoft",
+          category: "aiml",
+          type: "Generative AI & Azure OpenAI Solutions",
+          format: "Online + Global World Finals",
+          location: "Redmond, WA / Remote",
+          deadline: "20 Dec 2026",
+          date: "Jan - May 2027",
+          teamSize: "1 - 4 Members",
+          prize: "$100,000 USD + Mentorship with Satya Nadella",
+          url: "https://unstop.com/hackathons/microsoft-imagine-cup-2026",
+          badge: "$100K Grand Prize",
+          saved: false
+        },
+        {
+          id: "techm-internship",
+          title: "Tech Mahindra AI/ML Summer Internship 2026",
+          org: "Tech Mahindra Growth Labs",
+          category: "internship",
+          type: "Deep Learning & Python Engineering",
+          format: "Remote / Noida Center",
+          location: "Noida / Remote",
+          deadline: "18 Dec 2026",
+          date: "Summer 2027 (2 Months)",
+          teamSize: "Individual",
+          prize: "₹25,000 / Month Stipend + PPO",
+          url: "https://unstop.com/internships/tech-mahindra-summer-internship",
+          badge: "Paid Internship",
+          saved: false
+        }
+      ],
+
+      notes: [
+        { id: "n1", title: "Physics: Unit 3 — Semiconductors", subject: "Engineering Physics" },
+        { id: "n2", title: "Maths: Differential Equations", subject: "Mathematics" },
+        { id: "n3", title: "Python: OOPs Concepts", subject: "Programming" }
+      ],
+      activeNoteId: "n1",
+      activeNoteFeature: "summary",
+
+      slides: [
+        { title: "ZYNAX 3.0: 4-Year AI Campus Ecosystem", subtitle: "One Campus. One Degree. One Intelligent Companion.", content: "Comprehensive attendance maths, live timetable, notes AI, daily LeetCode arena, global competition hub, Unstop hackathons radar, and 4-year degree memory.", color: "#D6B66C" },
+        { title: "THE 4-YEAR DEGREE JOURNEY", subtitle: "From Fresher to Top SDE / ML Engineer", content: "Year 1: Programming & Math Foundations\nYear 2: Core CS & Competitions habit\nYear 3: AI/ML Specialization & Hackathons\nYear 4: Capstone, Resume Polish, Dream Placements", color: "#9875FF" },
+        { title: "GLOBAL CODING COMPETITION RADAR", subtitle: "Never Miss a LeetCode or Codeforces Contest", content: "Real-time countdown to Weekly & Biweekly Contests, Codeforces rounds, AtCoder, and CodeChef. ABES student leaderboard to compete fairly.", color: "#48B8FF" },
+        { title: "UNSTOP × ZYNAX HACKATHONS", subtitle: "Grounded Event Discovery & Team Formation", content: "Smart India Hackathon, ABES InnoHacks, Flipkart GRiD, and Microsoft Imagine Cup. Find teammates across departments with one click.", color: "#51D6A0" },
+        { title: "AI RESUME BUILDER & LINKEDIN", subtitle: "ATS 90+ Score & Instant Sync", content: "Harvard-standard formatting, action-verb enhancer, live ATS meter, LinkedIn OAuth connection, and one-click PDF generation.", color: "#F0D28B" }
+      ],
+
+      quizQuestions: [
+        { q: "Which particle is the majority carrier in n-type semiconductor?", opts: ["Electrons", "Holes", "Protons", "Neutrons"], ans: 0, exp: "Pentavalent impurities donate extra free electrons." },
+        { q: "Minimum attendance required at ABES Engineering College?", opts: ["50%", "65%", "75%", "90%"], ans: 2, exp: "75% is the AKTU mandate to appear in end-semester examinations." },
+        { q: "What is the band gap energy of Silicon (Si)?", opts: ["0.67 eV", "1.1 eV", "3.4 eV", "5.0 eV"], ans: 1, exp: "Si has an indirect band gap of approximately 1.1 eV at room temperature." },
+        { q: "Which phenomenon explains why total internal reflection occurs in optical fiber?", opts: ["Diffraction", "Refraction", "Total Internal Reflection", "Interference"], ans: 2, exp: "Light travels in the core at an angle greater than critical angle." },
+        { q: "What is the complexity of Hash Map prefix sum approach for Subarray Sum = K?", opts: ["O(N²)", "O(N log N)", "O(N)", "O(1)"], ans: 2, exp: "One pass with O(1) hash map lookup gives O(N) overall." }
+      ],
+
+      examQuestions: [
+        { q: "Define Hall Effect and derive an expression for Hall voltage.", opts: ["VH = IB/(ρw) where ρ is carrier density", "VH = IB/nqd", "VH = qvB/d", "VH = ρnvB"], ans: 1, exp: "Hall voltage arises due to Lorentz force on current-carrying carriers in a perpendicular B field." },
+        { q: "What is stimulated emission in lasers?", opts: ["Spontaneous photon release", "Photon-induced emission of identical photon", "Absorption of photon", "Heat radiation"], ans: 1, exp: "An incoming photon stimulates an excited electron to emit an identical photon." },
+        { q: "Numerical Aperture (NA) of optical fiber is:", opts: ["sin(θc)", "√(n1² - n2²)", "n1 × sin(θa)", "n2/n1"], ans: 1, exp: "NA = √(n1² - n2²) where n1 is core refractive index and n2 is cladding." },
+        { q: "Fermi level in an intrinsic semiconductor lies:", opts: ["At valence band edge", "At conduction band edge", "Near middle of band gap", "Above conduction band"], ans: 2, exp: "Fermi level is approximately at mid-gap for intrinsic semiconductors." },
+        { q: "Carbon Nanotubes (CNTs) have tensile strength approximately:", opts: ["100 MPa", "1 GPa", "63 GPa", "250 GPa"], ans: 2, exp: "CNTs have exceptional tensile strength of ~63 GPa." }
+      ],
+
+      leaderboard: [
+        { rank: 1, name: "Aarav Singh", problems: 142, streak: 28, xp: 4200, badge: "🔥" },
+        { rank: 2, name: "Priya Kapoor", problems: 128, streak: 21, xp: 3850, badge: "⭐" },
+        { rank: 3, name: "Anurag Banik", problems: 97, streak: 5, xp: 1450, badge: "🎯" },
+        { rank: 4, name: "Rohit Dev", problems: 86, streak: 14, xp: 1200, badge: "💪" },
+        { rank: 5, name: "Sneha Gupta", problems: 74, streak: 8, xp: 980, badge: "🌟" }
+      ],
+
+      docs: [
+        { type: "PDF", name: "AKTU_Syllabus_CSE_AIML_2026.pdf", desc: "Complete syllabus for Physics, Maths, Python, Electronics & English.", color: "red" },
+        { type: "PDF", name: "ABES_Timetable_OddSem_2026.pdf", desc: "Official weekly timetable with faculty names and room allocations.", color: "blue" },
+        { type: "PDF", name: "Physics_PYQ_2024_25.pdf", desc: "Previous year question paper — Engineering Physics MT-01 & MT-02.", color: "purple" },
+        { type: "DOCX", name: "Semiconductor_Notes_Unit3.docx", desc: "Handwritten notes on Hall Effect, band gap, and p-n junction.", color: "emerald" }
+      ]
+    };
+
+    // =================== TAB SWITCHING ===================
+    function switchTab(tabId) {
+      APP.currentTab = tabId;
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+      const target = document.getElementById("tab-" + tabId);
+      if (target) target.classList.remove("hidden");
+
+      document.querySelectorAll(".nav-tab-pill").forEach(pill => {
+        const isActive = pill.getAttribute("data-tab") === tabId;
+        if (isActive) pill.classList.add("active");
+        else pill.classList.remove("active");
+      });
+
+      document.querySelectorAll(".mobile-tab-btn").forEach(btn => {
+        const isActive = btn.getAttribute("data-tab") === tabId;
+        btn.style.color = isActive ? "#51D6A0" : "#7F8B85";
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (tabId === "timetable") renderTimetable();
+      if (tabId === "attendance") renderAttendance();
+      if (tabId === "notes") renderSmartNotesUI();
+      if (tabId === "quiz") renderStandardQuiz();
+      if (tabId === "planner") renderChapters();
+      if (tabId === "showtime") renderSlide();
+      if (tabId === "arena") { renderLeaderboard(); renderGlobalContests(); changeCodeTemplate("python"); }
+      if (tabId === "unstop") renderHackathons();
+      if (tabId === "resume") updateResumePreview();
+      if (tabId === "docs") renderDocs();
+      if (tabId === "tools") updateUnitOptions();
+    }
+
+    // =================== THEME ===================
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isLight = html.classList.toggle("light-mode");
+      html.classList.toggle("dark-mode", !isLight);
+      document.getElementById("theme-icon").innerText = isLight ? "🌙" : "☀️";
+      try { localStorage.setItem("zynax-theme", isLight ? "light" : "dark"); } catch(e) {}
+    }
+    (function loadTheme() {
+      try {
+        const t = localStorage.getItem("zynax-theme");
+        if (t === "light") {
+          document.documentElement.classList.add("light-mode");
+          document.documentElement.classList.remove("dark-mode");
+          const icon = document.getElementById("theme-icon");
+          if (icon) icon.innerText = "🌙";
+        }
+      } catch(e) {}
+    })();
+
+    // =================== GLOBAL CONTESTS ENGINE ===================
+    function renderGlobalContests() {
+      const grid = document.getElementById("global-contests-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      const filtered = APP.globalContests.filter(c => {
+        if (APP.activeContestFilter === "all") return true;
+        if (APP.activeContestFilter === "beginner") return c.difficulty === "beginner";
+        if (APP.activeContestFilter === "intermediate") return c.difficulty === "intermediate";
+        if (APP.activeContestFilter === "advanced") return c.difficulty === "advanced";
+        return c.type === APP.activeContestFilter;
+      });
+
+      filtered.forEach(c => {
+        const card = document.createElement("div");
+        card.className = "ref-card space-y-2 relative";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-0.5 rounded font-bold font-mono-code" style="background:${c.badgeColor}22; color:${c.badgeColor}">${c.platform}</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] text-orange-400 font-mono-code">⏳ ${c.countdown}</span>
+              <button onclick="toggleSaveContest('${c.id}')" class="text-sm ${c.saved ? 'text-yellow-400' : 'text-gray-500'}">★</button>
+            </div>
+          </div>
+          <h4 class="font-bold text-sm text-white">${c.title}</h4>
+          <p class="text-xs text-[#87928B]">📅 ${c.date} · ⏱️ ${c.duration}</p>
+          <div class="pt-2 flex justify-between items-center border-t border-white/[0.08]">
+            <span class="text-[10px] uppercase font-bold text-[#7F8B85]">${c.difficulty} · ${c.type}</span>
+            <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded bg-[#D6B66C]/20 text-[#D6B66C] hover:bg-[#D6B66C]/30 font-bold text-[11px]">
+              Official Page ↗
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      const savedCount = APP.globalContests.filter(c => c.saved).length;
+      const countEl = document.getElementById("saved-contest-count");
+      if (countEl) countEl.innerText = savedCount;
+    }
+
+    function filterContests(f) {
+      APP.activeContestFilter = f;
+      document.querySelectorAll(".contest-filter-btn").forEach(b => {
+        const match = b.innerText.toLowerCase().includes(f) || (f === "all" && b.innerText === "All");
+        b.className = match
+          ? "contest-filter-btn px-3 py-1.5 rounded-xl bg-[#D6B66C] text-black font-bold"
+          : "contest-filter-btn px-3 py-1.5 rounded-xl glass-card text-white";
+      });
+      renderGlobalContests();
+    }
+
+    function toggleSaveContest(id) {
+      const c = APP.globalContests.find(item => item.id === id);
+      if (c) {
+        c.saved = !c.saved;
+        renderGlobalContests();
+      }
+    }
+
+    // LeetCode Contest Countdown Timer
+    function startLeetCodeContestCountdown() {
+      let totalSecs = 5 * 86400 + 14 * 3600 + 22 * 60 + 18;
+      const display = document.getElementById("leetcode-contest-timer");
+      setInterval(() => {
+        if (totalSecs > 0) totalSecs--;
+        const d = Math.floor(totalSecs / 86400);
+        const h = Math.floor((totalSecs % 86400) / 3600);
+        const m = Math.floor((totalSecs % 3600) / 60);
+        const s = totalSecs % 60;
+        if (display) {
+          display.innerText = `${String(d).padStart(2,'0')}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+        }
+      }, 1000);
+    }
+
+    // =================== UNSTOP HACKATHONS RADAR ===================
+    function renderHackathons() {
+      const grid = document.getElementById("hackathons-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      const filtered = APP.unstopEvents.filter(e => {
+        if (APP.activeHackFilter === "all") return true;
+        return e.category === APP.activeHackFilter;
+      });
+
+      filtered.forEach(e => {
+        const card = document.createElement("div");
+        card.className = "ref-card space-y-2.5 flex flex-col justify-between";
+        card.innerHTML = `
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0]">${e.badge}</span>
+              <button onclick="toggleSaveHackathon('${e.id}')" class="text-sm ${e.saved ? 'text-yellow-400' : 'text-gray-500'}">★</button>
+            </div>
+            <h4 class="font-black text-base text-white leading-tight">${e.title}</h4>
+            <span class="text-xs text-[#D6B66C] block font-semibold">🏢 ${e.org}</span>
+            <div class="space-y-1 text-xs text-[#87928B] pt-1 font-sans">
+              <p>📍 <strong>Format:</strong> ${e.format}</p>
+              <p>👥 <strong>Team:</strong> ${e.teamSize}</p>
+              <p>🏆 <strong>Prizes:</strong> ${e.prize}</p>
+              <p class="text-red-400">⏰ <strong>Deadline:</strong> ${e.deadline}</p>
+            </div>
+          </div>
+          <div class="pt-2 flex gap-2 border-t border-white/[0.08]">
+            <button onclick="alert('Viewing: ${e.title}\\n\\nOrganizer: ${e.org}\\nLocation: ${e.location}\\nEligibility: All BTech Students')" class="flex-1 py-1.5 rounded-lg glass-card text-xs font-semibold text-white">
+              Details
+            </button>
+            <a href="${e.url}" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 rounded-lg bg-[#51D6A0] text-black font-bold text-xs text-center flex items-center justify-center gap-1 shadow">
+              <span>Register ↗</span>
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterHackathons(cat) {
+      APP.activeHackFilter = cat;
+      document.querySelectorAll(".hackathon-btn").forEach(b => {
+        const match = b.innerText.toLowerCase().includes(cat) || (cat === "all" && b.innerText.includes("All"));
+        b.className = match
+          ? "hackathon-btn px-3 py-1.5 rounded-xl bg-[#51D6A0] text-black font-bold"
+          : "hackathon-btn px-3 py-1.5 rounded-xl glass-card text-white";
+      });
+      renderHackathons();
+    }
+
+    function toggleSaveHackathon(id) {
+      const e = APP.unstopEvents.find(item => item.id === id);
+      if (e) {
+        e.saved = !e.saved;
+        renderHackathons();
+      }
+    }
+
+    function createTeamReq() {
+      const role = prompt("Enter the role you are looking for (e.g. 'Backend Dev in Django' or 'Flutter Dev'):", "ML / PyTorch Engineer");
+      if (role) {
+        const list = document.getElementById("team-requests-list");
+        if (list) {
+          const div = document.createElement("div");
+          div.className = "p-3 rounded-xl glass-card space-y-1 border border-[#D6B66C]/30";
+          div.innerHTML = `
+            <div class="flex justify-between items-center">
+              <strong class="text-white">SIH 2026 — Anurag's Squad</strong>
+              <span class="text-[10px] text-[#D6B66C] font-bold">1 Member Needed</span>
+            </div>
+            <p class="text-[11px] text-[#87928B]">Looking for: ${role} from ABES CSE/IT.</p>
+            <span class="text-[10px] text-green-400 font-semibold block">Just posted · Open for requests</span>
+          `;
+          list.prepend(div);
+        }
+      }
+    }
+
+    // =================== 4-YEAR AI COMPANION MEMORY ENGINE ===================
+    function queryAiCompanion(queryKey) {
+      const out = document.getElementById("ai-memory-output");
+      if (!out) return;
+
+      const p = APP.studentProfile;
+      const responses = {
+        last_month: `📅 <strong>Memory Recall (Last Month):</strong><br/>
+• You completed <strong>Unit 1 (Optics & Interference)</strong> with 100% chapter score.<br/>
+• Finished 28 LeetCode problems on Arrays & Hash Maps.<br/>
+• Began learning Git/GitHub version control with campus project repo.`,
+
+        projects: `💻 <strong>Saved Projects in 4-Year Memory:</strong><br/>
+1. <strong>ZYNAX 3.0 Campus AI Ecosystem:</strong> Full full-stack campus platform with timetable, attendance simulation, and contest radar.<br/>
+2. <strong>Subarray Sum K Optimizer:</strong> O(N) hash map + prefix sum implementation handling 2×10⁴ inputs in 48ms.<br/>
+3. <strong>Web Audio Synthesizer:</strong> Browser-native sound generator for rain & white noise focus sessions.`,
+
+        dsa: `⚡ <strong>Finished DSA Topics:</strong><br/>
+• Arrays & Strings (Solved 34 problems)<br/>
+• Hash Maps & Frequency Counting (Solved 28 problems)<br/>
+• Prefix Sums & Subarray Math (Solved 15 problems)<br/>
+• Basic Recursion & Binary Search (Solved 20 problems)<br/>
+<em>Next recommended: Two Pointers and Sliding Window!</em>`,
+
+        next: `🎯 <strong>Proactive Learning Recommendation for Anurag:</strong><br/>
+1. <strong>Next DSA Topic:</strong> Two Pointers & Sliding Window techniques (e.g. 3Sum, Longest Substring Without Repeating Characters).<br/>
+2. <strong>Academic Priority:</strong> Basic Electronics is at 62% attendance. Attend the next 3 classes.<br/>
+3. <strong>Immediate Hackathon:</strong> Register for ABES InnoHacks 4.0 before Dec 5 deadline!`,
+
+        hackathons: `🚀 <strong>Curated Hackathons for Your Track (CSE AI/ML):</strong><br/>
+1. <strong>Smart India Hackathon 2026:</strong> Ministry of Education. ₹1,00,000 prize. Deadline: 30 Nov.<br/>
+2. <strong>ABES InnoHacks 4.0:</strong> On-campus 36-hour hackathon. ₹75,000 cash prize. Deadline: 05 Dec.<br/>
+3. <strong>Flipkart GRiD 7.0:</strong> National tech track with direct Pre-Placement Interviews (PPIs)!`,
+
+        exams: `📚 <strong>Semester 1 Academic Preparation (MT-02):</strong><br/>
+• <strong>Engineering Physics (MT-02 in 12 days):</strong> Focus on Unit 3 Semiconductors (Hall Effect derivation) and Unit 4 Lasers.<br/>
+• <strong>Attendance Armor:</strong> Safe bunks = 3 classes. Do not skip Electronics or Maths.`
+      };
+
+      out.innerHTML = `
+        <strong class="text-[#D6B66C] block">My ZYNAX AI Memory Response:</strong>
+        <div class="pt-1">${responses[queryKey] || responses.next}</div>
+      `;
+    }
+
+    function exportAiMemory() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(APP.studentProfile, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `ZYNAX_4Year_Memory_${APP.studentProfile.roll}.json`);
+      dlAnchor.click();
+      alert("✅ 4-Year Academic Memory exported successfully as JSON!");
+    }
+
+    function openMemorySettings() {
+      alert("🔒 ZYNAX 4-Year Memory & Data Privacy:\n\n• Your academic progress is strictly private to your ABES roll number (2026ABES042).\n• No memory data is shared with third parties or external student accounts.\n• You can review, edit, or delete stored information anytime.");
+    }
+
+    // =================== AI RESUME BUILDER & LINKEDIN ===================
+    function updateResumePreview() {
+      const name = (document.getElementById("res-name") || {}).value || "Anurag Banik";
+      const headline = (document.getElementById("res-headline") || {}).value || "";
+      const email = (document.getElementById("res-email") || {}).value || "";
+      const phone = (document.getElementById("res-phone") || {}).value || "";
+      const skills = (document.getElementById("res-skills") || {}).value || "";
+      const projects = (document.getElementById("res-projects") || {}).value || "";
+
+      const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+      setEl("res-p-name", name.toUpperCase());
+      setEl("res-p-headline", headline);
+      setEl("res-p-contact", `${email} · ${phone} · Ghaziabad, UP · linkedin.com/in/anurag-banik · github.com/anuragbanik`);
+      setEl("res-p-skills", skills);
+      setEl("res-p-projects", projects);
+
+      // Simple ATS keyword calculator
+      let score = 85;
+      if (skills.toLowerCase().includes("python")) score += 2;
+      if (skills.toLowerCase().includes("dsa")) score += 2;
+      if (projects.toLowerCase().includes("built") || projects.toLowerCase().includes("engineered")) score += 3;
+      const atsEl = document.getElementById("resume-ats-score");
+      if (atsEl) atsEl.innerText = `${Math.min(score, 98)} / 100`;
+    }
+
+    function printResume() {
+      window.print();
+    }
+
+    function syncLinkedIn() {
+      alert("🌐 Synced with LinkedIn!\n\nSkills, Projects ('ZYNAX 3.0 Campus OS'), and ABES EC Education updated on your LinkedIn profile!");
+    }
+
+    function toggleLinkedInLogin() {
+      APP.linkedInConnected = !APP.linkedInConnected;
+      const badge = document.getElementById("linkedin-status-badge");
+      if (badge) {
+        badge.innerText = APP.linkedInConnected ? "CONNECTED" : "DISCONNECTED";
+        badge.className = APP.linkedInConnected
+          ? "text-[10px] px-1.5 rounded bg-blue-500/20 text-[#48B8FF] font-bold"
+          : "text-[10px] px-1.5 rounded bg-red-500/20 text-red-400 font-bold";
+      }
+      alert(APP.linkedInConnected ? "✅ LinkedIn Authenticated as Anurag Banik" : "Disconnected from LinkedIn");
+    }
+
+    function simulateLinkedInLogin() {
+      alert("🌐 LinkedIn OAuth Verified!\nConnected to Anurag Banik's professional profile.");
+      switchTab("dashboard");
+    }
+
+    // =================== TIMETABLE ENGINE ===================
+    function selectDay(day) {
+      APP.activeDay = day;
+      document.querySelectorAll(".day-btn").forEach(b => {
+        b.className = b.getAttribute("data-day") === day
+          ? "day-btn px-3 py-1.5 rounded-xl text-xs font-bold btn-gold"
+          : "day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card";
+      });
+      renderTimetable();
+    }
+
+    function renderTimetable() {
+      const container = document.getElementById("timetable-slots-list");
+      if (!container) return;
+      container.innerHTML = "";
+      const slots = APP.timetable[APP.activeDay] || [];
+      if (!slots.length) {
+        container.innerHTML = '<p class="text-center text-xs text-[#7F8B85] py-6">No classes scheduled — enjoy the day! 🎉</p>';
+        return;
+      }
+      slots.forEach((s, idx) => {
+        const isNext = s.isNext;
+        const div = document.createElement("div");
+        div.className = `p-3.5 rounded-xl ref-card flex items-center justify-between gap-2 ${isNext ? "border-[#48B8FF]/60" : ""}`;
+        div.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black ${isNext ? "bg-[#48B8FF]/20 text-[#48B8FF]" : "bg-[#D6B66C]/10 text-[#D6B66C]"}">${idx + 1}</div>
+            <div>
+              <strong class="text-sm text-white block">${s.subject}</strong>
+              <span class="text-xs text-[#7F8B85]">${s.faculty} · <strong class="text-[#D6B66C]">${s.room}</strong></span>
+            </div>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <span class="font-mono-code text-xs text-[#D6B66C] font-bold block">${s.time}</span>
+            ${isNext ? '<span class="text-[10px] text-[#48B8FF] animate-pulse font-bold">NEXT UP</span>' : ""}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function startClassCountdown() {
+      let secs = 19 * 60 + 42;
+      const display = document.getElementById("class-countdown-display");
+      setInterval(() => {
+        if (secs > 0) secs--;
+        const m = Math.floor(secs / 60), s = secs % 60;
+        if (display) display.innerText = `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+      }, 1000);
+    }
+
+    // =================== ATTENDANCE ENGINE ===================
+    function renderAttendance() {
+      const container = document.getElementById("attendance-subject-list");
+      if (!container) return;
+      container.innerHTML = "";
+      let totA = 0, totT = 0, totalSafe = 0, worstShortfall = 0;
+
+      APP.subjects.forEach(s => {
+        totA += s.attended; totT += s.total;
+        const pct = Math.round((s.attended / s.total) * 1000) / 10;
+        const thr = APP.targetAttCriteria / 100;
+        const isSafe = pct >= APP.targetAttCriteria;
+        const sb = Math.max(0, Math.floor((s.attended - thr * s.total) / thr));
+        totalSafe += sb;
+        if (!isSafe) {
+          const need = Math.ceil((thr * s.total - s.attended) / (1 - thr));
+          worstShortfall = Math.max(worstShortfall, need);
+        }
+
+        const card = document.createElement("div");
+        card.className = "p-3.5 rounded-xl ref-card space-y-2";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <strong class="text-sm text-white">${s.name}</strong>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full ${isSafe ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}">${pct}%</span>
+                ${isSafe ? `<span class="text-[10px] text-[#51D6A0] font-semibold">🛡️ ${sb} safe bunks</span>` : `<span class="text-[10px] text-red-400 font-semibold">⚠️ Need +${Math.ceil((0.75 * s.total - s.attended) / 0.25)} classes</span>`}
+              </div>
+              <span class="text-xs text-[#7F8B85]">${s.attended}/${s.total} classes · ${s.faculty}</span>
+            </div>
+            <div class="flex gap-1.5 flex-shrink-0">
+              <button onclick="modifyAttendance('${s.id}',-1)" class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 font-bold hover:bg-red-500/30 text-sm">−</button>
+              <button onclick="modifyAttendance('${s.id}',1)" class="w-8 h-8 rounded-lg bg-[#51D6A0]/20 text-[#51D6A0] font-bold hover:bg-[#51D6A0]/30 text-sm">+</button>
+            </div>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill ${isSafe ? "bg-gradient-to-r from-[#51D6A0] to-[#48B8FF]" : "bg-red-500"}" style="width:${Math.min(pct, 100)}%"></div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      const agg = Math.round((totA / totT) * 1000) / 10;
+      const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+      setEl("att-aggregate-pill", agg + "%");
+      setEl("dash-agg-pct", agg + "%");
+      setEl("dash-safe-bunks", `+${totalSafe} classes`);
+      setEl("sim-safe-bunks", totalSafe + " Classes");
+      setEl("sim-deficit", worstShortfall ? worstShortfall + " Classes" : "All Safe ✓");
+    }
+
+    function modifyAttendance(id, delta) {
+      const sub = APP.subjects.find(s => s.id === id);
+      if (!sub) return;
+      if (delta === 1) { sub.attended++; sub.total++; }
+      else if (delta === -1 && sub.attended > 0) { sub.attended = Math.max(0, sub.attended - 1); }
+      renderAttendance();
+    }
+
+    function updateTargetThreshold(val) {
+      APP.targetAttCriteria = parseInt(val);
+      const el = document.getElementById("target-att-label");
+      if (el) el.innerText = val + "%";
+      renderAttendance();
+    }
+
+    // =================== STUDY ARC ===================
+    function renderChapters() {
+      const container = document.getElementById("chapter-progress-list");
+      if (!container) return;
+      container.innerHTML = "";
+      APP.chapters.forEach(ch => {
+        const statusColor = ch.progress === 100 ? "#51D6A0" : ch.progress >= 60 ? "#D6B66C" : ch.progress > 0 ? "#48B8FF" : "#8E9691";
+        const statusLabel = ch.progress === 100 ? "✓ Complete" : ch.progress >= 60 ? "In Progress" : ch.progress > 0 ? "Started" : "Not Started";
+        const div = document.createElement("div");
+        div.className = "p-4 rounded-xl ref-card space-y-2";
+        div.innerHTML = `
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-[10px] font-bold uppercase" style="color:${statusColor}">${ch.unit} · ${statusLabel}</span>
+              <h4 class="font-black text-sm text-white">${ch.name}</h4>
+              <p class="text-[11px] text-[#7F8B85]">${ch.topics}</p>
+            </div>
+            <span class="text-lg font-black font-mono-code flex-shrink-0 ml-3" style="color:${statusColor}">${ch.progress}%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width:${ch.progress}%; background: linear-gradient(90deg, ${statusColor}, #48B8FF)"></div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function generateStudyRoadmap() {
+      const plan = [
+        "📅 Day 1-2: Unit 3 — Semiconductors (Complete remaining 65%)",
+        "   → Hall Effect derivation, Fermi level in extrinsic semiconductors",
+        "   → Solve 15 previous year questions on Unit 3",
+        "📅 Day 3-5: Unit 4 — Lasers & Fiber Optics (Full unit)",
+        "   → Population inversion, stimulated emission, laser types",
+        "   → Numerical Aperture, acceptance angle, fiber losses",
+        "📅 Day 6-7: Unit 2 — Nanomaterials (Revisit remaining 30%)",
+        "   → Synthesis methods: CVD, Sol-gel, ball milling",
+        "   → Applications in semiconductors and medical devices",
+        "📅 Day 8-9: Full-Length Practice — Units 1 & 2",
+        "   → Thin film interference, Newton rings, Michelson",
+        "📅 Day 10-11: Mock Test Mode — Boss Battle (90-min Sim)",
+        "   → Cover all 4 units, focus on 5-mark and 10-mark questions",
+        "📅 Day 12: Final Revision + Formula Sheet Review"
+      ];
+      const display = document.getElementById("study-roadmap-display");
+      const content = document.getElementById("roadmap-content");
+      if (display && content) {
+        display.classList.remove("hidden");
+        content.innerHTML = plan.map(l => `<p class="${l.startsWith("   ") ? "ml-4 text-[#7F8B85]" : "font-semibold text-white"}">${l}</p>`).join("");
+      }
+    }
+
+    // =================== BRAIN DUMP ===================
+    function renderSmartNotesUI() {
+      const list = document.getElementById("saved-notes-list");
+      if (list) {
+        list.innerHTML = "";
+        APP.notes.forEach(n => {
+          const btn = document.createElement("button");
+          const isActive = n.id === APP.activeNoteId;
+          btn.className = `w-full text-left p-2.5 rounded-xl ${isActive ? "bg-[#D6B66C]/20 border border-[#D6B66C]/40" : "glass-card"} text-xs text-white`;
+          btn.innerHTML = `<strong>${n.title}</strong><span class="text-[10px] text-[#7F8B85] block">${n.subject}</span>`;
+          btn.onclick = () => { APP.activeNoteId = n.id; renderSmartNotesUI(); };
+          list.appendChild(btn);
+        });
+      }
+      showNoteFeature(APP.activeNoteFeature);
+    }
+
+    const NOTE_CONTENT = {
+      summary: `SEMICONDUCTORS — CORE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+▸ Definition: Materials with Eg ~ 1-2 eV (conductive at high T)
+▸ Silicon: Eg = 1.1 eV (most used in ICs)
+▸ Germanium: Eg = 0.67 eV (used in early transistors)
+
+Intrinsic: Pure semiconductor, ni = p = n
+Extrinsic Types:
+  • n-type: Pentavalent dopant (P, As, Sb) → electrons dominant
+  • p-type: Trivalent dopant (B, Al, Ga) → holes dominant
+
+Fermi Level:
+  • Intrinsic: EF ≈ middle of band gap
+  • n-type: EF moves toward conduction band
+  • p-type: EF moves toward valence band`,
+
+      formulas: `KEY FORMULAS — ENGINEERING PHYSICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hall Effect:
+  VH = (I × B) / (n × q × d)
+  RH = 1/(n × q)  [Hall coefficient]
+
+Semiconductor:
+  ni² = n × p  [Mass action law]
+  EF = Ei + kT × ln(ND/ni)  [n-type Fermi level]
+
+Optical Fiber:
+  NA = √(n1² - n2²)
+  θc = arcsin(NA)  [Acceptance angle]
+  Δ = (n1 - n2)/n1  [Relative index difference]
+
+Laser:
+  E = hν = hc/λ
+  Population Inversion: N2 > N1`,
+
+      mcqs: `PRACTICE MCQs — UNIT 3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Q1. Which is majority carrier in p-type?
+   ✓ (B) Holes
+   Explanation: Trivalent dopant creates hole vacancies
+
+Q2. Hall voltage formula is:
+   ✓ (A) VH = IB/(nqd)
+   
+Q3. Fermi level in intrinsic SC lies:
+   ✓ (C) Near middle of band gap`,
+
+      flashcards: `🗂️ FLASHCARD SET — UNIT 3 & 4
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Card 1: Hall Effect
+  → Voltage across transverse B-field in current-carrying conductor
+  → Determines carrier type (sign of VH)
+
+Card 2: Depletion Region
+  → Zone at p-n junction with no free carriers
+  → Creates built-in potential barrier (~0.7V for Si)`,
+
+      exam: `EXPECTED EXAM QUESTIONS — MT-02
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5-Mark Questions:
+  1. Explain Hall Effect with diagram. Derive VH expression.
+  2. What is Population Inversion? Why is it necessary for laser?
+  3. Distinguish n-type and p-type semiconductors.
+
+10-Mark Questions:
+  1. Derive an expression for Fermi level in n-type semiconductor.
+  2. Explain construction and working of He-Ne laser.`
+    };
+
+    function showNoteFeature(feat) {
+      APP.activeNoteFeature = feat;
+      const display = document.getElementById("smart-note-display");
+      if (!display) return;
+      display.innerText = NOTE_CONTENT[feat] || "Select a feature above.";
+      ["summary","formulas","mcqs","flashcards","exam"].forEach(f => {
+        const btn = document.getElementById("nft-" + f);
+        if (btn) {
+          btn.className = f === feat
+            ? "px-3 py-1 rounded-lg bg-[#D6B66C] text-black font-bold text-xs"
+            : "px-3 py-1 rounded-lg glass-card text-[#7F8B85] text-xs";
+        }
+      });
+    }
+
+    function generateSmartNotes() {
+      const display = document.getElementById("smart-note-display");
+      if (display) {
+        display.innerText = "✨ Generating AI smart notes with TinyFish API...\n\n" + NOTE_CONTENT.summary;
+        setTimeout(() => {
+          display.innerText = "✅ SMART NOTES GENERATED (TinyFish AI Gateway)!\n\n" + NOTE_CONTENT.summary;
+        }, 1200);
+      }
+    }
+
+    function downloadNotesPdf() {
+      alert("🖨️ Opening print dialog — Save as PDF to export your notes.\n\nTip: Select 'Save as PDF' in the destination.");
+      window.print();
+    }
+
+    function triggerNoteUpload() { document.getElementById("pdf-file-input").click(); }
+    function triggerPdfUpload() { document.getElementById("pdf-file-input").click(); }
+    function handleFileSelected(e) {
+      const file = e.target.files[0];
+      if (file) alert(`✅ Uploaded: ${file.name}\n\nAI is grounding notes and generating formulas.`);
+    }
+
+    // =================== BOSS BATTLE / QUIZ ===================
+    function renderStandardQuiz() {
+      const q = APP.quizQuestions[APP.quizIndex];
+      if (!q) return;
+      const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+      setEl("quiz-progress-text", `Question ${APP.quizIndex + 1} of ${APP.quizQuestions.length}`);
+      setEl("quiz-score-text", `Score: ${APP.quizScore} / ${APP.quizQuestions.length}`);
+      setEl("quiz-question-title", q.q);
+
+      const opts = document.getElementById("quiz-options-container");
+      const expBox = document.getElementById("quiz-explanation-box");
+      if (!opts) return;
+      opts.innerHTML = "";
+      if (expBox) expBox.classList.add("hidden");
+
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "p-3 rounded-xl glass-card text-left text-xs font-semibold hover:border-[#D6B66C] transition";
+        btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+        btn.onclick = () => {
+          const isCorrect = idx === q.ans;
+          if (isCorrect) { btn.className = "p-3 rounded-xl bg-green-500/20 border border-green-500 text-green-400 font-bold text-xs"; APP.quizScore++; }
+          else {
+            btn.className = "p-3 rounded-xl bg-red-500/20 border border-red-500 text-red-400 font-bold text-xs";
+            opts.querySelectorAll("button")[q.ans].className = "p-3 rounded-xl bg-green-500/20 border border-green-500 text-green-400 font-bold text-xs";
+          }
+          opts.querySelectorAll("button").forEach(b => b.disabled = true);
+          if (expBox) { expBox.innerText = `💡 ${q.exp}`; expBox.classList.remove("hidden"); }
+          setTimeout(() => {
+            if (APP.quizIndex < APP.quizQuestions.length - 1) { APP.quizIndex++; renderStandardQuiz(); }
+            else {
+              document.getElementById("quiz-question-title").innerText = `🎯 Quiz Complete! Score: ${APP.quizScore}/${APP.quizQuestions.length}`;
+              opts.innerHTML = `<button onclick="APP.quizIndex=0; APP.quizScore=0; renderStandardQuiz();" class="btn-gold px-6 py-2 rounded-xl text-xs font-bold col-span-2">🔄 Restart Quiz</button>`;
+            }
+          }, 1800);
+        };
+        opts.appendChild(btn);
+      });
+    }
+
+    function start90MinExamMode() {
+      document.getElementById("quiz-standard-container").classList.add("hidden");
+      const examContainer = document.getElementById("exam-mode-container");
+      examContainer.classList.remove("hidden");
+      APP.examCurrentQ = 0;
+      APP.examSecondsLeft = 90 * 60;
+      APP.examAnswers = {};
+      renderExamQuestion();
+      startExamTimer();
+    }
+
+    function renderExamQuestion() {
+      const q = APP.examQuestions[APP.examCurrentQ];
+      if (!q) return;
+      const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+      setEl("exam-q-num", `Q${APP.examCurrentQ + 1} / ${APP.examQuestions.length}`);
+      setEl("exam-q-text", q.q);
+      const opts = document.getElementById("exam-options-list");
+      if (!opts) return;
+      opts.innerHTML = "";
+      q.opts.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        const isSelected = APP.examAnswers[APP.examCurrentQ] === idx;
+        btn.className = `w-full p-2.5 rounded-xl ${isSelected ? "bg-[#9875FF]/30 border border-[#9875FF]" : "glass-card"} text-left text-xs text-white hover:border-[#9875FF] transition`;
+        btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+        btn.onclick = () => { APP.examAnswers[APP.examCurrentQ] = idx; renderExamQuestion(); };
+        opts.appendChild(btn);
+      });
+    }
+
+    function startExamTimer() {
+      if (APP.examTimerInterval) clearInterval(APP.examTimerInterval);
+      APP.examTimerInterval = setInterval(() => {
+        if (APP.examSecondsLeft > 0) {
+          APP.examSecondsLeft--;
+          const m = Math.floor(APP.examSecondsLeft / 60), s = APP.examSecondsLeft % 60;
+          const display = document.getElementById("exam-timer-display");
+          if (display) {
+            display.innerText = `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+            display.className = APP.examSecondsLeft < 300
+              ? "text-2xl font-mono-code font-black text-red-500 animate-pulse"
+              : "text-2xl font-mono-code font-black text-red-400";
+          }
+        } else { clearInterval(APP.examTimerInterval); submitExamNow(); }
+      }, 1000);
+    }
+
+    function nextExamQ() {
+      if (APP.examCurrentQ < APP.examQuestions.length - 1) { APP.examCurrentQ++; renderExamQuestion(); }
+    }
+    function prevExamQ() {
+      if (APP.examCurrentQ > 0) { APP.examCurrentQ--; renderExamQuestion(); }
+    }
+    function markReview() { alert("⚑ Question marked for review."); }
+
+    function submitExamNow() {
+      if (APP.examTimerInterval) clearInterval(APP.examTimerInterval);
+      let correct = 0;
+      APP.examQuestions.forEach((q, i) => { if (APP.examAnswers[i] === q.ans) correct++; });
+      const pct = Math.round((correct / APP.examQuestions.length) * 100);
+      alert(`⚔️ Exam Submitted!\n\nScore: ${correct}/${APP.examQuestions.length} (${pct}%)\n${pct >= 70 ? "🎯 Outstanding performance!" : "📚 Review weak topics."}`);
+      document.getElementById("exam-mode-container").classList.add("hidden");
+      document.getElementById("quiz-standard-container").classList.remove("hidden");
+    }
+
+    // =================== CODE ARENA ===================
+    const CODE_TEMPLATES = {
+      python: `def subarraySum(nums, k):
+    """
+    Approach: Hash Map + Prefix Sum → O(N) Time, O(N) Space
+    """
+    count = 0
+    prefix_sum = 0
+    freq = {0: 1}
+    for num in nums:
+        prefix_sum += num
+        count += freq.get(prefix_sum - k, 0)
+        freq[prefix_sum] = freq.get(prefix_sum, 0) + 1
+    return count
+
+# Test cases
+print(subarraySum([1, 1, 1], 2))   # Expected: 2
+print(subarraySum([1, 2, 3], 3))   # Expected: 2`,
+
+      javascript: `/**
+ * Subarray Sum Equals K
+ * Approach: Hash Map + Prefix Sum → O(N) Time
+ */
+function subarraySum(nums, k) {
+    let count = 0, prefixSum = 0;
+    const freq = new Map([[0, 1]]);
+    for (const num of nums) {
+        prefixSum += num;
+        count += freq.get(prefixSum - k) || 0;
+        freq.set(prefixSum, (freq.get(prefixSum) || 0) + 1);
+    }
+    return count;
+}
+
+// Test cases
+console.log(subarraySum([1, 1, 1], 2)); // 2
+console.log(subarraySum([1, 2, 3], 3)); // 2`,
+
+      cpp: `#include <unordered_map>
+using namespace std;
+
+// Subarray Sum Equals K — O(N) approach
+int subarraySum(vector<int>& nums, int k) {
+    unordered_map<int, int> freq;
+    freq[0] = 1;
+    int count = 0, prefixSum = 0;
+    for (int num : nums) {
+        prefixSum += num;
+        count += freq.count(prefixSum - k) ? freq[prefixSum - k] : 0;
+        freq[prefixSum]++;
+    }
+    return count;
+}
+// Output: 2 for [1,1,1] with k=2`,
+
+      java: `import java.util.HashMap;
+
+// Subarray Sum Equals K — O(N) approach
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> freq = new HashMap<>();
+        freq.put(0, 1);
+        int count = 0, prefixSum = 0;
+        for (int num : nums) {
+            prefixSum += num;
+            count += freq.getOrDefault(prefixSum - k, 0);
+            freq.put(prefixSum, freq.getOrDefault(prefixSum, 0) + 1);
+        }
+        return count;
+    }
+    // Test: subarraySum([1,1,1], 2) → 2
+}`
+    };
+
+    function changeCodeTemplate(lang) {
+      const ed = document.getElementById("arena-code-editor");
+      if (ed) ed.value = CODE_TEMPLATES[lang] || CODE_TEMPLATES.python;
+    }
+    function resetCodeTemplate() {
+      const sel = document.getElementById("code-lang-selector");
+      if (sel) changeCodeTemplate(sel.value);
+    }
+    function runCodeTests() {
+      const output = document.getElementById("arena-console-output");
+      if (!output) return;
+      output.innerHTML = `<span class='text-[#51D6A0] font-bold'>✓ Test 1: subarraySum([1,1,1], 2) → 2 ✅ (expected: 2)</span><br/><span class='text-[#51D6A0] font-bold'>✓ Test 2: subarraySum([1,2,3], 3) → 2 ✅ (expected: 2)</span><br/><span class='text-[#D6B66C]'>Runtime: 48ms · Memory: 42.1 MB · Beats 94.2% of submissions</span>`;
+    }
+    function submitCodeSolution() {
+      runCodeTests();
+      setTimeout(() => alert("🎉 Solution Accepted! +100 XP awarded!\nYou now rank #3 on the ABES daily leaderboard."), 500);
+    }
+    function toggleArenaExplanation() {
+      const c = document.getElementById("arena-exp-content");
+      const a = document.getElementById("arena-exp-arrow");
+      if (c) { c.classList.toggle("hidden"); if (a) a.innerText = c.classList.contains("hidden") ? "▼" : "▲"; }
+    }
+
+    function renderLeaderboard() {
+      const list = document.getElementById("leaderboard-list");
+      if (!list) return;
+      list.innerHTML = APP.leaderboard.map(p => `
+        <div class="flex items-center gap-3 p-2 rounded-lg ${p.rank === 3 ? "bg-[#D6B66C]/10 border border-[#D6B66C]/30" : ""}">
+          <span class="text-sm font-black w-6 text-center ${p.rank === 1 ? "text-[#F0D28B]" : p.rank === 2 ? "text-[#C0C0C0]" : "text-[#D6B66C]"}">#${p.rank}</span>
+          <span class="text-sm">${p.badge}</span>
+          <div class="flex-1">
+            <span class="text-xs font-bold text-white">${p.name}</span>
+            <span class="text-[10px] text-[#7F8B85] block">${p.problems} solved · 🔥 ${p.streak}d streak</span>
+          </div>
+          <span class="text-xs font-black text-[#D6B66C]">${p.xp.toLocaleString()} XP</span>
+        </div>
+      `).join("");
+    }
+
+    // =================== GEMINI AI / BESTIE AI VOICE MODAL ===================
+    function openGeminiVoiceModal() { document.getElementById("gemini-voice-modal").classList.remove("hidden"); }
+    function closeGeminiVoiceModal() { document.getElementById("gemini-voice-modal").classList.add("hidden"); }
+    function changeAssistantLang(l) { APP.activeLang = l; }
+
+    const GEMINI_RESPONSES = {
+      en: {
+        attendance: "Your aggregate attendance is 75.5% — just above the ABES 75% mandate! Electronics is at 62%, which is critical. You need to attend 11 more consecutive Electronics classes to reach 75%. You have 3 safe bunks across other subjects.",
+        timetable: "Today (Thursday) you have: Mathematics at 9:00 (Room 101), Engineering Physics at 10:00 (Room 204) — starting in 20 minutes! — Physics Lab from 11:15, and English at 14:00.",
+        contest: "The Next LeetCode Contest is Weekly Contest 438 on Sunday at 08:00 AM IST! Biweekly Contest 151 is this Saturday at 08:00 PM IST. You have 97 solved problems with a 1,642 Knight rating.",
+        hackathon: "Smart India Hackathon (SIH 2026) registration closes in 6 days! Also check out ABES InnoHacks 4.0 (36-hour campus hackathon with ₹75k prize). Form your team on the Unstop tab!",
+        default: "Hey Anurag! I'm Bestie AI, your 4-year campus companion powered by TinyFish AI Gateway. Ask me about attendance, your next LeetCode contest, SIH hackathons, or your 4-year degree roadmap!"
+      },
+      hi: {
+        attendance: "आपकी कुल उपस्थिति 75.5% है — ABES की 75% सीमा से थोड़ा ऊपर! इलेक्ट्रॉनिक्स में 62% है जो चिंताजनक है। 75% तक पहुँचने के लिए 11 और क्लास लगातार चाहिए।",
+        timetable: "आज (गुरुवार) को: गणित 9 बजे (रूम 101), इंजीनियरिंग फिजिक्स 10 बजे (रूम 204) — 20 मिनट में शुरू! — फिजिक्स लैब 11:15 बजे, अंग्रेजी 2 बजे।",
+        contest: "अगला LeetCode कॉन्टेस्ट वीकली 438 रविवार सुबह 8:00 बजे है! शनिवार को बायो-वीकली कॉन्टेस्ट 151 भी है।",
+        default: "नमस्ते अनुराग! मैं आपका Bestie AI 4-वर्षीय साथी हूँ। उपस्थिति, टाइमटेबल, लीटकोड कॉन्टेस्ट, या हैकाथॉन के बारे में पूछें।"
+      },
+      bn: {
+        attendance: "আপনার মোট উপস্থিতি 75.5% — ABES-এর 75% সীমার ঠিক উপরে! Electronics-এ 62%, যা বিপজ্জনক। 75%-এ পৌঁছাতে আরও 11টি ক্লাস লাগাতার করতে হবে।",
+        timetable: "আজ (বৃহস্পতিবার): গণিত ৯টায় (রুম ১০১), ইঞ্জিনিয়ারিং ফিজিক্স ১০টায় (রুম ২০৪) — ২০ মিনিটে শুরু! — ফিজিক্স ল্যাব ১১:১৫টায়, ইংরেজি ২টায়।",
+        contest: "পরবর্তী LeetCode Weekly Contest 438 রবিবার সকাল ৮:০০ টায়! শনিবার বায়ো-উইকলি কনটেস্ট ১৫১ আছে।",
+        default: "নমস্কার অনুরাগ! আমি আপনার Bestie AI ৪-বছরের শিক্ষাগত সহযোগী। উপস্থিতি, সময়সূচি, লিটকোড বা হ্যাকাথন সম্পর্কে জিজ্ঞেস করুন।"
+      }
+    };
+
+    function sendGeminiMsg() {
+      const input = document.getElementById("gemini-chat-input");
+      const val = (input.value || "").trim();
+      if (!val) return;
+      input.value = "";
+
+      const log = document.getElementById("gemini-chat-log");
+      const userMsg = document.createElement("div");
+      userMsg.className = "p-2 rounded-lg bg-[#9875FF]/20 text-right text-xs text-white";
+      userMsg.innerHTML = `<strong>You:</strong> ${val}`;
+      log.appendChild(userMsg);
+      log.scrollTop = log.scrollHeight;
+
+      const thinking = document.createElement("div");
+      thinking.className = "p-2 rounded-lg bg-[#9875FF]/10 text-xs text-[#9875FF] italic";
+      thinking.innerText = "Bestie AI is reasoning with TinyFish Gateway...";
+      log.appendChild(thinking);
+      log.scrollTop = log.scrollHeight;
+
+      setTimeout(() => {
+        log.removeChild(thinking);
+        const lang = APP.activeLang;
+        const responses = GEMINI_RESPONSES[lang] || GEMINI_RESPONSES.en;
+        const valLower = val.toLowerCase();
+        let reply = responses.default;
+        if (valLower.includes("attend") || valLower.includes("bunk") || valLower.includes("absent")) reply = responses.attendance;
+        else if (valLower.includes("time") || valLower.includes("class") || valLower.includes("schedule")) reply = responses.timetable;
+        else if (valLower.includes("contest") || valLower.includes("leetcode") || valLower.includes("codeforces")) reply = responses.contest;
+        else if (valLower.includes("hackathon") || valLower.includes("sih") || valLower.includes("unstop")) reply = responses.hackathon;
+
+        const aiMsg = document.createElement("div");
+        aiMsg.className = "p-2.5 rounded-xl bg-white/[0.04] text-xs text-white border border-white/5";
+        aiMsg.innerHTML = `<strong class="text-[#9875FF]">Bestie AI:</strong> ${reply.replace(/\\n/g, "<br/>")}`;
+        log.appendChild(aiMsg);
+        log.scrollTop = log.scrollHeight;
+
+        if ("speechSynthesis" in window && lang === "en") {
+          const utter = new SpeechSynthesisUtterance(reply.substring(0, 150));
+          utter.lang = "en-US"; utter.rate = 0.95; utter.pitch = 1;
+          window.speechSynthesis.speak(utter);
+        }
+      }, 600);
+    }
+
+    function startVoiceInput() {
+      if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
+        alert("Voice input requires Chrome or Edge browser.");
+        return;
+      }
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const rec = new SR();
+      const langMap = { en: "en-IN", hi: "hi-IN", bn: "bn-IN" };
+      rec.lang = langMap[APP.activeLang] || "en-IN";
+      rec.interimResults = false;
+      const btn = document.getElementById("mic-btn");
+      if (btn) { btn.style.background = "rgba(239,68,68,0.3)"; btn.innerText = "🔴"; }
+      rec.onresult = e => {
+        const transcript = e.results[0][0].transcript;
+        const inp = document.getElementById("gemini-chat-input");
+        if (inp) inp.value = transcript;
+        sendGeminiMsg();
+      };
+      rec.onend = () => { if (btn) { btn.style.background = ""; btn.innerText = "🎤"; } };
+      rec.onerror = () => { if (btn) { btn.style.background = ""; btn.innerText = "🎤"; } };
+      rec.start();
+    }
+
+    // =================== REMINDER ===================
+    function toggleReminderPanel() {
+      const m = document.getElementById("reminder-modal");
+      if (m) m.classList.toggle("hidden");
+    }
+
+    function requestBrowserNotification() {
+      if ("Notification" in window) {
+        Notification.requestPermission().then(perm => {
+          if (perm === "granted") {
+            new Notification("ZYNAX 3.0 — Class Reminder", {
+              body: "Engineering Physics starts in 20 minutes in Room 204!",
+              icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='18'>Z</text></svg>"
+            });
+          }
+        });
+      } else {
+        alert("Browser notifications not supported. Use Chrome or Edge.");
+      }
+    }
+
+    // =================== SHOWTIME ===================
+    function renderSlide() {
+      const s = APP.slides[APP.currentSlide - 1];
+      if (!s) return;
+      const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
+      setEl("slide-indicator", `Slide ${APP.currentSlide} / ${APP.slides.length}`);
+      const stage = document.getElementById("slide-stage-content");
+      if (stage) {
+        stage.innerHTML = `
+          <div class="space-y-4">
+            <span class="text-xs uppercase font-bold tracking-wider" style="color:${s.color}">${s.subtitle}</span>
+            <h3 class="text-2xl sm:text-3xl font-black text-white">${s.title}</h3>
+            <div class="w-16 h-1 rounded-full" style="background:${s.color}"></div>
+            <p class="text-xs sm:text-sm text-[#87928B] leading-relaxed whitespace-pre-line">${s.content}</p>
+            <div class="text-[10px] text-[#7F8B85] pt-2 font-mono-code">ZYNAX 3.0 · AI Campus Ecosystem · ABES Engineering College</div>
+          </div>
+        `;
+      }
+      const thumbs = document.getElementById("slide-thumbnails");
+      if (thumbs) {
+        thumbs.innerHTML = APP.slides.map((sl, i) => `
+          <button onclick="APP.currentSlide=${i+1}; renderSlide();" class="flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold ${i+1===APP.currentSlide ? "btn-gold" : "glass-card text-[#7F8B85]"}">
+            ${i+1}. ${sl.title.substring(0,15)}...
+          </button>
+        `).join("");
+      }
+    }
+    function nextSlide() { if (APP.currentSlide < APP.slides.length) { APP.currentSlide++; renderSlide(); } }
+    function prevSlide() { if (APP.currentSlide > 1) { APP.currentSlide--; renderSlide(); } }
+
+    // =================== DOCS VAULT ===================
+    function renderDocs() {
+      const grid = document.getElementById("docs-vault-grid");
+      if (!grid) return;
+      const colorMap = { red: "#ef4444", blue: "#48B8FF", purple: "#9875FF", emerald: "#51D6A0" };
+      grid.innerHTML = APP.docs.map(doc => `
+        <div class="ref-card space-y-2">
+          <span class="text-xs px-2 py-0.5 rounded font-bold font-mono-code" style="background:${colorMap[doc.color]}22; color:${colorMap[doc.color]}">${doc.type}</span>
+          <h4 class="font-bold text-sm text-white">${doc.name}</h4>
+          <p class="text-xs text-[#7F8B85]">${doc.desc}</p>
+          <div class="flex gap-2 pt-1">
+            <button onclick="alert('Opening ${doc.name}')" class="glass-card px-3 py-1 rounded-lg text-xs font-semibold text-white">📖 View</button>
+            <button onclick="alert('Downloading ${doc.name}')" class="glass-card px-3 py-1 rounded-lg text-xs font-semibold text-[#D6B66C]">⬇ Download</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // =================== AUTH ===================
+    function requestOtp() {
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      const el = document.getElementById("displayed-otp");
+      const inp = document.getElementById("otp-input");
+      if (el) el.innerText = otp;
+      if (inp) inp.value = otp;
+      document.getElementById("auth-otp-box").classList.remove("hidden");
+    }
+    function verifyOtpNow() {
+      const entered = (document.getElementById("otp-input") || {}).value || "";
+      const shown = (document.getElementById("displayed-otp") || {}).innerText || "";
+      if (entered === shown) { alert("✅ Authenticated into ZYNAX 3.0!"); switchTab("dashboard"); }
+      else alert("❌ Incorrect OTP. Try again.");
+    }
+
+    // =================== SCIENTIFIC CALCULATOR ===================
+    function calcKey(k) {
+      if (APP.calcVal === "0" && !["Math.", "(", "."].some(c => k.startsWith(c))) APP.calcVal = k;
+      else APP.calcVal += k;
+      const el = document.getElementById("calc-display");
+      if (el) el.value = APP.calcVal;
+    }
+    function calcClear() {
+      APP.calcVal = "0";
+      const el = document.getElementById("calc-display");
+      if (el) el.value = "0";
+    }
+    function calcBackspace() {
+      APP.calcVal = APP.calcVal.length > 1 ? APP.calcVal.slice(0,-1) : "0";
+      const el = document.getElementById("calc-display");
+      if (el) el.value = APP.calcVal;
+    }
+    function calcEquals() {
+      const el = document.getElementById("calc-display");
+      try {
+        const expr = APP.calcVal.replace(/%/g, "/100");
+        const result = Function('"use strict"; return (' + expr + ')')();
+        APP.calcVal = Number.isFinite(result) ? String(parseFloat(result.toFixed(10))) : "Error";
+      } catch(e) { APP.calcVal = "Error"; }
+      if (el) el.value = APP.calcVal;
+    }
+
+    // =================== CGPA CALCULATOR ===================
+    function addCgpaRow() {
+      const list = document.getElementById("cgpa-subjects-list");
+      if (!list) return;
+      const div = document.createElement("div");
+      div.className = "flex gap-2";
+      div.innerHTML = `
+        <input placeholder="Subject" class="flex-1 px-2 py-1 rounded-lg glass-card text-xs text-white" />
+        <input type="number" placeholder="Grade (10)" min="0" max="10" step="0.1" class="w-20 px-2 py-1 rounded-lg glass-card text-xs text-white cgpa-grade" />
+        <input type="number" placeholder="Credits" min="1" max="6" class="w-16 px-2 py-1 rounded-lg glass-card text-xs text-white cgpa-credit" />
+      `;
+      list.appendChild(div);
+    }
+    function calcCGPA() {
+      const grades = Array.from(document.querySelectorAll(".cgpa-grade")).map(el => parseFloat(el.value) || 0);
+      const credits = Array.from(document.querySelectorAll(".cgpa-credit")).map(el => parseFloat(el.value) || 0);
+      let totalPoints = 0, totalCredits = 0;
+      grades.forEach((g, i) => { totalPoints += g * credits[i]; totalCredits += credits[i]; });
+      const cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+      const result = document.getElementById("cgpa-result");
+      if (result) {
+        result.innerText = `CGPA: ${cgpa} / 10.0 ${cgpa >= 8 ? "🎓 Distinction!" : cgpa >= 6 ? "✅ Good Standing" : "⚠️ Need Improvement"}`;
+        result.classList.remove("hidden");
+      }
+    }
+
+    // =================== POMODORO TIMER ===================
+    const POMO_MODES = { focus: 25*60, short: 5*60, long: 15*60 };
+    function setPomodoroMode(mode) {
+      APP.pomoMode = mode;
+      APP.pomoTime = POMO_MODES[mode];
+      APP.pomoRunning = false;
+      clearInterval(APP.pomoInterval);
+      const el = document.getElementById("pomodoro-timer-num");
+      const btn = document.getElementById("pomo-toggle-btn");
+      const label = document.getElementById("pomo-session-label");
+      const labels = { focus: "Focus Session", short: "Short Break", long: "Long Break" };
+      if (el) { const m = Math.floor(APP.pomoTime/60); el.innerText = `${String(m).padStart(2,"0")}:00`; }
+      if (btn) btn.innerText = "▶ Start";
+      if (label) label.innerText = labels[mode];
+    }
+    function togglePomodoro() {
+      const btn = document.getElementById("pomo-toggle-btn");
+      if (APP.pomoRunning) {
+        clearInterval(APP.pomoInterval);
+        APP.pomoRunning = false;
+        if (btn) btn.innerText = "▶ Resume";
+      } else {
+        APP.pomoRunning = true;
+        if (btn) btn.innerText = "⏸ Pause";
+        APP.pomoInterval = setInterval(() => {
+          if (APP.pomoTime > 0) {
+            APP.pomoTime--;
+            const m = Math.floor(APP.pomoTime/60), s = APP.pomoTime%60;
+            const el = document.getElementById("pomodoro-timer-num");
+            if (el) el.innerText = `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+          } else {
+            clearInterval(APP.pomoInterval);
+            APP.pomoRunning = false;
+            if (btn) btn.innerText = "▶ Start";
+            alert("✅ Focus session complete! Take a break.");
+          }
+        }, 1000);
+      }
+    }
+    function resetPomodoro() {
+      clearInterval(APP.pomoInterval);
+      APP.pomoRunning = false;
+      APP.pomoTime = POMO_MODES[APP.pomoMode];
+      const m = Math.floor(APP.pomoTime/60);
+      const el = document.getElementById("pomodoro-timer-num");
+      const btn = document.getElementById("pomo-toggle-btn");
+      if (el) el.innerText = `${String(m).padStart(2,"0")}:00`;
+      if (btn) btn.innerText = "▶ Start";
+    }
+
+    // =================== AMBIENT AUDIO ===================
+    let ambientNodes = [], ambientCtx = null;
+    function getAudioContext() {
+      if (!ambientCtx) ambientCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (ambientCtx.state === "suspended") ambientCtx.resume();
+      return ambientCtx;
+    }
+    function stopAmbient() {
+      ambientNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+      ambientNodes = [];
+      const el = document.getElementById("ambient-status");
+      if (el) el.innerText = "Not Playing";
+    }
+    function toggleAmbientSound(type) {
+      stopAmbient();
+      const ctx = getAudioContext();
+      const statusEl = document.getElementById("ambient-status");
+      try {
+        if (type === "rain") {
+          const bufLen = ctx.sampleRate * 2;
+          const buffer = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1) * 0.3;
+          const source = ctx.createBufferSource();
+          source.buffer = buffer; source.loop = true;
+          const filter = ctx.createBiquadFilter();
+          filter.type = "lowpass"; filter.frequency.value = 800;
+          const gain = ctx.createGain(); gain.gain.value = 0.4;
+          source.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+          source.start();
+          ambientNodes.push(source);
+          if (statusEl) statusEl.innerText = "🌧️ Rain Playing...";
+        } else if (type === "whitenoise") {
+          const bufLen = ctx.sampleRate * 2;
+          const buffer = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufLen; i++) data[i] = (Math.random() * 2 - 1) * 0.15;
+          const source = ctx.createBufferSource();
+          source.buffer = buffer; source.loop = true;
+          const gain = ctx.createGain(); gain.gain.value = 0.3;
+          source.connect(gain); gain.connect(ctx.destination);
+          source.start();
+          ambientNodes.push(source);
+          if (statusEl) statusEl.innerText = "📻 Lo-Fi Noise Playing...";
+        } else if (type === "cafe") {
+          [220, 330, 440].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.frequency.value = freq + Math.random() * 10;
+            osc.type = "sine";
+            gain.gain.value = 0.03;
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start();
+            ambientNodes.push(osc);
+          });
+          if (statusEl) statusEl.innerText = "☕ Café Ambience Playing...";
+        }
+      } catch(e) {
+        if (statusEl) statusEl.innerText = "Audio unavailable";
+      }
+    }
+
+    // =================== ATTENDANCE TOOL CALCULATOR ===================
+    function calcAttendance() {
+      const attended = parseInt(document.getElementById("att-calc-attended").value) || 0;
+      const total = parseInt(document.getElementById("att-calc-total").value) || 1;
+      const req = parseInt(document.getElementById("att-calc-req").value) || 75;
+      const pct = ((attended / total) * 100).toFixed(1);
+      const thr = req / 100;
+      const safeBunks = Math.max(0, Math.floor((attended - thr * total) / thr));
+      const needMore = Math.max(0, Math.ceil((thr * total - attended) / (1 - thr)));
+      const result = document.getElementById("att-calc-result");
+      if (result) {
+        result.innerHTML = `
+          <strong class="block text-white mb-1">Current: ${pct}% ${parseFloat(pct) >= req ? "✅ Safe" : "❌ Below target"}</strong>
+          ${safeBunks > 0 ? `<span class="text-[#51D6A0] block font-semibold">🛡️ You can skip ${safeBunks} more class(es)</span>` : ""}
+          ${needMore > 0 ? `<span class="text-red-400 block font-semibold">⚠️ Attend ${needMore} consecutive to reach ${req}%</span>` : ""}
+        `;
+        result.classList.remove("hidden");
+      }
+    }
+
+    // =================== UNIT CONVERTER ===================
+    const UNIT_DATA = {
+      length: { units: ["m","km","cm","mm","ft","inch","mile"], convert: (v,f,t) => {
+        const toM = { m:1, km:1000, cm:0.01, mm:0.001, ft:0.3048, inch:0.0254, mile:1609.34 };
+        return v * toM[f] / toM[t];
+      }},
+      mass: { units: ["kg","g","mg","lb","oz","ton"], convert: (v,f,t) => {
+        const toKg = { kg:1, g:0.001, mg:0.000001, lb:0.453592, oz:0.0283495, ton:1000 };
+        return v * toKg[f] / toKg[t];
+      }},
+      temp: { units: ["°C","°F","K"], convert: (v,f,t) => {
+        let celsius = f === "°C" ? v : f === "°F" ? (v-32)*5/9 : v-273.15;
+        return t === "°C" ? celsius : t === "°F" ? celsius*9/5+32 : celsius+273.15;
+      }},
+      energy: { units: ["J","kJ","cal","kcal","eV","Wh"], convert: (v,f,t) => {
+        const toJ = { J:1, kJ:1000, cal:4.184, kcal:4184, eV:1.602e-19, Wh:3600 };
+        return v * toJ[f] / toJ[t];
+      }}
+    };
+    function updateUnitOptions() {
+      const cat = (document.getElementById("unit-category") || {}).value || "length";
+      const data = UNIT_DATA[cat];
+      if (!data) return;
+      ["unit-from","unit-to"].forEach((id,i) => {
+        const sel = document.getElementById(id);
+        if (sel) sel.innerHTML = data.units.map((u,j) => `<option ${j===i?"selected":""}>${u}</option>`).join("");
+      });
+    }
+    function convertUnit() {
+      const cat = (document.getElementById("unit-category") || {}).value || "length";
+      const v = parseFloat((document.getElementById("unit-input-val") || {}).value) || 0;
+      const from = (document.getElementById("unit-from") || {}).value;
+      const to = (document.getElementById("unit-to") || {}).value;
+      const data = UNIT_DATA[cat];
+      if (!data) return;
+      const result = data.convert(v, from, to);
+      const el = document.getElementById("unit-result");
+      if (el) el.innerText = `${v} ${from} = ${parseFloat(result.toFixed(6))} ${to}`;
+    }
+
+    // =================== BACKGROUND MATRIX CANVAS ===================
+    (function initCodingCanvas() {
+      const c = document.getElementById("codeMatrixCanvas");
+      if (!c) return;
+      const ctx = c.getContext("2d");
+      let w = c.width = window.innerWidth, h = c.height = window.innerHeight;
+      window.addEventListener("resize", () => { w = c.width = window.innerWidth; h = c.height = window.innerHeight; });
+
+      const codeSnippets = [
+        "const zynax = new CampusOS({ student: 'Anurag', sem: 'Odd', sgpa: 8.80 });",
+        "async function checkAttendance(req = 0.75) { return attended / total >= req; }",
+        "def subarray_sum_k(nums: list[int], k: int) -> int: return freq.get(prefix - k, 0)",
+        "template<typename T> class SafeBunkArmor { float threshold = 0.75f; };",
+        "01000001 01000010 01000101 01010011 // ABES EC",
+        "\\int_{-\\infty}^{\\infty} \\psi^*(x) \\hat{H} \\psi(x) dx = E_n",
+        "git commit -m 'feat: ZYNAX 3.0 with LeetCode & Unstop Radar'",
+        "docker run -d -p 8080:8080 zynax/bestie-ai:v3.0-companion",
+        "curl -X POST https://api.tinyfish.ai/v1/chat -H 'Authorization: Bearer sk-tinyfish...'",
+        "SELECT * FROM abes_students WHERE attendance >= 75.0 AND streak >= 5;",
+        "const HallVoltage = (I * B) / (n * q * d); // Unit 3 Physics",
+        "let safeBunks = Math.floor((attended - 0.75 * total) / 0.75);",
+        "import { FourYearCompanion } from '@zynax/degree-roadmap';",
+        "console.log('ONE STUDENT. FOUR YEARS. ONE INTELLIGENT COMPANION.');"
+      ];
+
+      const codeStreams = [];
+      const colWidth = 280;
+      const numCols = Math.ceil(w / colWidth) + 1;
+
+      for (let i = 0; i < numCols; i++) {
+        codeStreams.push({
+          x: i * colWidth + Math.random() * 40,
+          y: Math.random() * h,
+          speed: 0.35 + Math.random() * 0.45,
+          snippet: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
+          opacity: 0.12 + Math.random() * 0.15,
+          color: ["#51D6A0", "#D6B66C", "#9875FF", "#48B8FF"][Math.floor(Math.random() * 4)]
+        });
+      }
+
+      function drawMatrix() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.font = "11px 'Fira Code', 'JetBrains Mono', monospace";
+        codeStreams.forEach(stream => {
+          ctx.fillStyle = stream.color;
+          ctx.globalAlpha = stream.opacity;
+          ctx.fillText(stream.snippet, stream.x, stream.y);
+          stream.y += stream.speed;
+          if (stream.y > h + 30) {
+            stream.y = -20;
+            stream.snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+            stream.color = ["#51D6A0", "#D6B66C", "#9875FF", "#48B8FF"][Math.floor(Math.random() * 4)];
+          }
+        });
+        ctx.globalAlpha = 1.0;
+        requestAnimationFrame(drawMatrix);
+      }
+      drawMatrix();
+    })();
+
+    // =================== NEURAL NETWORK CANVAS ===================
+    (function initNeuralCanvas() {
+      const c = document.getElementById("neuralCanvas");
+      if (!c) return;
+      const ctx = c.getContext("2d");
+      let w = c.width = window.innerWidth, h = c.height = window.innerHeight;
+      window.addEventListener("resize", () => { w = c.width = window.innerWidth; h = c.height = window.innerHeight; });
+      const nodes = [];
+      for (let i = 0; i < 45; i++) nodes.push({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.25, vy: (Math.random()-0.5)*0.25, r: Math.random()*1.5+0.5 });
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.strokeStyle = "rgba(81, 214, 160, 0.08)";
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i+1; j < nodes.length; j++) {
+            const dx = nodes[i].x-nodes[j].x, dy = nodes[i].y-nodes[j].y, d = Math.sqrt(dx*dx+dy*dy);
+            if (d < 120) { ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke(); }
+          }
+        }
+        nodes.forEach(n => {
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+          ctx.fillStyle = "#51D6A0"; ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // =================== INIT ON LOAD ===================
+    window.addEventListener("DOMContentLoaded", () => {
+      renderTimetable();
+      renderAttendance();
+      renderGlobalContests();
+      renderHackathons();
+      startLeetCodeContestCountdown();
+      changeCodeTemplate("python");
+      startClassCountdown();
+      updateUnitOptions();
+      renderDocs();
+      updateResumePreview();
+      switchTab("dashboard");
+    });
+  </script>
+</body>
+</html>'''
+
+out_path = r"C:\Users\Anurag\.gemini\antigravity\scratch\zynax\index.html"
+with open(out_path, "w", encoding="utf-8") as f:
+    f.write(html_code)
+
+print(f"Successfully generated {out_path} ({len(html_code)} bytes)")

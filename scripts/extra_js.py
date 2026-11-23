@@ -1,19 +1,447 @@
 # -*- coding: utf-8 -*-
 """
-JavaScript logic for:
-1. Personal Profile Management (upload, camera, cropper, sync, persistence)
-2. 8 Settings categories
-3. ABES Exam Lab (PYQ vault, OCR text extraction, pattern analysis, question bank, 4 mock papers)
-4. Exam mode with pre-test setup, voice reading, camera proctoring, integrity monitoring, autosave, and auto-submission
-5. ABES Student Leaderboard with podium and privacy opt-out
+Master Extra JavaScript Logic:
+1. Female Voice Speech Synthesis & Voice Recognition
+2. Topic-wise LeetCode & CodeChef questions with VS Code integration
+3. Settings changing functions (Theme, Notifications, Voice, Language, Memory, Privacy)
+4. Personal Profile Management & Real-time sync
+5. ABES Exam Lab & PYQ Vault engine
 """
 
 EXTRA_JS = r'''
     // =========================================================================
-    // PART A & G: PERSONAL PROFILE MANAGEMENT & 8-CATEGORY SETTINGS ENGINE
+    // FEMALE VOICE SPEECH SYNTHESIS ENGINE (GEMINI ASSISTANT & EXAM READERS)
     // =========================================================================
 
-    // Profile Synchronization Across All Application Views
+    function speakWithFemaleVoice(text, lang) {
+      if (!("speechSynthesis" in window)) return;
+      window.speechSynthesis.cancel();
+
+      // Clean markdown or tags if present
+      const cleanText = text.replace(/<[^>]*>/g, "").replace(/\*\*/g, "").replace(/#{1,6}\s/g, "");
+      const utter = new SpeechSynthesisUtterance(cleanText);
+      const activeLang = lang || APP.activeLang || "en";
+
+      const voices = window.speechSynthesis.getVoices();
+      let targetVoice = null;
+
+      if (activeLang === "hi") {
+        utter.lang = "hi-IN";
+        targetVoice = voices.find(v => v.lang.startsWith("hi") && (/female|woman|kalpana|swara/i.test(v.name) || !/male|david|george/i.test(v.name))) || voices.find(v => v.lang.startsWith("hi"));
+      } else if (activeLang === "bn") {
+        utter.lang = "bn-IN";
+        targetVoice = voices.find(v => v.lang.startsWith("bn")) || voices.find(v => v.lang.startsWith("hi"));
+      } else {
+        utter.lang = "en-US";
+        // Prefer natural female voices across OS and browsers
+        targetVoice = voices.find(v => 
+          /zira|samantha|victoria|karen|jenny|female|google uk english female|google us english|alloy|nova|hazel/i.test(v.name) && 
+          v.lang.startsWith("en")
+        ) || voices.find(v => /female|woman/i.test(v.name)) || voices.find(v => v.lang.startsWith("en"));
+      }
+
+      if (targetVoice) utter.voice = targetVoice;
+
+      // Natural, bright feminine vocal settings
+      const userSettings = APP.voiceSettings || { rate: 1.0, pitch: 1.15 };
+      utter.rate = userSettings.rate || 1.0;
+      utter.pitch = userSettings.pitch || 1.15;
+
+      // Animate wave elements during speech
+      utter.onstart = () => {
+        document.querySelectorAll(".voice-wave-bar, #gemini-voice-wave").forEach(el => {
+          el.classList.add("animate-pulse");
+        });
+      };
+      utter.onend = () => {
+        document.querySelectorAll(".voice-wave-bar, #gemini-voice-wave").forEach(el => {
+          el.classList.remove("animate-pulse");
+        });
+      };
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    // Ensure speech synthesis voices are preloaded
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
+
+    function testVoiceSpeech() {
+      speakWithFemaleVoice("Yo Anurag! This is your Gemini female voice assistant. All campus systems and examination monitors are operational!", APP.activeLang || "en");
+    }
+
+    // Interactive Voice Recognition for Gemini Modal
+    function startVoiceInput() {
+      if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
+        alert("Voice recognition requires Chrome, Edge, or modern Safari. You can type directly in the input box!");
+        return;
+      }
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const rec = new SR();
+      rec.lang = APP.activeLang === "hi" ? "hi-IN" : APP.activeLang === "bn" ? "bn-IN" : "en-US";
+      rec.interimResults = false;
+
+      const input = document.getElementById("gemini-chat-input");
+      const btn = document.getElementById("gemini-voice-btn");
+      if (btn) btn.classList.add("animate-ping", "border-[#9875FF]");
+
+      rec.onstart = () => {
+        if (input) input.placeholder = "Listening... Speak now!";
+      };
+      rec.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        if (input) {
+          input.value = transcript;
+          sendGeminiMsg();
+        }
+      };
+      rec.onerror = () => {
+        if (input) input.placeholder = "Ask Bestie AI anything...";
+      };
+      rec.onend = () => {
+        if (btn) btn.classList.remove("animate-ping", "border-[#9875FF]");
+        if (input && !input.value) input.placeholder = "Ask Bestie AI anything...";
+      };
+      rec.start();
+    }
+
+
+    // =========================================================================
+    // TOPIC-WISE LEETCODE & CODECHEF ARENA + VS CODE INTEGRATION
+    // =========================================================================
+
+    APP.topicProblems = [
+      {
+        id: "prob_1",
+        title: "Two Sum",
+        slug: "two-sum",
+        platform: "LeetCode",
+        contest: "Weekly Special",
+        topic: "arrays",
+        diff: "Easy",
+        timeComp: "O(N)",
+        spaceComp: "O(N)",
+        link: "https://leetcode.com/problems/two-sum/",
+        desc: "Find indices of two numbers that add up to target. Optimal hash map solution."
+      },
+      {
+        id: "prob_2",
+        title: "Subarray Sum Equals K",
+        slug: "subarray-sum-equals-k",
+        platform: "LeetCode",
+        contest: "DSA Standard",
+        topic: "arrays",
+        diff: "Medium",
+        timeComp: "O(N)",
+        spaceComp: "O(N)",
+        link: "https://leetcode.com/problems/subarray-sum-equals-k/",
+        desc: "Return total continuous subarrays whose sum equals k using prefix sums."
+      },
+      {
+        id: "prob_3",
+        title: "Chef and String (XYSTR)",
+        slug: "chef-and-string",
+        platform: "CodeChef",
+        contest: "Starters 175",
+        topic: "arrays",
+        diff: "Easy",
+        timeComp: "O(N)",
+        spaceComp: "O(1)",
+        link: "https://www.codechef.com/problems/XYSTR",
+        desc: "Find maximum number of pairwise disjoint student pairs of 'xy' or 'yx'."
+      },
+      {
+        id: "prob_4",
+        title: "Trapping Rain Water",
+        slug: "trapping-rain-water",
+        platform: "LeetCode",
+        contest: "Biweekly Focus",
+        topic: "pointers",
+        diff: "Hard",
+        timeComp: "O(N)",
+        spaceComp: "O(1)",
+        link: "https://leetcode.com/problems/trapping-rain-water/",
+        desc: "Compute total trapped rain water after raining using two-pointer approach."
+      },
+      {
+        id: "prob_5",
+        title: "Longest Substring Without Repeating",
+        slug: "longest-substring-without-repeating-characters",
+        platform: "LeetCode",
+        contest: "Weekly 438 Prep",
+        topic: "pointers",
+        diff: "Medium",
+        timeComp: "O(N)",
+        spaceComp: "O(min(M,N))",
+        link: "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+        desc: "Sliding window technique with hash set to find maximum non-repeating substring length."
+      },
+      {
+        id: "prob_6",
+        title: "Search in Rotated Sorted Array",
+        slug: "search-in-rotated-sorted-array",
+        platform: "LeetCode",
+        contest: "DSA Binary Search",
+        topic: "binary",
+        diff: "Medium",
+        timeComp: "O(log N)",
+        spaceComp: "O(1)",
+        link: "https://leetcode.com/problems/search-in-rotated-sorted-array/",
+        desc: "Modified binary search with pivot detection to search element in O(log N)."
+      },
+      {
+        id: "prob_7",
+        title: "Coins and Triangle (TRICOIN)",
+        slug: "coins-and-triangle",
+        platform: "CodeChef",
+        contest: "Starters Practice",
+        topic: "binary",
+        diff: "Easy",
+        timeComp: "O(log N)",
+        spaceComp: "O(1)",
+        link: "https://www.codechef.com/problems/TRICOIN",
+        desc: "Find maximum height of triangle that can be formed using N gold coins."
+      },
+      {
+        id: "prob_8",
+        title: "Lowest Common Ancestor of Binary Tree",
+        slug: "lowest-common-ancestor-of-a-binary-tree",
+        platform: "LeetCode",
+        contest: "Trees & Graphs",
+        topic: "trees",
+        diff: "Medium",
+        timeComp: "O(N)",
+        spaceComp: "O(H)",
+        link: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
+        desc: "DFS recursive traversal to find lowest common ancestor node between p and q."
+      },
+      {
+        id: "prob_9",
+        title: "Course Schedule (Topological Sort)",
+        slug: "course-schedule",
+        platform: "LeetCode",
+        contest: "Advanced Graphs",
+        topic: "trees",
+        diff: "Medium",
+        timeComp: "O(V + E)",
+        spaceComp: "O(V + E)",
+        link: "https://leetcode.com/problems/course-schedule/",
+        desc: "Cycle detection in directed graph using Kahn's algorithm or DFS coloring."
+      },
+      {
+        id: "prob_10",
+        title: "Chef and Round Run (CHEFRRUN)",
+        slug: "chef-and-round-run",
+        platform: "CodeChef",
+        contest: "CodeChef Cook-Off",
+        topic: "trees",
+        diff: "Medium",
+        timeComp: "O(N)",
+        spaceComp: "O(N)",
+        link: "https://www.codechef.com/problems/CHEFRRUN",
+        desc: "Tarjan's / Kosaraju's strongly connected components in circular array graphs."
+      },
+      {
+        id: "prob_11",
+        title: "Coin Change (Min Coins)",
+        slug: "coin-change",
+        platform: "LeetCode",
+        contest: "DP Mastery",
+        topic: "dp",
+        diff: "Medium",
+        timeComp: "O(Amount * N)",
+        spaceComp: "O(Amount)",
+        link: "https://leetcode.com/problems/coin-change/",
+        desc: "Unbounded knapsack style 1D dynamic programming to find fewest coins for amount."
+      },
+      {
+        id: "prob_12",
+        title: "Longest Increasing Subsequence",
+        slug: "longest-increasing-subsequence",
+        platform: "LeetCode",
+        contest: "DP & Binary Search",
+        topic: "dp",
+        diff: "Medium",
+        timeComp: "O(N log N)",
+        spaceComp: "O(N)",
+        link: "https://leetcode.com/problems/longest-increasing-subsequence/",
+        desc: "Patience sorting / binary search tails array optimization for LIS."
+      }
+    ];
+
+    let activeTopicFilter = "all";
+
+    function filterTopicProblems(topic) {
+      activeTopicFilter = topic;
+      document.querySelectorAll(".topic-filter-btn").forEach(btn => {
+        const isTarget = btn.getAttribute("data-topic") === topic;
+        btn.classList.toggle("bg-[#D6B66C]", isTarget);
+        btn.classList.toggle("text-black", isTarget);
+        btn.classList.toggle("font-bold", isTarget);
+        btn.classList.toggle("glass-card", !isTarget);
+        btn.classList.toggle("text-white", !isTarget);
+      });
+      renderTopicProblems();
+    }
+
+    function renderTopicProblems() {
+      const container = document.getElementById("topic-problems-container");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const filtered = activeTopicFilter === "all" 
+        ? APP.topicProblems 
+        : APP.topicProblems.filter(p => p.topic === activeTopicFilter || (activeTopicFilter === "codechef" && p.platform === "CodeChef"));
+
+      filtered.forEach(p => {
+        const isLeetCode = p.platform === "LeetCode";
+        const diffColor = p.diff === "Easy" ? "text-green-400 bg-green-500/10 border-green-500/30" : p.diff === "Medium" ? "text-yellow-400 bg-yellow-500/10 border-yellow-500/30" : "text-red-400 bg-red-500/10 border-red-500/30";
+
+        const card = document.createElement("div");
+        card.className = "ref-card p-4 space-y-3 flex flex-col justify-between hover:border-[#D6B66C]/40 transition";
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[9px] px-2 py-0.5 rounded font-black font-mono-code ${isLeetCode ? 'bg-amber-500/20 text-[#F0D28B] border border-amber-500/30' : 'bg-orange-600/20 text-orange-400 border border-orange-500/30'}">
+                ${p.platform} · ${p.contest}
+              </span>
+              <span class="text-[9px] px-2 py-0.5 rounded-full font-bold border ${diffColor}">
+                ${p.diff}
+              </span>
+            </div>
+            <h4 class="text-sm font-black text-white">${p.title}</h4>
+            <p class="text-[11px] text-[#87928B] leading-relaxed">${p.desc}</p>
+            <div class="flex items-center gap-2 text-[10px] font-mono-code text-[#717D77] pt-1">
+              <span>Time: <strong class="text-[#51D6A0]">${p.timeComp}</strong></span>
+              <span>•</span>
+              <span>Space: <strong class="text-[#48B8FF]">${p.spaceComp}</strong></span>
+            </div>
+          </div>
+
+          <div class="pt-3 flex items-center justify-between gap-2 border-t border-white/[0.06]">
+            <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl glass-card text-xs font-semibold text-[#48B8FF] hover:border-[#48B8FF] flex items-center gap-1">
+              <span>Official Problem</span>
+              <span class="text-[10px]">↗</span>
+            </a>
+            <button onclick="openProblemInVsCode('${p.slug}', '${p.title}', '${p.platform}', 'py')" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#007ACC] to-[#0098FF] hover:from-[#008AE6] hover:to-[#1AA3FF] text-white font-bold text-xs shadow-md flex items-center gap-1.5 transition hover:scale-105" title="Open starter code directly in Visual Studio Code">
+              <span>⚡</span><span>Open in VS Code</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Direct VS Code Protocol Handler
+    function openProblemInVsCode(slug, title, platform, lang) {
+      const isCpp = lang === "cpp";
+      const ext = isCpp ? "cpp" : "py";
+      const localFilePath = `C:/Users/Anurag/.gemini/antigravity/scratch/zynax/solutions/${slug}.${ext}`;
+      const vscodeUri = `vscode://file/${localFilePath}`;
+
+      const boilerplate = isCpp 
+        ? `// ${platform}: ${title}\n// Solution by Anurag Banik (Roll: 2026ABES042)\n// ABES Engineering College\n#include <iostream>\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nint main() {\n    // Write your optimal solution here\n    cout << "ZYNAX Coding Arena: ${title}" << endl;\n    return 0;\n}\n`
+        : `# ${platform}: ${title}\n# Solution by Anurag Banik (Roll: 2026ABES042)\n# ABES Engineering College\nfrom typing import List\n\ndef solve():\n    # Write your optimal solution here\n    pass\n\nif __name__ == '__main__':\n    solve()\n`;
+
+      try {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(boilerplate);
+        }
+      } catch(e){}
+
+      // Launch VS Code via URI handler
+      window.location.href = vscodeUri;
+
+      alert(`⚡ Visual Studio Code Launched!\n\n• Target: solutions/${slug}.${ext}\n• Problem: ${title} (${platform})\n• Starter template copied to clipboard!`);
+    }
+
+
+    // =========================================================================
+    // SETTINGS CHANGING CONTROLS (USABLE & PERSISTENT)
+    // =========================================================================
+
+    function setTheme(mode) {
+      const html = document.documentElement;
+      const isLight = mode === "light";
+      html.classList.toggle("light-mode", isLight);
+      html.classList.toggle("dark-mode", !isLight);
+
+      const icon = document.getElementById("theme-icon");
+      if (icon) icon.innerText = isLight ? "🌙" : "☀️";
+
+      try {
+        localStorage.setItem("zynax-theme", mode);
+      } catch(e){}
+
+      const darkCard = document.getElementById("opt-theme-dark");
+      const lightCard = document.getElementById("opt-theme-light");
+      if (darkCard) darkCard.classList.toggle("border-[#D6B66C]", !isLight);
+      if (lightCard) lightCard.classList.toggle("border-[#D6B66C]", isLight);
+    }
+
+    function updateNotificationPref(key, checked) {
+      if (!APP.notifications) {
+        APP.notifications = { attendance: true, contest: true, hackathon: true };
+      }
+      APP.notifications[key] = checked;
+      try {
+        localStorage.setItem("ZYNAX_NOTIFICATIONS", JSON.stringify(APP.notifications));
+      } catch(e){}
+    }
+
+    function updateVoiceSettings() {
+      const persona = document.getElementById("voice-persona") ? document.getElementById("voice-persona").value : "gemini-female";
+      const rate = document.getElementById("voice-rate") ? parseFloat(document.getElementById("voice-rate").value) : 1.0;
+      APP.voiceSettings = { persona, rate, pitch: 1.15 };
+
+      const rateVal = document.getElementById("voice-rate-val");
+      if (rateVal) rateVal.innerText = rate.toFixed(2) + "x";
+
+      try {
+        localStorage.setItem("ZYNAX_VOICE_SETTINGS", JSON.stringify(APP.voiceSettings));
+      } catch(e){}
+    }
+
+    function downloadFourYearMemory() {
+      const p = APP.studentProfile;
+      const memoryObj = {
+        student: p.name,
+        roll: p.roll,
+        college: p.college || "ABES Engineering College, Ghaziabad",
+        branch: p.branch,
+        year: p.currentYear,
+        semester: p.currentSem,
+        aggregateAttendance: p.aggregateAttendance,
+        streakDays: p.streakDays,
+        skills: p.languages || ["Python", "C++", "JavaScript", "SQL"],
+        completedTopics: p.completedTopics || [],
+        examHistory: APP.examAttempts || [],
+        savedHackathons: p.savedHackathons || [],
+        savedContests: p.savedContests || [],
+        exportedAt: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(memoryObj, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `ZYNAX_4Year_Memory_${p.roll}.json`;
+      a.click();
+    }
+
+    function clearLocalCache() {
+      if (confirm("Reset local temporary cache? Your student profile and exam records will remain safe.")) {
+        localStorage.removeItem("ZYNAX_ACTIVE_EXAM_ANSWERS");
+        alert("✓ Local cache cleared successfully.");
+      }
+    }
+
+
+    // =========================================================================
+    // PROFILE SYNCHRONIZATION ACROSS ALL APPLICATION VIEWS
+    // =========================================================================
+
     function syncProfileAcrossApp() {
       const p = APP.studentProfile;
       if (!p) return;
@@ -110,7 +538,7 @@ EXTRA_JS = r'''
       }
     }
 
-    // Settings Category Switcher (8 Categories)
+    // Settings Category Switcher
     function switchSettingsCategory(catId) {
       const categories = ['profile', 'appearance', 'notifications', 'voice', 'language', 'privacy', 'memory', 'account'];
       categories.forEach(c => {
@@ -125,7 +553,6 @@ EXTRA_JS = r'''
       });
     }
 
-    // Save Profile Details
     function saveProfileDetails(showAlert = true) {
       APP.studentProfile.name = document.getElementById("prof-name").value.trim() || APP.studentProfile.name;
       APP.studentProfile.email = document.getElementById("prof-email").value.trim() || APP.studentProfile.email;
@@ -148,7 +575,6 @@ EXTRA_JS = r'''
       if (showAlert) alert("✓ Personal Profile & Settings updated and synchronized across all ZYNAX modules!");
     }
 
-    // Profile Picture File Upload Handler
     function handleProfileUpload(e) {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
@@ -170,7 +596,6 @@ EXTRA_JS = r'''
       reader.readAsDataURL(file);
     }
 
-    // Remove Profile Picture
     function removeProfilePicture() {
       if (confirm("Remove your profile picture and revert to your initials avatar?")) {
         APP.studentProfile.avatarDataUrl = null;
@@ -181,7 +606,6 @@ EXTRA_JS = r'''
       }
     }
 
-    // Toggle Public Leaderboard Visibility
     function toggleLeaderboardVisibility(checked) {
       if (typeof checked === "undefined") {
         APP.studentProfile.publicProfile = !APP.studentProfile.publicProfile;
@@ -200,7 +624,6 @@ EXTRA_JS = r'''
       syncProfileAcrossApp();
     }
 
-    // Camera Capture Modal Logic
     let cameraStream = null;
     function openCameraCaptureModal() {
       const modal = document.getElementById("camera-modal");
@@ -250,7 +673,6 @@ EXTRA_JS = r'''
       openCropModal(dataUrl);
     }
 
-    // Canvas Cropper Modal Logic
     let cropperImage = new Image();
     function openCropModal(imgSrc) {
       const src = imgSrc || APP.studentProfile.avatarDataUrl;
@@ -289,8 +711,6 @@ EXTRA_JS = r'''
       ctx.translate(canvas.width / 2 + panX, canvas.height / 2 + panY);
       ctx.scale(scale, scale);
 
-      // Fit image
-      const size = Math.min(cropperImage.width, cropperImage.height);
       const dw = canvas.width, dh = (canvas.width / cropperImage.width) * cropperImage.height;
       ctx.drawImage(cropperImage, -dw / 2, -dh / 2, dw, dh);
       ctx.restore();
@@ -299,7 +719,6 @@ EXTRA_JS = r'''
     function applyCroppedImage() {
       const canvas = document.getElementById("crop-canvas");
       if (!canvas) return;
-      // Generate clean 256x256 circular crop
       const outCanvas = document.createElement("canvas");
       outCanvas.width = 256; outCanvas.height = 256;
       const outCtx = outCanvas.getContext("2d");
@@ -352,10 +771,9 @@ EXTRA_JS = r'''
 
 
     // =========================================================================
-    // PART B, C, D, E, F: ABES EXAM LAB & PYQ INTELLIGENCE ECOSYSTEM
+    // ABES EXAM LAB & PYQ INTELLIGENCE ECOSYSTEM
     // =========================================================================
 
-    // Exam Lab Sub-Tab Switcher
     function switchExamLabTab(t) {
       const tabs = ['vault', 'analysis', 'bank', 'mock', 'tracker', 'leaderboard'];
       tabs.forEach(id => {
@@ -376,7 +794,6 @@ EXTRA_JS = r'''
       if (t === "leaderboard") renderLeaderboardTable();
     }
 
-    // Default Pre-loaded Authentic ABES PYQ Documents
     APP.pyqDocuments = [
       {
         id: "doc1",
@@ -436,7 +853,6 @@ EXTRA_JS = r'''
       }
     ];
 
-    // Render PYQ Vault Documents
     function renderVaultDocuments() {
       const container = document.getElementById("pyq-documents-container");
       if (!container) return;
@@ -483,7 +899,6 @@ EXTRA_JS = r'''
       });
     }
 
-    // Handle Uploading PYQ Files
     function handlePyqFiles(e) {
       const files = e.target.files;
       if (!files || files.length === 0) return;
@@ -500,7 +915,6 @@ EXTRA_JS = r'''
         const reader = new FileReader();
         reader.onload = function(evt) {
           processed++;
-          // Real extraction simulation with filename parsing
           const isPhysics = file.name.toLowerCase().includes("phys");
           const isMath = file.name.toLowerCase().includes("math");
           const isElec = file.name.toLowerCase().includes("elec");
@@ -540,9 +954,7 @@ EXTRA_JS = r'''
       const newCode = prompt("Edit Subject Code:", doc.code);
       if (newCode) doc.code = newCode;
       const newSession = prompt("Edit Exam Session & Year:", `${doc.session} ${doc.year}`);
-      if (newSession) {
-        doc.session = newSession;
-      }
+      if (newSession) doc.session = newSession;
       renderVaultDocuments();
       alert("✓ Document metadata corrected and verified!");
     }
@@ -561,7 +973,6 @@ EXTRA_JS = r'''
       renderVaultDocuments();
     }
 
-    // ================= MARKS-WISE QUESTION BANK DATA =================
     APP.qBankData = {
       "2m": [
         {
@@ -570,9 +981,9 @@ EXTRA_JS = r'''
           q: "Define Meissner Effect. How does it prove that superconductors are perfectly diamagnetic?",
           marks: 2,
           source: "[VERIFIED UPLOADED PYQ] · ABES_Physics_KAS101T_2024_PUT.pdf (Q1b)",
-          scheme: "Definition: 1 Mark | Magnetic susceptibility derivation (&chi; = -1): 1 Mark",
-          expected: "Expected: Expulsion of magnetic flux lines (B=0) when cooled below critical temperature Tc. Since B = &mu;₀(H + M) = 0 &rarr; M = -H &rarr; &chi; = M/H = -1.",
-          answer: "Meissner Effect states that when a superconducting material is cooled below its critical temperature (T < Tc) in the presence of a weak magnetic field, the magnetic flux lines are completely expelled from the interior of the material, making B = 0 inside. Since B = μ₀(H + M) = 0, we have M = -H, which yields a magnetic susceptibility χ = M/H = -1. This proves that superconductors exhibit perfect diamagnetism."
+          scheme: "Definition: 1 Mark | Magnetic susceptibility derivation (χ = -1): 1 Mark",
+          expected: "Expected: Expulsion of magnetic flux lines (B=0) when cooled below Tc. Since B = μ₀(H + M) = 0 -> M = -H -> χ = M/H = -1.",
+          answer: "Meissner Effect states that when a superconducting material is cooled below its critical temperature (T < Tc) in a magnetic field, the magnetic flux lines are completely expelled from the interior, making B = 0. Since B = μ₀(H + M) = 0, we have M = -H, giving susceptibility χ = M/H = -1. This proves perfect diamagnetism."
         },
         {
           id: "2m_2",
@@ -581,8 +992,8 @@ EXTRA_JS = r'''
           marks: 2,
           source: "[VERIFIED UPLOADED PYQ] · ABES_Physics_KAS101T_2023_EndSem.pdf (Q1a)",
           scheme: "Definition: 1 Mark | Formula with symbols explained: 1 Mark",
-          expected: "Expected: Length of an object measured by an observer moving relative to it is contracted in the direction of motion. L = L₀ √(1 - v²/c²).",
-          answer: "Length contraction is a relativistic effect where the length of an object measured by an observer in relative motion at velocity v is shorter than its proper length L₀ measured at rest. The formula is: L = L₀ √(1 - v²/c²), where L is the relativistic length, L₀ is the proper rest length, v is the relative velocity, and c is the speed of light."
+          expected: "Expected: Length contracted in direction of motion. L = L₀ √(1 - v²/c²).",
+          answer: "Length contraction is a relativistic effect where the length of an object measured by an observer in relative motion at velocity v is shorter than its proper rest length L₀: L = L₀ √(1 - v²/c²)."
         },
         {
           id: "2m_3",
@@ -591,8 +1002,8 @@ EXTRA_JS = r'''
           marks: 2,
           source: "[VERIFIED UPLOADED PYQ] · ABES_Physics_KAS101T_2024_PUT.pdf (Q1e)",
           scheme: "Hypothesis: 1 Mark | Formula λ = h/p: 1 Mark",
-          expected: "Expected: Dual nature of matter — moving particles exhibit wave properties. λ = h/p = h/(mv).",
-          answer: "De-Broglie hypothesized that moving material particles exhibit wave-like characteristics alongside particle properties. The wavelength associated with a particle of mass m moving with velocity v is given by de-Broglie wavelength: λ = h / p = h / (mv) = h / √(2mE), where h is Planck's constant (6.626 × 10⁻³⁴ J·s)."
+          expected: "Expected: Dual nature of matter. λ = h/p = h/(mv).",
+          answer: "De-Broglie hypothesized that material particles exhibit wave-like characteristics. The de-Broglie wavelength associated with momentum p is: λ = h / p = h / (mv) = h / √(2mE)."
         },
         {
           id: "2m_4",
@@ -601,8 +1012,8 @@ EXTRA_JS = r'''
           marks: 2,
           source: "[REPEATED PYQ TOPIC] · Appeared 2x in 2023 & 2024",
           scheme: "Definition: 1 Mark | Mathematical formula: 1 Mark",
-          expected: "Expected: Light-gathering capacity of the fiber. NA = sin(θa) = √(n₁² - n₂²).",
-          answer: "Numerical Aperture (NA) is a dimensionless measure of the light-gathering capacity of an optical fiber. It represents the sine of the maximum acceptance angle (θa) at which light can enter the core and undergo total internal reflection: NA = sin(θa) = √(n₁² - n₂²), where n₁ is the core refractive index and n₂ is the cladding refractive index."
+          expected: "Expected: Light-gathering capacity. NA = sin(θa) = √(n₁² - n₂²).",
+          answer: "Numerical Aperture (NA) is the sine of the maximum acceptance angle (θa) for total internal reflection: NA = sin(θa) = √(n₁² - n₂²), where n₁ is core and n₂ is cladding index."
         }
       ],
       "4m": [
@@ -612,31 +1023,31 @@ EXTRA_JS = r'''
           q: "Derive Schrödinger's time-independent wave equation for a particle moving in a one-dimensional potential V(x).",
           marks: 4,
           source: "[VERIFIED UPLOADED PYQ] · ABES_Physics_KAS101T_2024_PUT.pdf (Q2c)",
-          scheme: "Wave equation assumption: 1m | Double differentiation: 1m | Energy substitution: 1m | Final equation: 1m",
-          expected: "Expected: Starting from classical wave equation Ψ(x,t) = ψ(x)e^(-iωt), taking ∂²Ψ/∂x², substituting total energy E = p²/2m + V, yielding d²ψ/dx² + (2m/ħ²)(E - V)ψ = 0.",
-          answer: "1. Assume wave function Ψ(x,t) = ψ(x)e^(-iωt).\n2. Differentiating twice with respect to x: d²Ψ/dx² = (d²ψ/dx²)e^(-iωt).\n3. Differentiating with respect to t: dΨ/dt = -iωΨ &rarr; multiply by iħ gives iħ(∂Ψ/∂t) = EΨ.\n4. Total energy E = Kinetic Energy + Potential Energy = p²/(2m) + V(x).\n5. From de-Broglie, p = ħk. Substituting p² = 2m(E - V), we obtain the standard Time-Independent Schrödinger Equation:\nd²ψ/dx² + (2m / ħ²)[E - V(x)]ψ = 0."
+          scheme: "Wave assumption: 1m | Differentiation: 1m | Energy substitution: 1m | Final equation: 1m",
+          expected: "Expected: Starting from Ψ(x,t) = ψ(x)e^(-iωt), d²ψ/dx² + (2m/ħ²)[E - V(x)]ψ = 0.",
+          answer: "1. Assume Ψ(x,t) = ψ(x)e^(-iωt).\n2. Differentiating twice w.r.t x: d²Ψ/dx² = (d²ψ/dx²)e^(-iωt).\n3. Differentiating w.r.t t: iħ(∂Ψ/∂t) = EΨ.\n4. Energy relation: E = p²/(2m) + V(x).\n5. From p = ħk and p² = 2m(E - V), we obtain:\nd²ψ/dx² + (2m / ħ²)[E - V(x)]ψ = 0."
         },
         {
           id: "4m_2",
           unit: "Unit 3 · Quantum Mechanics (Numerical)",
-          q: "An electron is bound in an infinitely deep one-dimensional potential well of width 1.0 Å. Calculate its ground state energy in electron-volts (eV).",
+          q: "An electron is bound in an infinitely deep 1D potential well of width 1.0 Å. Calculate ground state energy in eV.",
           marks: 4,
           source: "[VERIFIED UPLOADED PYQ] · ABES_Physics_KAS101T_2023_EndSem.pdf (Q2b)",
-          scheme: "Formula E_n = n²h²/(8mL²): 1m | Substitution: 1.5m | Correct evaluation in eV with units: 1.5m",
-          expected: "Expected: m = 9.1x10^-31 kg, L = 10^-10 m, h = 6.626x10^-34 J·s. E₁ ≈ 37.6 eV.",
-          answer: "Given:\n• L = 1.0 Å = 1.0 × 10⁻¹⁰ m\n• m = 9.11 × 10⁻³¹ kg\n• h = 6.626 × 10⁻³⁴ J·s\n• n = 1 (ground state)\n\nFormula for energy eigenvalues in an infinite square well:\nE_n = (n² h²) / (8 m L²)\n\nSubstituting values:\nE₁ = (1² × (6.626 × 10⁻³⁴)²) / [8 × (9.11 × 10⁻³¹) × (1.0 × 10⁻¹⁰)²]\nE₁ = (4.39 × 10⁻⁶⁷) / [7.288 × 10⁻⁵⁰] = 6.024 × 10⁻¹⁸ Joules\n\nConverting to eV (1 eV = 1.6 × 10⁻¹⁹ J):\nE₁ = (6.024 × 10⁻¹⁸) / (1.602 × 10⁻¹⁹) ≈ 37.60 eV.\nFinal Answer: Ground state energy is 37.60 eV."
+          scheme: "Formula: 1m | Substitution: 1.5m | Evaluation in eV: 1.5m",
+          expected: "Expected: E₁ = (1² h²) / (8 m L²) ≈ 37.60 eV.",
+          answer: "Given: L = 1.0 × 10⁻¹⁰ m, m = 9.11 × 10⁻³¹ kg, h = 6.626 × 10⁻³⁴ J·s, n = 1.\nE₁ = h² / (8 m L²) = 6.024 × 10⁻¹⁸ Joules\nDividing by 1.602 × 10⁻¹⁹ J/eV gives:\nE₁ ≈ 37.60 eV."
         }
       ],
       "10m": [
         {
           id: "10m_1",
           unit: "Unit 1 · Relativistic Mechanics (Repeated 3x)",
-          q: "What is Compton Effect? Explain the scattering process and derive the complete expression for Compton shift Δλ = (h/m₀c)(1 - cosθ). Also discuss why Compton shift is not observed with visible light.",
+          q: "What is Compton Effect? Explain scattering and derive Compton shift Δλ = (h/m₀c)(1 - cosθ). Why is it not observed with visible light?",
           marks: 10,
           source: "[REPEATED PYQ TOPIC] · Appeared in 2024 PUT Q2, 2023 EndSem Q3b, 2022 MT-02 Q4a",
-          scheme: "Physical Principle & Collision Diagram: 2m | Conservation of Relativistic Energy: 2.5m | Conservation of Momentum: 2.5m | Compton Shift formula: 2m | Visible light explanation: 1m",
-          expected: "Expected: Elastic collision between incident X-ray photon (hν) and stationary free electron. Full relativistic momentum vector equations, eliminating electron velocity v, obtaining Δλ = (h/m₀c)(1 - cosθ). Visible light wavelength (4000-7000 Å) is too large compared to Δλ (0.0242 Å) to be detected.",
-          answer: "1. Definition: When monochromatic high-frequency electromagnetic radiation (such as X-rays or gamma rays) is scattered by a stationary electron, the scattered radiation contains components of longer wavelength (lower frequency) alongside the incident wavelength. This wavelength shift is called Compton Shift (Δλ).\n\n2. Conservation Principles:\n• Incident photon energy: E₁ = hν, momentum: p₁ = hν/c\n• Stationary electron energy: E₀ = m₀c², momentum: p₀ = 0\n• Scattered photon at angle θ: E₂ = hν', momentum: p₂ = hν'/c\n• Recoil electron at angle φ: E = mc², momentum: p = mv\n\n3. Conservation of Energy:\nhν + m₀c² = hν' + mc²  ==>  mc² = h(ν - ν') + m₀c²\nSquaring: m²c⁴ = h²(ν - ν')² + m₀²c⁴ + 2hm₀c²(ν - ν')  ---- [Eq 1]\n\n4. Conservation of Momentum:\nAlong x-axis: (hν/c) = (hν'/c)cosθ + mv cosφ\nAlong y-axis: 0 = (hν'/c)sinθ - mv sinφ\nSquaring and adding both equations eliminates φ:\nm²v²c² = h²(ν² + ν'² - 2νν'cosθ)  ---- [Eq 2]\n\n5. Subtracting [Eq 2] from [Eq 1] and using m²c⁴ - m²v²c² = m₀²c⁴:\n0 = -2h²νν'(1 - cosθ) + 2hm₀c²(ν - ν')\nm₀c²(ν - ν') = hνν'(1 - cosθ)\nDividing both sides by m₀c² ν ν':\n(ν - ν') / (ν ν') = (h / m₀c²)(1 - cosθ)\nSince c/ν' - c/ν = λ' - λ = Δλ:\nΔλ = (h / m₀c)(1 - cosθ)\nWhere (h / m₀c) is the Compton wavelength of electron = 0.0242 Å.\n\n6. Why not observed with visible light:\nFor visible light, wavelength λ is approx 5000 Å. The maximum Compton shift is 2(0.0242 Å) = 0.0484 Å. The fractional shift Δλ / λ is less than 0.001%, which is negligible and imperceptible. For X-rays (λ ~ 1 Å), the shift is ~5%, which is easily detected."
+          scheme: "Collision Diagram: 2m | Relativistic Energy: 2.5m | Momentum conservation: 2.5m | Compton Shift formula: 2m | Visible light explanation: 1m",
+          expected: "Expected: Elastic collision between X-ray photon and stationary electron. Eliminating electron recoil angle φ gives Δλ = (h / m₀c)(1 - cosθ). For visible light (5000 Å), shift (0.0484 Å) is negligibly small.",
+          answer: "1. Definition: Scattering of high-frequency photons by electrons resulting in wavelength increase.\n2. Energy conservation: hν + m₀c² = hν' + mc²\n3. Momentum conservation along x and y axes.\n4. Squaring and eliminating recoil angle gives: Δλ = λ' - λ = (h / m₀c)(1 - cosθ).\n5. Visible light λ ~ 5000 Å; max Δλ is 0.0484 Å (< 0.001% shift), hence imperceptible."
         }
       ]
     };
@@ -814,12 +1225,12 @@ EXTRA_JS = r'''
           
           <div class="section">SECTION B: SHORT DERIVATIONS & NUMERICALS (4 Marks Each)</div>
           <div class="q">5. Derive Schrödinger's time-independent wave equation for a 1D free particle. [4]</div>
-          <div class="q">6. An electron is confined in a 1.0 Å 1D infinite square well. Calculate its ground state energy in eV. [4]</div>
+          <div class="q">6. An electron is confined in a 1.0 Å 1D infinite square well. Calculate ground state energy in eV. [4]</div>
           <div class="q">7. Differentiate between Type-I and Type-II Superconductors with graphs. [4]</div>
 
           <div class="section">SECTION C: LONG COMPREHENSIVE QUESTIONS (10 Marks Each)</div>
           <div class="q">8. What is Compton Effect? Derive the expression for Compton Shift Δλ = (h/m₀c)(1 - cosθ). Why is it not observed with visible light? [10]</div>
-          <div class="q">9. State and prove Poynting Theorem for the flow of electromagnetic energy. Explain the physical significance of each term. [10]</div>
+          <div class="q">9. State and prove Poynting Theorem for the flow of electromagnetic energy. [10]</div>
         </body>
         </html>
       `);
@@ -856,13 +1267,11 @@ EXTRA_JS = r'''
       if (modal) modal.classList.add("hidden");
     }
 
-    // Launch Exam with Fullscreen, Optional Voice & Camera Proctoring
     function launchExamSession() {
       closePreExamModal();
       const wantVoice = document.getElementById("setup-opt-voice") ? document.getElementById("setup-opt-voice").checked : true;
       const wantCamera = document.getElementById("setup-opt-camera") ? document.getElementById("setup-opt-camera").checked : false;
 
-      // Switch view
       switchExamLabTab("quiz_active");
       const quizTab = document.getElementById("tab-quiz");
       if (quizTab) quizTab.classList.remove("hidden");
@@ -870,20 +1279,17 @@ EXTRA_JS = r'''
       const activeContainer = document.getElementById("active-exam-container");
       if (activeContainer) activeContainer.classList.remove("hidden");
 
-      // Hide other sub-views
       ['vault', 'analysis', 'bank', 'mock', 'tracker', 'leaderboard'].forEach(id => {
         const v = document.getElementById("elab-view-" + id);
         if (v) v.classList.add("hidden");
       });
 
-      // Request browser fullscreen mode
       try {
         if (document.documentElement.requestFullscreen) {
           document.documentElement.requestFullscreen().catch(() => {});
         }
       } catch(e){}
 
-      // Activate Camera Proctoring if requested
       const camBox = document.getElementById("proctor-cam-box");
       const camVid = document.getElementById("proctor-video");
       if (wantCamera && camBox && camVid && navigator.mediaDevices) {
@@ -900,14 +1306,12 @@ EXTRA_JS = r'''
         camBox.classList.add("hidden");
       }
 
-      // Initialize Exam State
       APP.examSecondsLeft = (currentExamPaper ? currentExamPaper.durationMins : 90) * 60;
       APP.examCurrentQ = 0;
       APP.examIntegrityWarnings = 0;
       APP.examIntegrityLogs = [];
       APP.examAnswers = {};
 
-      // Load previous autosaved answers if available
       try {
         const saved = localStorage.getItem("ZYNAX_ACTIVE_EXAM_ANSWERS");
         if (saved) {
@@ -916,10 +1320,8 @@ EXTRA_JS = r'''
         }
       } catch(e){}
 
-      // Start Countdown Timer
       startActiveExamTimer();
 
-      // Start continuous autosave
       if (examAutosaveInterval) clearInterval(examAutosaveInterval);
       examAutosaveInterval = setInterval(() => {
         try {
@@ -931,14 +1333,10 @@ EXTRA_JS = r'''
         } catch(e){}
       }, 3000);
 
-      // Render Question 1
       renderActiveExamQuestion();
 
-      // Announce exam start via voice if enabled
-      if (wantVoice && 'speechSynthesis' in window) {
-        const ut = new SpeechSynthesisUtterance("Examination session started. Good luck Anurag!");
-        ut.rate = 1.0;
-        window.speechSynthesis.speak(ut);
+      if (wantVoice) {
+        speakWithFemaleVoice("Examination session started. Good luck Anurag!");
       }
     }
 
@@ -972,7 +1370,6 @@ EXTRA_JS = r'''
       }, 1000);
     }
 
-    // Active Exam Questions Set
     APP.activeExamQuestions = [
       {
         q: "What is Compton Effect? Explain the scattering process and derive the expression for Compton Shift Δλ = (h/m₀c)(1 - cosθ).",
@@ -1097,14 +1494,10 @@ EXTRA_JS = r'''
 
     function readCurrentQuestionVoice() {
       const q = APP.activeExamQuestions[APP.examCurrentQ];
-      if (!q || !('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const ut = new SpeechSynthesisUtterance(`Question ${APP.examCurrentQ + 1} for ${q.marks} marks. ${q.q}`);
-      ut.rate = 1.0;
-      window.speechSynthesis.speak(ut);
+      if (!q) return;
+      speakWithFemaleVoice(`Question ${APP.examCurrentQ + 1} for ${q.marks} marks. ${q.q}`);
     }
 
-    // Examination Integrity Monitoring (Fullscreen, Tab Switching, Window Blur)
     window.addEventListener("blur", handleExamIntegrityViolation);
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) handleExamIntegrityViolation();
@@ -1142,12 +1535,10 @@ EXTRA_JS = r'''
       if (examAutosaveInterval) clearInterval(examAutosaveInterval);
       turnOffExamCamera();
 
-      // Exit fullscreen safely
       try {
         if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
       } catch(e){}
 
-      // Calculate score
       let score = 0;
       let total = 0;
       APP.activeExamQuestions.forEach((q, idx) => {
@@ -1155,7 +1546,6 @@ EXTRA_JS = r'''
         if (q.type === "options") {
           if (APP.examAnswers[idx] === q.correct) score += q.marks;
         } else {
-          // Long question grading heuristic
           const ans = (APP.examAnswers[idx] || "").trim();
           if (ans.length > 30) score += Math.round(q.marks * 0.85);
           else if (ans.length > 5) score += Math.round(q.marks * 0.5);
@@ -1164,7 +1554,6 @@ EXTRA_JS = r'''
 
       const pct = Math.round((score / total) * 100);
 
-      // Record in APP.examAttempts
       if (!APP.examAttempts) APP.examAttempts = [];
       APP.examAttempts.push({
         paper: currentExamPaper ? currentExamPaper.title : "Engineering Physics MT-02",
@@ -1175,7 +1564,6 @@ EXTRA_JS = r'''
         date: new Date().toISOString()
       });
 
-      // Update student profile SGPA & streak
       if (APP.studentProfile) {
         APP.studentProfile.examScoreAvg = pct;
       }
@@ -1184,11 +1572,9 @@ EXTRA_JS = r'''
         localStorage.removeItem("ZYNAX_ACTIVE_EXAM_ANSWERS");
       } catch(e){}
 
-      // Hide active container
       const activeContainer = document.getElementById("active-exam-container");
       if (activeContainer) activeContainer.classList.add("hidden");
 
-      // Show Scorecard Modal
       const modal = document.getElementById("exam-scorecard-modal");
       const pctEl = document.getElementById("scorecard-pct");
       const marksEl = document.getElementById("scorecard-marks");
@@ -1273,7 +1659,6 @@ EXTRA_JS = r'''
       renderLeaderboardTable();
     }
 
-    // AI Exam Coach Interactive Responses
     function askCoach(query) {
       const box = document.getElementById("coach-response-box");
       const text = document.getElementById("coach-response-text");
@@ -1296,5 +1681,7 @@ EXTRA_JS = r'''
       } else {
         text.innerHTML = "<strong>AI Exam Coach:</strong> Final exam paper generated from authentic ABES PYQs: Includes 5x 2-mark, 3x 4-mark, and 2x 10-mark verified questions covering the full syllabus!";
       }
+
+      speakWithFemaleVoice(text.innerText);
     }
 '''

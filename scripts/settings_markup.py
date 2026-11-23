@@ -1,15 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Markup for Settings & Personal Profile Management
-Organized into 8 dedicated categories:
-1. Personal Profile
-2. Appearance — Light/Dark Mode
-3. Notifications
-4. Voice Assistant Preferences
-5. Language Preferences
-6. Privacy and Security
-7. AI Memory Management
-8. Account Management
+Markup for Settings & Personal Profile Management (8 Categories)
 """
 
 SETTINGS_HTML = r'''
@@ -23,7 +14,7 @@ SETTINGS_HTML = r'''
             <span>⚙️ SETTINGS &amp; PROFILE</span>
             <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold">8 CATEGORIES</span>
           </h2>
-          <p class="text-xs text-[#7F8B85]">Manage personal student profile, credentials, preferences, voice AI, and academic privacy.</p>
+          <p class="text-xs text-[#7F8B85]">Manage personal student profile, credentials, appearance, voice AI, and academic privacy.</p>
         </div>
         <div class="flex items-center gap-2">
           <span class="text-xs font-mono-code text-[#51D6A0] bg-[#51D6A0]/10 px-3 py-1 rounded-xl border border-[#51D6A0]/30 flex items-center gap-1.5">
@@ -41,7 +32,7 @@ SETTINGS_HTML = r'''
         <!-- Sidebar Navigation (8 Categories) -->
         <div class="lg:col-span-1 space-y-1.5">
           <div class="ref-card p-2 space-y-1">
-            <button onclick="switchSettingsCategory('profile')" id="set-cat-profile" class="settings-nav-btn active w-full text-left px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition">
+            <button onclick="switchSettingsCategory('profile')" id="set-cat-profile" class="settings-nav-btn active w-full text-left px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition bg-[#181E1B] text-white">
               <span>👤</span><span>1. Personal Profile</span>
             </button>
             <button onclick="switchSettingsCategory('appearance')" id="set-cat-appearance" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
@@ -184,7 +175,7 @@ SETTINGS_HTML = r'''
               </div>
 
               <div class="pt-2 flex justify-end">
-                <button onclick="saveProfileDetails()" class="btn-emerald px-5 py-2 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
+                <button onclick="saveProfileDetails(true)" class="btn-emerald px-5 py-2 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
                   <span>✓</span><span>Save Profile Changes</span>
                 </button>
               </div>
@@ -196,7 +187,7 @@ SETTINGS_HTML = r'''
             <div class="ref-card p-5 space-y-4">
               <h3 class="text-sm font-black text-white">🎨 Theme &amp; Visual Design System</h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div onclick="setTheme('dark')" class="p-4 rounded-xl ref-card border-2 cursor-pointer transition hover:border-[#D6B66C]" id="opt-theme-dark">
+                <div onclick="setTheme('dark')" class="p-4 rounded-xl ref-card border-2 cursor-pointer transition hover:border-[#D6B66C] border-[#D6B66C]" id="opt-theme-dark">
                   <div class="flex items-center justify-between mb-2">
                     <span class="font-bold text-white">Dark Obsidian (Default)</span>
                     <span class="w-3 h-3 rounded-full bg-[#D6B66C]"></span>
@@ -232,21 +223,21 @@ SETTINGS_HTML = r'''
                     <strong class="text-white block">Attendance Armor Warnings</strong>
                     <span class="text-[10px] text-[#7F8B85]">Alert me immediately when any subject drops below 75% attendance.</span>
                   </div>
-                  <input type="checkbox" checked class="accent-[#51D6A0] w-4 h-4" />
+                  <input type="checkbox" id="notif-att" checked onchange="updateNotificationPref('attendance', this.checked)" class="accent-[#51D6A0] w-4 h-4 cursor-pointer" />
                 </div>
                 <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03]">
                   <div>
                     <strong class="text-white block">LeetCode Contest Countdown Alert</strong>
                     <span class="text-[10px] text-[#7F8B85]">Send reminder 1 hour before Weekly &amp; Biweekly contests.</span>
                   </div>
-                  <input type="checkbox" checked class="accent-[#D6B66C] w-4 h-4" />
+                  <input type="checkbox" id="notif-contest" checked onchange="updateNotificationPref('contest', this.checked)" class="accent-[#D6B66C] w-4 h-4 cursor-pointer" />
                 </div>
                 <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03]">
                   <div>
                     <strong class="text-white block">Unstop Hackathon Deadlines</strong>
                     <span class="text-[10px] text-[#7F8B85]">Alert 48 hours before registration closes for saved hackathons.</span>
                   </div>
-                  <input type="checkbox" checked class="accent-[#48B8FF] w-4 h-4" />
+                  <input type="checkbox" id="notif-hack" checked onchange="updateNotificationPref('hackathon', this.checked)" class="accent-[#48B8FF] w-4 h-4 cursor-pointer" />
                 </div>
               </div>
             </div>
@@ -255,23 +246,36 @@ SETTINGS_HTML = r'''
           <!-- 4. VOICE ASSISTANT PREFERENCES -->
           <div id="settings-panel-voice" class="settings-panel hidden space-y-4">
             <div class="ref-card p-5 space-y-4">
-              <h3 class="text-sm font-black text-white">🎙️ Gemini Voice &amp; Exam Proctoring Preferences</h3>
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-black text-white">🎙️ Gemini Voice Assistant (Natural Female Voice)</h3>
+                  <p class="text-xs text-[#7F8B85]">Configured with smooth, natural female speech synthesis and multi-language support.</p>
+                </div>
+                <button onclick="testVoiceSpeech()" class="btn-purple px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                  <span>🔊</span><span>Test Voice</span>
+                </button>
+              </div>
+
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label class="text-[#7F8B85] block mb-1">Voice Personality</label>
-                  <select id="voice-persona" class="w-full px-3 py-2 rounded-xl glass-card text-white text-xs">
-                    <option value="gemini-warm">Gemini Warm Natural (Female)</option>
-                    <option value="gemini-deep">Gemini Executive (Male)</option>
-                    <option value="system">Native Browser Synthesis</option>
+                  <select id="voice-persona" onchange="updateVoiceSettings()" class="w-full px-3 py-2 rounded-xl glass-card text-white text-xs">
+                    <option value="gemini-female" selected>Gemini Natural Female (Recommended)</option>
+                    <option value="gemini-warm">Gemini Warm Studio (Female)</option>
+                    <option value="system-female">Native Browser Female Voice</option>
                   </select>
                 </div>
                 <div>
-                  <label class="text-[#7F8B85] block mb-1">Speaking Rate</label>
-                  <input type="range" min="0.8" max="1.4" step="0.1" value="1.0" class="w-full accent-[#9875FF]" />
+                  <div class="flex justify-between items-center mb-1">
+                    <label class="text-[#7F8B85]">Speaking Rate</label>
+                    <span id="voice-rate-val" class="text-[#D6B66C] font-mono-code font-bold">1.0x</span>
+                  </div>
+                  <input type="range" id="voice-rate" min="0.8" max="1.4" step="0.05" value="1.0" oninput="updateVoiceSettings()" class="w-full accent-[#9875FF]" />
                 </div>
               </div>
+
               <div class="p-3 rounded-xl bg-[#9875FF]/10 border border-[#9875FF]/20 text-[11px] text-[#D8CEFF]">
-                <strong>🛡️ Examination Privacy Guarantee:</strong> During active mock tests, voice assistance is strictly limited to reading questions and announcing remaining time. It will never solve questions, provide hints, or reveal answers.
+                <strong>🛡️ Examination Accessibility Guarantee:</strong> Voice assistant reads questions clearly and announces remaining time milestones. It will never provide unauthorized solutions during an active test.
               </div>
             </div>
           </div>
@@ -280,7 +284,7 @@ SETTINGS_HTML = r'''
           <div id="settings-panel-language" class="settings-panel hidden space-y-4">
             <div class="ref-card p-5 space-y-4">
               <h3 class="text-sm font-black text-white">🌐 Campus Multi-Language Support</h3>
-              <p class="text-xs text-[#7F8B85]">Bestie AI and Exam Voice assistance seamlessly converse in your preferred native language.</p>
+              <p class="text-xs text-[#7F8B85]">Bestie AI, voice assistant, and exam helpers converse fluently in your selected language.</p>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <label class="p-3 rounded-xl ref-card flex items-center gap-2 cursor-pointer border hover:border-[#D6B66C]">
                   <input type="radio" name="lang-pref" value="en" checked onchange="setGlobalLanguage('en')" class="accent-[#D6B66C]" />
@@ -313,6 +317,13 @@ SETTINGS_HTML = r'''
                     <span class="text-[10px] text-[#7F8B85]">Download JSON containing profile, test scores, notes, and attendance math.</span>
                   </div>
                   <button onclick="exportStudentDataArchive()" class="glass-card px-3 py-1.5 rounded-xl text-xs font-bold text-[#D6B66C]">Export JSON</button>
+                </div>
+                <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.03]">
+                  <div>
+                    <strong class="text-white block">Reset Local Temporary Cache</strong>
+                    <span class="text-[10px] text-[#7F8B85]">Clear unsaved question drafts and temporary local states.</span>
+                  </div>
+                  <button onclick="clearLocalCache()" class="glass-card px-3 py-1.5 rounded-xl text-xs font-bold text-red-400">Clear Cache</button>
                 </div>
               </div>
             </div>
@@ -401,10 +412,8 @@ SETTINGS_HTML = r'''
           </div>
           <div class="relative rounded-2xl overflow-hidden bg-black aspect-square flex items-center justify-center border border-white/10">
             <canvas id="crop-canvas" width="300" height="300" class="w-full h-full"></canvas>
-            <!-- Circular overlay guideline -->
             <div class="absolute inset-0 pointer-events-none rounded-full border-2 border-[#D6B66C]/60 shadow-[0_0_0_9999px_rgba(0,0,0,0.5)]"></div>
           </div>
-          <!-- Controls -->
           <div class="space-y-2 text-xs">
             <div class="flex items-center justify-between">
               <span class="text-[#7F8B85]">Zoom / Scale:</span>

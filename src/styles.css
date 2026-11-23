@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   ZYNAX 2.0 - GOLDEN MATTE HD DESIGN SYSTEM
+   Themes: Dark Obsidian (Default) & Premium Ivory (Light Mode)
+   ========================================================================== */
+
+:root {
+  /* ZYNAX 2.0 Official Golden Matte Palette */
+  --color-gold: #D6B66C;
+  --color-gold-warm: #F0D28B;
+  --color-gold-glow: rgba(214, 182, 108, 0.35);
+  --color-obsidian: #090B0A;
+  --color-charcoal: #151816;
+  --color-purple: #9875FF;
+  --color-purple-glow: rgba(152, 117, 255, 0.35);
+  --color-blue: #48B8FF;
+  --color-blue-glow: rgba(72, 184, 255, 0.35);
+  --color-emerald: #51D6A0;
+  --color-emerald-glow: rgba(81, 214, 160, 0.35);
+  --color-white: #F5F5F5;
+  --color-muted: #8E9691;
+
+  /* Theme Dynamic CSS Variables - Dark Mode (Default) */
+  --bg-primary: #090B0A;
+  --bg-surface: #151816;
+  --bg-surface-elevated: #1C201D;
+  --text-primary: #F5F5F5;
+  --text-secondary: #8E9691;
+  --border-color: rgba(214, 182, 108, 0.18);
+  --border-color-strong: rgba(214, 182, 108, 0.38);
+  --glass-bg: rgba(21, 24, 22, 0.78);
+  --glass-card: rgba(25, 29, 26, 0.82);
+  --shadow-ambient: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
+  --grid-line: rgba(214, 182, 108, 0.06);
+}
+
+/* Light Mode Overrides */
+html.light-mode {
+  --bg-primary: #F9F8F3;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F2EFE8;
+  --text-primary: #121513;
+  --text-secondary: #5C635E;
+  --border-color: rgba(185, 150, 75, 0.28);
+  --border-color-strong: rgba(185, 150, 75, 0.55);
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-card: rgba(255, 255, 255, 0.94);
+  --shadow-ambient: 0 12px 32px -8px rgba(185, 150, 75, 0.12);
+  --grid-line: rgba(185, 150, 75, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-ambient);
+}
+
+.glass-card {
+  background: var(--glass-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-ambient);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--border-color-strong);
+  box-shadow: 0 14px 34px -8px var(--color-gold-glow);
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+.btn-gold {
+  background: linear-gradient(135deg, #D6B66C 0%, #B8964E 100%);
+  color: #090B0A;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(214, 182, 108, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-gold:hover {
+  box-shadow: 0 0 28px rgba(214, 182, 108, 0.6);
+  transform: translateY(-1px) scale(1.01);
+}
+
+.btn-purple {
+  background: linear-gradient(135deg, #9875FF 0%, #7648F5 100%);
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(152, 117, 255, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-purple:hover {
+  box-shadow: 0 0 28px rgba(152, 117, 255, 0.6);
+  transform: translateY(-1px) scale(1.01);
+}
+
+.btn-emerald {
+  background: linear-gradient(135deg, #51D6A0 0%, #2FA875 100%);
+  color: #090B0A;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(81, 214, 160, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-emerald:hover {
+  box-shadow: 0 0 28px rgba(81, 214, 160, 0.6);
+  transform: translateY(-1px) scale(1.01);
+}
+
+/* 3D Rotating Stats Cube */
+.cube-stats-container {
+  perspective: 900px;
+  width: 140px;
+  height: 140px;
+}
+
+.cube-stats {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: spinStatsCube 18s infinite linear;
+}
+
+@keyframes spinStatsCube {
+  0% { transform: rotateX(16deg) rotateY(0deg); }
+  100% { transform: rotateX(16deg) rotateY(360deg); }
+}
+
+.cube-stats-face {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  background: rgba(21, 24, 22, 0.85);
+  border: 1.5px solid var(--color-gold);
+  box-shadow: inset 0 0 24px rgba(214, 182, 108, 0.25);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.face-f { transform: rotateY(0deg) translateZ(70px); }
+.face-b { transform: rotateY(180deg) translateZ(70px); }
+.face-r { transform: rotateY(90deg) translateZ(70px); }
+.face-l { transform: rotateY(-90deg) translateZ(70px); }
+.face-t { transform: rotateX(90deg) translateZ(70px); }
+.face-bt { transform: rotateX(-90deg) translateZ(70px); }
+
+/* Moving Perspective Grid Floor */
+.grid-floor {
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* Voice Wave Visualizer */
+.wave-bar {
+  width: 4px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--color-gold);
+  animation: wavePulse 1.2s infinite ease-in-out;
+}
+.wave-bar:nth-child(2) { animation-delay: 0.15s; background: var(--color-purple); }
+.wave-bar:nth-child(3) { animation-delay: 0.3s; background: var(--color-blue); }
+.wave-bar:nth-child(4) { animation-delay: 0.45s; background: var(--color-emerald); }
+.wave-bar:nth-child(5) { animation-delay: 0.6s; background: var(--color-gold); }
+
+@keyframes wavePulse {
+  0%, 100% { height: 8px; }
+  50% { height: 26px; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  opacity: 0.4;
+  border-radius: 9999px;
+}

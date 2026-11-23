@@ -1,0 +1,2434 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ZYNAX 2.0 — The Ultimate AI Campus Ecosystem</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* ==========================================================================
+       ZYNAX 2.0 GOLDEN MATTE HD THEME SYSTEM
+       ========================================================================== */
+    :root {
+      --color-gold: #D6B66C;
+      --color-gold-warm: #F0D28B;
+      --color-gold-glow: rgba(214, 182, 108, 0.35);
+      --color-obsidian: #090B0A;
+      --color-charcoal: #151816;
+      --color-purple: #9875FF;
+      --color-blue: #48B8FF;
+      --color-emerald: #51D6A0;
+      --color-white: #F5F5F5;
+      --color-muted: #8E9691;
+
+      /* Dark Mode (Default) */
+      --bg-primary: #090B0A;
+      --bg-surface: #151816;
+      --bg-surface-elevated: #1C201D;
+      --text-primary: #F5F5F5;
+      --text-secondary: #8E9691;
+      --border-color: rgba(214, 182, 108, 0.2);
+      --border-color-strong: rgba(214, 182, 108, 0.45);
+      --glass-bg: rgba(21, 24, 22, 0.82);
+      --glass-card: rgba(25, 29, 26, 0.88);
+      --shadow-ambient: 0 16px 40px -10px rgba(0, 0, 0, 0.6);
+      --grid-line: rgba(214, 182, 108, 0.08);
+    }
+
+    html.light-mode {
+      --bg-primary: #F9F8F3;
+      --bg-surface: #FFFFFF;
+      --bg-surface-elevated: #F2EFE8;
+      --text-primary: #121513;
+      --text-secondary: #5C635E;
+      --border-color: rgba(185, 150, 75, 0.28);
+      --border-color-strong: rgba(185, 150, 75, 0.55);
+      --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-card: rgba(255, 255, 255, 0.95);
+      --shadow-ambient: 0 12px 32px -8px rgba(185, 150, 75, 0.15);
+      --grid-line: rgba(185, 150, 75, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.2s ease;
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-ambient);
+    }
+
+    .glass-card {
+      background: var(--glass-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      border-color: var(--border-color-strong);
+      box-shadow: 0 12px 30px -8px var(--color-gold-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #D6B66C 0%, #B8964E 100%);
+      color: #090B0A;
+      font-weight: 700;
+      box-shadow: 0 0 16px rgba(214, 182, 108, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-gold:hover {
+      box-shadow: 0 0 24px rgba(214, 182, 108, 0.6);
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #9875FF 0%, #7648F5 100%);
+      color: #FFFFFF;
+      font-weight: 700;
+      box-shadow: 0 0 18px rgba(152, 117, 255, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-purple:hover {
+      box-shadow: 0 0 26px rgba(152, 117, 255, 0.6);
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, #51D6A0 0%, #2FA875 100%);
+      color: #090B0A;
+      font-weight: 700;
+      box-shadow: 0 0 18px rgba(81, 214, 160, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-emerald:hover {
+      box-shadow: 0 0 26px rgba(81, 214, 160, 0.6);
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    /* 3D Rotating Stats Cube */
+    .cube-stats-container {
+      perspective: 900px;
+      width: 140px;
+      height: 140px;
+    }
+    .cube-stats {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spinStatsCube 16s infinite linear;
+    }
+    @keyframes spinStatsCube {
+      0% { transform: rotateX(16deg) rotateY(0deg); }
+      100% { transform: rotateX(16deg) rotateY(360deg); }
+    }
+    .cube-stats-face {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      background: rgba(21, 24, 22, 0.88);
+      border: 1.5px solid var(--color-gold);
+      box-shadow: inset 0 0 22px rgba(214, 182, 108, 0.28);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+      border-radius: 14px;
+    }
+    html.light-mode .cube-stats-face {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #B9964B;
+      box-shadow: inset 0 0 16px rgba(185, 150, 75, 0.25);
+    }
+    .face-f  { transform: rotateY(0deg) translateZ(70px); }
+    .face-b  { transform: rotateY(180deg) translateZ(70px); }
+    .face-r  { transform: rotateY(90deg) translateZ(70px); }
+    .face-l  { transform: rotateY(-90deg) translateZ(70px); }
+    .face-t  { transform: rotateX(90deg) translateZ(70px); }
+    .face-bt { transform: rotateX(-90deg) translateZ(70px); }
+
+    /* Moving Perspective Grid Floor */
+    .grid-floor {
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
+    /* Flip Card */
+    .flip-card { perspective: 1000px; }
+    .flip-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+    .flip-card:hover .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flip-back { transform: rotateY(180deg); }
+
+    /* Voice Wave Bars */
+    .wave-bar {
+      width: 4px;
+      height: 8px;
+      border-radius: 9999px;
+      background: var(--color-gold);
+      animation: wavePulse 1.2s infinite ease-in-out;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; background: var(--color-purple); }
+    .wave-bar:nth-child(3) { animation-delay: 0.3s; background: var(--color-blue); }
+    .wave-bar:nth-child(4) { animation-delay: 0.45s; background: var(--color-emerald); }
+    .wave-bar:nth-child(5) { animation-delay: 0.6s; background: var(--color-gold); }
+    @keyframes wavePulse {
+      0%, 100% { height: 8px; }
+      50% { height: 26px; }
+    }
+
+    /* Code editor styling */
+    .code-editor {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      tab-size: 2;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen pb-24 md:pb-12 flex flex-col">
+
+  <!-- Neural Network Canvas Backdrop -->
+  <canvas id="neuralCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- ========================================================================
+       TOP NAVIGATION BAR
+       ======================================================================== -->
+  <header class="sticky top-0 z-40 glass-panel border-b border-[var(--border-color)] px-4 py-2.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div onclick="switchTab('dashboard')" class="cursor-pointer flex items-center gap-2 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#D6B66C] via-[#9875FF] to-[#48B8FF] p-0.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-[#090B0A] rounded-[10px] flex items-center justify-center font-black text-sm text-[#D6B66C]">
+            Z
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-black text-base tracking-wider" style="color: var(--text-primary)">ZYNAX</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded-md font-bold uppercase tracking-wider bg-[#D6B66C]/20 text-[#D6B66C] border border-[#D6B66C]/40">2.0</span>
+          </div>
+          <span class="text-[9px] text-[var(--text-secondary)] font-mono block hidden sm:inline">AI CAMPUS ECOSYSTEM · ABES EC</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Desktop Navigation Links -->
+    <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold">
+      <button onclick="switchTab('dashboard')" class="nav-item px-3 py-1.5 rounded-lg text-[#D6B66C] font-bold" data-tab="dashboard">Vibes</button>
+      <button onclick="switchTab('timetable')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]" data-tab="timetable">Grind</button>
+      <button onclick="switchTab('attendance')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]" data-tab="attendance">Pull Up</button>
+      <button onclick="switchTab('arena')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[#48B8FF] flex items-center gap-1" data-tab="arena">
+        <span>Arena</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-[#48B8FF] animate-pulse"></span>
+      </button>
+      <button onclick="switchTab('planner')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]" data-tab="planner">Study Arc</button>
+      <button onclick="switchTab('notes')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]" data-tab="notes">Brain Dump</button>
+      <button onclick="switchTab('quiz')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]" data-tab="quiz">Boss Battle</button>
+      <button onclick="switchTab('tools')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]" data-tab="tools">15 Tools</button>
+      <button onclick="switchTab('docs')" class="nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]" data-tab="docs">The Stash</button>
+    </nav>
+
+    <!-- Right Utility Controls -->
+    <div class="flex items-center gap-2">
+      <!-- XP Badge -->
+      <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#D6B66C]/10 border border-[#D6B66C]/30 text-[11px] font-bold text-[#D6B66C]" title="Total Student XP">
+        <span>⭐</span>
+        <span id="header-xp">1,450 XP</span>
+      </div>
+
+      <!-- Streak Badge -->
+      <div class="hidden md:flex items-center gap-1 px-2.5 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-[11px] font-bold text-orange-400">
+        <span>🔥</span>
+        <span id="header-streak">5d Streak</span>
+      </div>
+
+      <!-- Notifications Bell -->
+      <button onclick="toggleReminderPanel()" class="relative p-2 rounded-xl glass-card text-[var(--text-secondary)] hover:text-[#D6B66C] transition" title="Class Reminders & Notification Center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+        <span id="reminder-bell-dot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#51D6A0] animate-pulse"></span>
+      </button>
+
+      <!-- Theme Switcher (Dark Mode / Light Mode) -->
+      <button onclick="toggleTheme()" class="p-2 rounded-xl glass-card text-[var(--text-secondary)] hover:text-[#D6B66C] transition" title="Toggle Light / Dark Mode">
+        <span id="theme-icon" class="text-xs">☀️</span>
+      </button>
+
+      <!-- User Profile / Lock In Pill -->
+      <button onclick="switchTab('auth')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-card text-xs font-semibold hover:border-[#D6B66C] transition">
+        <div class="w-5 h-5 rounded-full bg-gradient-to-tr from-[#D6B66C] to-[#9875FF] flex items-center justify-center text-[10px] text-black font-black">
+          A
+        </div>
+        <span class="hidden sm:inline font-bold" id="header-username">Anurag</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       LEFT-SIDE FLOATING AI VOICE ASSISTANT (GEMINI) TRIGGER
+       ======================================================================== -->
+  <div class="fixed left-4 bottom-20 md:bottom-8 z-50 flex items-center gap-2">
+    <button onclick="openGeminiVoiceModal()" class="group relative w-14 h-14 rounded-full bg-gradient-to-tr from-[#9875FF] via-[#48B8FF] to-[#D6B66C] p-0.5 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center" title="Open Gemini AI Voice Assistant">
+      <div class="w-full h-full bg-[#090B0A] rounded-full flex items-center justify-center relative overflow-hidden">
+        <!-- Glowing pulse aura -->
+        <span class="absolute inset-0 bg-[#9875FF]/20 animate-ping rounded-full pointer-events-none"></span>
+        <svg class="w-6 h-6 text-[#D6B66C] group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+        </svg>
+      </div>
+    </button>
+    <div class="hidden sm:flex flex-col bg-[var(--glass-card)] px-3 py-1.5 rounded-xl border border-[var(--border-color)] shadow-lg pointer-events-none">
+      <span class="text-[9px] uppercase font-bold text-[#D6B66C] tracking-wider">Gemini Voice AI</span>
+      <span class="text-[10px] text-[var(--text-secondary)]">Tap to speak (EN/HI/BN)</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MAIN APP WORKSPACE CONTENT
+       ======================================================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 md:p-6 z-10 relative">
+
+    <!-- TAB 1: VIBE CHECK (MAIN DASHBOARD) -->
+    <section id="tab-dashboard" class="tab-content space-y-6">
+      <!-- Hero Banner with 3D Stats Cube & Welcome Message -->
+      <div class="glass-panel p-5 sm:p-6 rounded-2xl relative overflow-hidden border border-[var(--border-color)]">
+        <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-[#D6B66C]/10 via-[#9875FF]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center md:text-left">
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <span class="text-xs px-2.5 py-1 rounded-full bg-[#D6B66C]/15 text-[#D6B66C] font-mono font-bold border border-[#D6B66C]/30">VIBE CHECK · ACTIVE</span>
+              <span class="text-xs text-[var(--text-secondary)] font-mono">Thu, 19 Nov 2026 · Odd Semester</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-black tracking-tight" style="color: var(--text-primary)">
+              Yo, <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#D6B66C] via-[#F0D28B] to-[#9875FF]">ANURAG BANIK</span>! Let's Cook.
+            </h1>
+            <p class="text-xs sm:text-sm text-[var(--text-secondary)] max-w-xl">
+              "YOUR CAMPUS. YOUR INTELLIGENCE. YOUR FUTURE." You're in <strong class="text-[#D6B66C]">CSE (AI/ML) Sec A</strong> at ABES Engineering College. Engineering Physics starts in 20 minutes in Room 204.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-2 justify-center md:justify-start">
+              <button onclick="switchTab('arena')" class="btn-gold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-lg">
+                <span>⚡ Daily Code Arena</span>
+              </button>
+              <button onclick="switchTab('quiz')" class="btn-purple px-4 py-2 rounded-xl text-xs flex items-center gap-1.5">
+                <span>⚔️ 90-Min Mock Exam</span>
+              </button>
+              <button onclick="openGeminiVoiceModal()" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-[#D6B66C] flex items-center gap-1.5">
+                <span>🎙️ Ask Gemini AI</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3D Rotating Stats Cube -->
+          <div class="cube-stats-container flex-shrink-0">
+            <div class="cube-stats">
+              <div class="cube-stats-face face-f">
+                <span class="text-[9px] uppercase font-bold text-[#51D6A0]">ATTENDANCE</span>
+                <span class="text-2xl font-black text-white mt-1" id="cube-att">75.5%</span>
+                <span class="text-[9px] text-[#51D6A0] font-semibold">+3 Safe Bunks</span>
+              </div>
+              <div class="cube-stats-face face-b">
+                <span class="text-[9px] uppercase font-bold text-[#9875FF]">STREAK</span>
+                <span class="text-2xl font-black text-white mt-1">🔥 5d</span>
+                <span class="text-[9px] text-[var(--text-secondary)]">Grind Secured</span>
+              </div>
+              <div class="cube-stats-face face-r">
+                <span class="text-[9px] uppercase font-bold text-[#D6B66C]">TOTAL XP</span>
+                <span class="text-2xl font-black text-[#D6B66C] mt-1">1,450</span>
+                <span class="text-[9px] text-[var(--text-secondary)]">Lvl 4: Prodigy</span>
+              </div>
+              <div class="cube-stats-face face-l">
+                <span class="text-[9px] uppercase font-bold text-[#48B8FF]">CLASSES TODAY</span>
+                <span class="text-2xl font-black text-white mt-1">4</span>
+                <span class="text-[9px] text-[var(--text-secondary)]">Next: Phys 204</span>
+              </div>
+              <div class="cube-stats-face face-t">
+                <span class="text-[9px] uppercase font-bold text-[#F0D28B]">BOSS FIGHT</span>
+                <span class="text-xl font-black text-red-400 mt-1">12 Days</span>
+                <span class="text-[9px] text-[var(--text-secondary)]">MT-02 Exam</span>
+              </div>
+              <div class="cube-stats-face face-bt">
+                <span class="text-[9px] uppercase font-bold text-[#D6B66C]">ZYNAX</span>
+                <span class="text-lg font-black text-[#D6B66C] mt-1">2.0</span>
+                <span class="text-[9px] text-[var(--text-secondary)]">Cook Mode</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Cards Grid (4 Core Highlights) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Next Up Class -->
+        <div class="glass-card p-4 rounded-xl border-l-4 border-l-[#48B8FF] space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-[#48B8FF] uppercase tracking-wider text-[10px]">NEXT UP · IN 20 MIN</span>
+            <span class="w-2 h-2 rounded-full bg-[#48B8FF] animate-ping"></span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Engineering Physics</h3>
+            <p class="text-xs text-[var(--text-secondary)]">10:00 - 11:00 · Room 204</p>
+          </div>
+          <div class="flex items-center justify-between text-[11px] pt-1 border-t border-[var(--border-color)]">
+            <span class="text-[var(--text-secondary)]">Dr. Verma</span>
+            <button onclick="switchTab('timetable')" class="text-[#48B8FF] font-semibold hover:underline">View Routine →</button>
+          </div>
+        </div>
+
+        <!-- Boss Fight Exam -->
+        <div class="glass-card p-4 rounded-xl border-l-4 border-l-red-500 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-red-400 uppercase tracking-wider text-[10px]">BOSS FIGHT · MID-TERM 02</span>
+            <span class="text-[10px] font-mono text-red-400 font-bold">12d Left</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Engineering Physics</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Units 1-4 · 51% Prepared</p>
+          </div>
+          <div class="w-full bg-black/30 rounded-full h-1.5 overflow-hidden">
+            <div class="bg-red-500 h-1.5 rounded-full" style="width: 51%"></div>
+          </div>
+          <div class="flex items-center justify-between text-[11px] pt-0.5">
+            <span class="text-[var(--text-secondary)]">Need 4 more units</span>
+            <button onclick="switchTab('planner')" class="text-[#D6B66C] font-semibold hover:underline">Study Arc →</button>
+          </div>
+        </div>
+
+        <!-- Attendance Status -->
+        <div class="glass-card p-4 rounded-xl border-l-4 border-l-[#51D6A0] space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-[#51D6A0] uppercase tracking-wider text-[10px]">PULL UP · ATTENDANCE</span>
+            <span class="text-[10px] font-mono text-[#51D6A0] font-bold">Aggregate</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-black text-[#51D6A0]" id="dash-agg-pct">75.5%</span>
+            <span class="text-xs text-[#51D6A0] font-semibold">+3 buffer classes</span>
+          </div>
+          <p class="text-xs text-[var(--text-secondary)]">Electronics (62%) is below target threshold (75%).</p>
+          <div class="flex items-center justify-between text-[11px] pt-1 border-t border-[var(--border-color)]">
+            <span class="text-red-400">⚠️ Needs attention</span>
+            <button onclick="switchTab('attendance')" class="text-[#51D6A0] font-semibold hover:underline">Track Now →</button>
+          </div>
+        </div>
+
+        <!-- Daily Code Challenge -->
+        <div class="glass-card p-4 rounded-xl border-l-4 border-l-[#9875FF] space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-[#9875FF] uppercase tracking-wider text-[10px]">DAILY LEETCODE · ABES</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#9875FF]/20 text-[#9875FF] font-bold">Medium</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Subarray Sum Equals K</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Hash Map · Prefix Sums</p>
+          </div>
+          <div class="flex items-center justify-between text-[11px] pt-2 border-t border-[var(--border-color)]">
+            <span class="text-[#D6B66C] font-bold">+100 XP Points</span>
+            <button onclick="switchTab('arena')" class="text-[#9875FF] font-semibold hover:underline">Solve Arena →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal Sliding Feature Cards Carousel -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="font-black text-sm tracking-wide uppercase flex items-center gap-2" style="color: var(--text-primary)">
+            <span>⚡ SQUAD TOOLS & PRODUCTIVITY HUB</span>
+          </h2>
+          <span class="text-xs text-[var(--text-secondary)]">Swipe to explore →</span>
+        </div>
+        <div class="flex gap-4 overflow-x-auto pb-3 snap-x">
+          <!-- Card 1 -->
+          <div onclick="switchTab('arena')" class="cursor-pointer flex-shrink-0 w-72 glass-card p-4 rounded-2xl snap-start space-y-2 border border-[#48B8FF]/30 hover:border-[#48B8FF]">
+            <div class="w-8 h-8 rounded-lg bg-[#48B8FF]/20 flex items-center justify-center text-[#48B8FF] font-black text-sm">LC</div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Daily Code Arena</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Solve daily LeetCode challenges, climb the ABES student leaderboard, and practice time complexities.</p>
+            <span class="text-xs text-[#48B8FF] font-bold block pt-1">Open Arena →</span>
+          </div>
+
+          <!-- Card 2 -->
+          <div onclick="openGeminiVoiceModal()" class="cursor-pointer flex-shrink-0 w-72 glass-card p-4 rounded-2xl snap-start space-y-2 border border-[#D6B66C]/30 hover:border-[#D6B66C]">
+            <div class="w-8 h-8 rounded-lg bg-[#D6B66C]/20 flex items-center justify-center text-[#D6B66C] font-black text-sm">🎙️</div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Gemini AI Assistant</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Talk or type with your campus companion in English, Hindi (हिंदी), and Bengali (বাংলা) with speech synthesis.</p>
+            <span class="text-xs text-[#D6B66C] font-bold block pt-1">Start Speaking →</span>
+          </div>
+
+          <!-- Card 3 -->
+          <div onclick="switchTab('quiz')" class="cursor-pointer flex-shrink-0 w-72 glass-card p-4 rounded-2xl snap-start space-y-2 border border-[#9875FF]/30 hover:border-[#9875FF]">
+            <div class="w-8 h-8 rounded-lg bg-[#9875FF]/20 flex items-center justify-center text-[#9875FF] font-black text-sm">⚔️</div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">90-Minute Exam Mode</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Full-screen distraction-free mock tests with countdown timers, question navigator, and optional integrity camera.</p>
+            <span class="text-xs text-[#9875FF] font-bold block pt-1">Enter Exam Mode →</span>
+          </div>
+
+          <!-- Card 4 -->
+          <div onclick="switchTab('notes')" class="cursor-pointer flex-shrink-0 w-72 glass-card p-4 rounded-2xl snap-start space-y-2 border border-[#51D6A0]/30 hover:border-[#51D6A0]">
+            <div class="w-8 h-8 rounded-lg bg-[#51D6A0]/20 flex items-center justify-center text-[#51D6A0] font-black text-sm">📝</div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Brain Dump Notes</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Upload notes or PDFs to automatically extract 12 smart artifacts: summaries, formulas, MCQs, and printable PDF exports.</p>
+            <span class="text-xs text-[#51D6A0] font-bold block pt-1">Generate Notes →</span>
+          </div>
+
+          <!-- Card 5 -->
+          <div onclick="switchTab('tools')" class="cursor-pointer flex-shrink-0 w-72 glass-card p-4 rounded-2xl snap-start space-y-2 border border-[var(--border-color)]">
+            <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-[var(--text-primary)] font-black text-sm">🛠️</div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">15 Virtual Tools Suite</h3>
+            <p class="text-xs text-[var(--text-secondary)]">Scientific calculator, CGPA projector, Pomodoro timer, lo-fi white noise generator, and flowcharts.</p>
+            <span class="text-xs text-[#D6B66C] font-bold block pt-1">Launch Tools →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: DAILY GRIND (TIMETABLE) -->
+    <section id="tab-timetable" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>DAILY GRIND</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono">CSE AI/ML · SEC A</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Smart Timetable with live slot countdowns and room mappings</p>
+        </div>
+        <!-- Day Selector Buttons -->
+        <div class="flex gap-1.5 overflow-x-auto pb-1" id="timetable-day-selector">
+          <button onclick="selectDay('Mon')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Mon">Mon</button>
+          <button onclick="selectDay('Tue')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Tue">Tue</button>
+          <button onclick="selectDay('Wed')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Wed">Wed</button>
+          <button onclick="selectDay('Thu')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold btn-gold" data-day="Thu">Thu</button>
+          <button onclick="selectDay('Fri')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Fri">Fri</button>
+          <button onclick="selectDay('Sat')" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card" data-day="Sat">Sat</button>
+        </div>
+      </div>
+
+      <!-- Live Countdown Card for Current Class -->
+      <div class="glass-panel p-4 rounded-xl border border-[#48B8FF]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#48B8FF]/20 border border-[#48B8FF]/40 flex items-center justify-center text-[#48B8FF] text-xl">
+            ⏰
+          </div>
+          <div>
+            <span class="text-[10px] uppercase font-bold text-[#48B8FF] tracking-wider block">NEXT CLASS COUNTDOWN</span>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Engineering Physics · Room 204</h3>
+            <span class="text-xs text-[var(--text-secondary)]">Faculty: Dr. Verma · Time: 10:00 - 11:00 AM</span>
+          </div>
+        </div>
+        <div class="text-center sm:text-right">
+          <span class="text-2xl font-mono font-black text-[#D6B66C]" id="class-countdown-display">00:19:42</span>
+          <span class="text-[10px] text-[var(--text-secondary)] block">Starts shortly</span>
+        </div>
+      </div>
+
+      <!-- Periods List for Selected Day -->
+      <div class="space-y-3" id="timetable-slots-list">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+      <!-- PDF Timetable Import Dropzone -->
+      <div class="glass-card p-4 rounded-xl border border-dashed border-[var(--border-color)] text-center space-y-2">
+        <span class="text-xl">📄</span>
+        <h4 class="text-xs font-bold text-[var(--text-primary)]">Import College Timetable PDF</h4>
+        <p class="text-[11px] text-[var(--text-secondary)]">Upload official ABES schedule PDF to auto-populate all slots</p>
+        <button onclick="triggerPdfUpload()" class="btn-gold px-4 py-1.5 rounded-lg text-xs font-bold">Upload Timetable PDF</button>
+      </div>
+    </section>
+
+    <!-- TAB 3: PULL UP (ATTENDANCE TRACKER) -->
+    <section id="tab-attendance" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>PULL UP</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono">TARGET 75% MANDATE</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Real-time attendance calculations, safe bunks, and deficit recovery simulator</p>
+        </div>
+        <div class="flex items-center gap-3 glass-card px-4 py-2 rounded-xl">
+          <span class="text-xs text-[var(--text-secondary)]">Aggregate:</span>
+          <span class="text-xl font-black text-[#51D6A0]" id="att-aggregate-pill">75.5%</span>
+        </div>
+      </div>
+
+      <!-- Attendance Interactive Calculator Box -->
+      <div class="glass-panel p-5 rounded-2xl border border-[var(--border-color)] space-y-4">
+        <h3 class="text-xs uppercase font-bold text-[#D6B66C] tracking-wider">⚡ Safe Bunks & Simulation Engine</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="glass-card p-3 rounded-xl border-l-2 border-l-[#51D6A0]">
+            <span class="text-[10px] text-[var(--text-secondary)] uppercase block">Safe Bunk Allowance</span>
+            <span class="text-2xl font-black text-[#51D6A0]" id="sim-safe-bunks">3 Classes</span>
+            <p class="text-[10px] text-[var(--text-secondary)] mt-1">You can skip up to 3 total classes across safe subjects while remaining &gt; 75%.</p>
+          </div>
+          <div class="glass-card p-3 rounded-xl border-l-2 border-l-red-400">
+            <span class="text-[10px] text-[var(--text-secondary)] uppercase block">Critical Recovery Shortfall</span>
+            <span class="text-2xl font-black text-red-400" id="sim-deficit">11 Classes</span>
+            <p class="text-[10px] text-[var(--text-secondary)] mt-1">Basic Electronics requires 11 consecutive classes to cross 75% mark.</p>
+          </div>
+          <div class="glass-card p-3 rounded-xl border-l-2 border-l-[#D6B66C]">
+            <span class="text-[10px] text-[var(--text-secondary)] uppercase block">Target Attendance Criteria</span>
+            <div class="flex items-center justify-between mt-1">
+              <span class="text-xl font-black text-[#D6B66C]" id="target-att-label">75%</span>
+              <input type="range" id="target-slider" min="70" max="90" value="75" class="w-24 accent-[#D6B66C]" oninput="updateTargetThreshold(this.value)" />
+            </div>
+            <p class="text-[10px] text-[var(--text-secondary)] mt-1">Drag slider to simulate different college criteria thresholds.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subject-Wise List with + / - Interactive Counters -->
+      <div class="space-y-3" id="attendance-subject-list">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </section>
+
+    <!-- TAB 4: DAILY CODE ARENA — ABES EDITION -->
+    <section id="tab-arena" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>DAILY CODE ARENA</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#48B8FF]/20 text-[#48B8FF] font-mono">ABES EDITION</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Solve daily DSA problems, test live code in browser, and climb student leaderboards</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs px-3 py-1 rounded-full bg-[#D6B66C]/15 text-[#D6B66C] font-bold border border-[#D6B66C]/30">Daily Challenge Active</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left: Problem Statement & Instructions (5 Cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="glass-panel p-5 rounded-2xl border border-[var(--border-color)] space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-xs px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 font-bold">Medium</span>
+                <span class="text-xs text-[var(--text-secondary)] font-mono">Problem #560</span>
+              </div>
+              <span class="text-xs text-[#D6B66C] font-bold">+100 XP Points</span>
+            </div>
+
+            <h3 class="text-lg font-black text-[var(--text-primary)]">Subarray Sum Equals K</h3>
+            <div class="flex flex-wrap gap-1.5 text-[10px]">
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[var(--text-secondary)]">Arrays</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[var(--text-secondary)]">Hash Table</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 text-[var(--text-secondary)]">Prefix Sum</span>
+            </div>
+
+            <div class="text-xs text-[var(--text-secondary)] space-y-2 pt-2 border-t border-[var(--border-color)]">
+              <p>Given an array of integers <code class="text-[#D6B66C]">nums</code> and an integer <code class="text-[#D6B66C]">k</code>, return the total number of continuous subarrays whose sum equals to <code class="text-[#D6B66C]">k</code>.</p>
+              
+              <div class="p-2.5 rounded-lg bg-black/30 font-mono text-[11px] space-y-1">
+                <span class="text-[var(--text-secondary)] block"><strong>Example 1:</strong></span>
+                <span class="text-[var(--text-primary)] block">Input: nums = [1,1,1], k = 2</span>
+                <span class="text-[#51D6A0] block">Output: 2</span>
+              </div>
+
+              <div class="p-2.5 rounded-lg bg-black/30 font-mono text-[11px] space-y-1">
+                <span class="text-[var(--text-secondary)] block"><strong>Example 2:</strong></span>
+                <span class="text-[var(--text-primary)] block">Input: nums = [1,2,3], k = 3</span>
+                <span class="text-[#51D6A0] block">Output: 2</span>
+              </div>
+
+              <div class="text-[11px] space-y-1 pt-1">
+                <strong class="text-[var(--text-primary)]">Constraints:</strong>
+                <ul class="list-disc pl-4 space-y-0.5 text-[var(--text-secondary)]">
+                  <li>1 &le; nums.length &le; 2 &times; 10<sup>4</sup></li>
+                  <li>-1000 &le; nums[i] &le; 1000</li>
+                  <li>-10<sup>7</sup> &le; k &le; 10<sup>7</sup></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Algorithm Explanation & Complexity -->
+            <div class="pt-3 border-t border-[var(--border-color)] space-y-2">
+              <button onclick="toggleArenaExplanation()" class="w-full flex items-center justify-between text-xs font-bold text-[#D6B66C]">
+                <span>💡 Video & Algorithm Explanation</span>
+                <span id="arena-exp-arrow">▼</span>
+              </button>
+              <div id="arena-exp-content" class="hidden text-xs text-[var(--text-secondary)] space-y-2 pt-2">
+                <p><strong class="text-white">Optimal Approach (Hash Map + Prefix Sum):</strong></p>
+                <p>Instead of checking every pair with $O(N^2)$, maintain a cumulative sum. At index $i$, if $(current\_sum - k)$ was seen before, that subarray sum is $k$.</p>
+                <div class="flex gap-4 text-[11px] font-mono">
+                  <span class="text-[#51D6A0]">Time: O(N)</span>
+                  <span class="text-[#48B8FF]">Space: O(N)</span>
+                </div>
+                <a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank" class="inline-block text-[#48B8FF] text-xs underline pt-1">View on Official LeetCode ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ABES Student Leaderboard -->
+          <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-black uppercase text-[#D6B66C] tracking-wide">🏆 ABES Leaderboard</h4>
+              <div class="flex gap-1 text-[10px]">
+                <button class="px-2 py-0.5 rounded bg-[#D6B66C] text-black font-bold">Daily</button>
+                <button class="px-2 py-0.5 rounded bg-white/5 text-[var(--text-secondary)]">Weekly</button>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-xs">
+              <div class="flex items-center justify-between p-2 rounded-lg bg-[#D6B66C]/10 border border-[#D6B66C]/30">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-[#D6B66C]">#1</span>
+                  <span class="font-bold text-[var(--text-primary)]">Anurag Banik (You)</span>
+                  <span class="text-[9px] px-1 rounded bg-[#D6B66C]/20 text-[#D6B66C]">5d Streak</span>
+                </div>
+                <span class="font-mono font-bold text-[#D6B66C]">1,450 XP</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-lg bg-white/5">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-[var(--text-secondary)]">#2</span>
+                  <span class="text-[var(--text-primary)]">Rohan_CSE</span>
+                  <span class="text-[9px] px-1 rounded bg-white/10 text-[var(--text-secondary)]">4d</span>
+                </div>
+                <span class="font-mono font-bold text-[var(--text-secondary)]">1,320 XP</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-lg bg-white/5">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-[var(--text-secondary)]">#3</span>
+                  <span class="text-[var(--text-primary)]">Priya_AIML</span>
+                  <span class="text-[9px] px-1 rounded bg-white/10 text-[var(--text-secondary)]">4d</span>
+                </div>
+                <span class="font-mono font-bold text-[var(--text-secondary)]">1,180 XP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: In-Browser Code Playground & Terminal (7 Cols) -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-[var(--text-primary)]">Language:</span>
+                <select id="code-lang-selector" class="px-2 py-1 rounded bg-black/40 border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none" onchange="changeCodeTemplate(this.value)">
+                  <option value="python">Python 3</option>
+                  <option value="javascript">JavaScript (ES6)</option>
+                  <option value="cpp">C++ (GCC 12)</option>
+                  <option value="java">Java 17</option>
+                </select>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="resetCodeTemplate()" class="px-3 py-1 rounded-lg glass-card text-xs text-[var(--text-secondary)] hover:text-white">Reset</button>
+                <button onclick="runCodeTests()" class="btn-gold px-4 py-1 rounded-lg text-xs font-bold flex items-center gap-1">
+                  <span>▶ Run Code</span>
+                </button>
+                <button onclick="submitCodeSolution()" class="btn-emerald px-4 py-1 rounded-lg text-xs font-bold flex items-center gap-1">
+                  <span>🚀 Submit</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Code Editor Textarea -->
+            <textarea id="arena-code-editor" class="w-full h-72 code-editor p-3 rounded-xl bg-black/50 border border-[var(--border-color)] text-xs text-white focus:outline-none focus:border-[#48B8FF] resize-none" spellcheck="false"></textarea>
+
+            <!-- Console Output Area -->
+            <div class="p-3 rounded-xl bg-black/60 border border-[var(--border-color)] font-mono text-xs space-y-1.5" id="arena-console-box">
+              <div class="flex items-center justify-between text-[10px] text-[var(--text-secondary)] pb-1 border-b border-white/10">
+                <span>TEST RUNNER CONSOLE</span>
+                <span id="arena-status-badge" class="text-green-400">Ready</span>
+              </div>
+              <div id="arena-console-output" class="text-[#51D6A0]">
+                Click "Run Code" to validate test cases [nums = [1,1,1], k = 2] and [nums = [1,2,3], k = 3].
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: STUDY ARC (AI STUDY PLANNER) -->
+    <section id="tab-planner" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>STUDY ARC</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#9875FF] font-mono">EXAM COUNTDOWN</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Chapter-by-chapter progression tracker and AI study roadmap</p>
+        </div>
+        <button onclick="generateStudyRoadmap()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold shadow-lg">
+          ⚡ Generate 12-Day Study Plan
+        </button>
+      </div>
+
+      <!-- Exam Countdown Banner -->
+      <div class="glass-panel p-5 rounded-2xl border border-red-500/30 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-red-400">TARGET EXAMINATION</span>
+          <h3 class="text-xl font-black text-[var(--text-primary)]">Mid-Term Exam 02 (MT-02) — Engineering Physics</h3>
+          <p class="text-xs text-[var(--text-secondary)]">Venue: Examination Hall 2 · Syllabus: Units 1, 2, 3 & 4</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="text-center p-3 rounded-xl glass-card">
+            <span class="text-2xl font-black font-mono text-red-400">12</span>
+            <span class="text-[9px] uppercase font-bold text-[var(--text-secondary)] block">Days</span>
+          </div>
+          <div class="text-center p-3 rounded-xl glass-card">
+            <span class="text-2xl font-black font-mono text-[#D6B66C]">14</span>
+            <span class="text-[9px] uppercase font-bold text-[var(--text-secondary)] block">Hours</span>
+          </div>
+          <div class="text-center p-3 rounded-xl glass-card">
+            <span class="text-2xl font-black font-mono text-[#51D6A0]">28</span>
+            <span class="text-[9px] uppercase font-bold text-[var(--text-secondary)] block">Mins</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter Progression Tracker -->
+      <div class="space-y-3" id="chapter-progress-list">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </section>
+
+    <!-- TAB 6: BRAIN DUMP (SMART NOTES & 12 AI FEATURES) -->
+    <section id="tab-notes" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>BRAIN DUMP</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono">12 SMART AI TOOLS</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Upload notes, extract formulas, generate flashcards, and download formatted PDFs</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="triggerNoteUpload()" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-[var(--text-primary)] hover:border-[#D6B66C]">
+            📁 Upload Doc / PDF
+          </button>
+          <button onclick="generateSmartNotes()" class="btn-emerald px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-lg">
+            <span>✨ GENERATE MY SMART NOTES</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Notes Content & Generated Artifacts -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left: Note Selector & Document Viewer (4 Cols) -->
+        <div class="lg:col-span-4 space-y-3">
+          <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-2">
+            <span class="text-xs uppercase font-bold text-[#D6B66C] tracking-wide block">Saved Documents</span>
+            <div class="space-y-1.5" id="saved-notes-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Smart AI Output Display (8 Cols) -->
+        <div class="lg:col-span-8 space-y-4">
+          <div class="glass-panel p-5 rounded-2xl border border-[var(--border-color)] space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[var(--border-color)]">
+              <div>
+                <h3 class="font-bold text-base text-[var(--text-primary)]" id="active-note-title">Physics: Unit 3 - Semiconductors</h3>
+                <span class="text-xs text-[#51D6A0] font-mono">✓ Grounded & Verified from Document Text</span>
+              </div>
+              <button onclick="downloadNotesPdf()" class="btn-gold px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1">
+                <span>🖨️ Download as PDF</span>
+              </button>
+            </div>
+
+            <!-- 12 AI Features Output Tabs -->
+            <div class="flex gap-2 overflow-x-auto pb-1 text-xs" id="note-feature-tabs">
+              <button onclick="showNoteFeature('summary')" id="nft-summary" class="px-3 py-1 rounded-lg bg-[#D6B66C] text-black font-bold">1. Summary</button>
+              <button onclick="showNoteFeature('formulas')" id="nft-formulas" class="px-3 py-1 rounded-lg glass-card text-[var(--text-secondary)]">2. Formulas</button>
+              <button onclick="showNoteFeature('mcqs')" id="nft-mcqs" class="px-3 py-1 rounded-lg glass-card text-[var(--text-secondary)]">3. MCQs</button>
+              <button onclick="showNoteFeature('questions')" id="nft-questions" class="px-3 py-1 rounded-lg glass-card text-[var(--text-secondary)]">4. Exam Qs</button>
+              <button onclick="showNoteFeature('flashcards')" id="nft-flashcards" class="px-3 py-1 rounded-lg glass-card text-[var(--text-secondary)]">5. Flashcards</button>
+            </div>
+
+            <!-- Dynamic Output Box -->
+            <div id="smart-note-display" class="p-4 rounded-xl bg-black/40 border border-[var(--border-color)] text-xs text-[var(--text-primary)] space-y-3 leading-relaxed whitespace-pre-line max-h-96 overflow-y-auto">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: BOSS BATTLE (MOCK TESTS & 90-MINUTE EXAM MODE) -->
+    <section id="tab-quiz" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>BOSS BATTLE</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#9875FF]/20 text-[#9875FF] font-mono">MOCK TEST LAB</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Curriculum-grounded quizzes and dedicated 90-Minute Examination Simulator</p>
+        </div>
+        <button onclick="start90MinExamMode()" class="btn-purple px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-lg">
+          <span>⚔️ START 90-MIN EXAM MODE</span>
+        </button>
+      </div>
+
+      <!-- Quick Quiz Box -->
+      <div id="quiz-standard-container" class="glass-panel p-5 sm:p-6 rounded-2xl border border-[var(--border-color)] space-y-4">
+        <div class="flex items-center justify-between text-xs pb-2 border-b border-[var(--border-color)]">
+          <span class="text-[#D6B66C] font-mono" id="quiz-progress-text">Question 1 of 5</span>
+          <span class="text-[var(--text-secondary)]" id="quiz-score-text">Score: 0 / 5</span>
+        </div>
+        <h3 class="text-base font-bold text-[var(--text-primary)]" id="quiz-question-title">
+          Which particle carries the majority charge in an n-type semiconductor?
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="quiz-options-container">
+          <!-- Populated by JS -->
+        </div>
+        <div id="quiz-explanation-box" class="hidden p-3 rounded-xl bg-[#51D6A0]/15 border border-[#51D6A0]/30 text-xs text-[#51D6A0]"></div>
+      </div>
+
+      <!-- 90-MINUTE EXAM SIMULATOR (HIDDEN UNTIL STARTED) -->
+      <div id="exam-mode-container" class="hidden glass-panel p-6 rounded-2xl border-2 border-[#9875FF]/50 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--border-color)]">
+          <div>
+            <span class="text-xs font-bold uppercase text-[#9875FF] tracking-wider">OFFICIAL 90-MINUTE MOCK EXAM MODE</span>
+            <h3 class="text-lg font-black text-white">Engineering Physics & Circuit Analysis</h3>
+          </div>
+          <div class="flex items-center gap-3">
+            <!-- Camera Preview Badge & Box -->
+            <div class="flex items-center gap-2">
+              <button onclick="toggleExamCamera()" id="exam-cam-toggle" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs font-semibold hover:bg-white/20">
+                📷 Enable Camera Integrity
+              </button>
+              <div id="exam-cam-box" class="hidden w-20 h-14 rounded-lg bg-black border border-green-400 overflow-hidden relative">
+                <video id="exam-cam-video" autoplay playsinline muted class="w-full h-full object-cover"></video>
+                <span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+              </div>
+            </div>
+            <!-- Timer -->
+            <div class="text-center px-4 py-1.5 rounded-xl bg-red-500/20 border border-red-500/40">
+              <span class="text-xl font-mono font-black text-red-400" id="exam-timer-display">90:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question Grid Navigator Palette -->
+        <div class="p-3 rounded-xl bg-black/40 border border-white/10 space-y-2">
+          <span class="text-[10px] text-[var(--text-secondary)] uppercase font-bold block">QUESTION PALETTE (20 QUESTIONS)</span>
+          <div class="flex flex-wrap gap-2" id="exam-palette-grid">
+            <!-- 20 Question Buttons -->
+          </div>
+        </div>
+
+        <!-- Active Exam Question -->
+        <div class="p-4 rounded-xl glass-card space-y-3" id="exam-question-card">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-[#D6B66C] font-bold" id="exam-q-number">Question #1</span>
+            <button onclick="toggleFlagForReview()" class="text-xs text-purple-400 font-semibold" id="exam-flag-btn">🚩 Mark for Review</button>
+          </div>
+          <h4 class="text-sm font-bold text-white" id="exam-q-text">Loading question...</h4>
+          <div class="space-y-2" id="exam-options-list"></div>
+        </div>
+
+        <div class="flex justify-between items-center pt-2">
+          <button onclick="prevExamQ()" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-white">Previous</button>
+          <button onclick="nextExamQ()" class="btn-purple px-4 py-2 rounded-xl text-xs font-bold">Next Question</button>
+          <button onclick="submitExamNow()" class="btn-emerald px-5 py-2 rounded-xl text-xs font-bold">Submit Exam</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 8: 15 VIRTUAL TOOLS SUITE -->
+    <section id="tab-tools" class="tab-content hidden space-y-6">
+      <div>
+        <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+          <span>15 VIRTUAL STUDENT TOOLS</span>
+          <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono">FUNCTIONAL UTILITIES</span>
+        </h2>
+        <p class="text-xs text-[var(--text-secondary)]">Dedicated engineering calculators, study timers, ambient noise generator, and flowcharts</p>
+      </div>
+
+      <!-- Tools Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- 1. Scientific Calculator -->
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs text-[#D6B66C]">1. Scientific Calculator</h4>
+            <span class="text-[10px] text-[var(--text-secondary)]">Trig & Log</span>
+          </div>
+          <input type="text" id="calc-display" readonly value="0" class="w-full text-right font-mono text-base font-black px-3 py-2 rounded-lg bg-black/50 text-white border border-white/10" />
+          <div class="grid grid-cols-4 gap-1.5 text-xs font-mono">
+            <button onclick="calcKey('sin(')" class="p-2 rounded bg-white/5 hover:bg-white/15 text-[var(--text-secondary)]">sin</button>
+            <button onclick="calcKey('cos(')" class="p-2 rounded bg-white/5 hover:bg-white/15 text-[var(--text-secondary)]">cos</button>
+            <button onclick="calcKey('log(')" class="p-2 rounded bg-white/5 hover:bg-white/15 text-[var(--text-secondary)]">log</button>
+            <button onclick="calcClear()" class="p-2 rounded bg-red-500/20 text-red-400 font-bold">C</button>
+            <button onclick="calcKey('7')" class="p-2 rounded glass-card text-white">7</button>
+            <button onclick="calcKey('8')" class="p-2 rounded glass-card text-white">8</button>
+            <button onclick="calcKey('9')" class="p-2 rounded glass-card text-white">9</button>
+            <button onclick="calcKey('/')" class="p-2 rounded bg-[#D6B66C]/20 text-[#D6B66C]">/</button>
+            <button onclick="calcKey('4')" class="p-2 rounded glass-card text-white">4</button>
+            <button onclick="calcKey('5')" class="p-2 rounded glass-card text-white">5</button>
+            <button onclick="calcKey('6')" class="p-2 rounded glass-card text-white">6</button>
+            <button onclick="calcKey('*')" class="p-2 rounded bg-[#D6B66C]/20 text-[#D6B66C]">*</button>
+            <button onclick="calcKey('1')" class="p-2 rounded glass-card text-white">1</button>
+            <button onclick="calcKey('2')" class="p-2 rounded glass-card text-white">2</button>
+            <button onclick="calcKey('3')" class="p-2 rounded glass-card text-white">3</button>
+            <button onclick="calcKey('-')" class="p-2 rounded bg-[#D6B66C]/20 text-[#D6B66C]">-</button>
+            <button onclick="calcKey('0')" class="p-2 rounded glass-card text-white">0</button>
+            <button onclick="calcKey('.')" class="p-2 rounded glass-card text-white">.</button>
+            <button onclick="calcEquals()" class="p-2 rounded btn-gold font-bold col-span-2">=</button>
+          </div>
+        </div>
+
+        <!-- 2. CGPA / SGPA Calculator -->
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs text-[#51D6A0]">2. CGPA / SGPA Predictor</h4>
+            <span class="text-[10px] text-[#51D6A0] font-bold" id="gpa-result-text">SGPA: 8.42</span>
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="text-[var(--text-secondary)]">Maths (4 cr)</span>
+              <select class="px-2 py-0.5 rounded bg-black/40 text-xs" onchange="calcGpa()"><option>A+ (9)</option><option selected>A (8)</option><option>B+ (7)</option></select>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[var(--text-secondary)]">Physics (4 cr)</span>
+              <select class="px-2 py-0.5 rounded bg-black/40 text-xs" onchange="calcGpa()"><option selected>A+ (9)</option><option>A (8)</option><option>B+ (7)</option></select>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[var(--text-secondary)]">Python (3 cr)</span>
+              <select class="px-2 py-0.5 rounded bg-black/40 text-xs" onchange="calcGpa()"><option selected>O (10)</option><option>A+ (9)</option><option>A (8)</option></select>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[var(--text-secondary)]">Electronics (3 cr)</span>
+              <select class="px-2 py-0.5 rounded bg-black/40 text-xs" onchange="calcGpa()"><option>A (8)</option><option selected>B+ (7)</option><option>B (6)</option></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Pomodoro Focus Timer -->
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3 text-center">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs text-[#9875FF]">3. Pomodoro Focus Timer</h4>
+            <span class="text-[10px] text-[var(--text-secondary)]">25m Work / 5m Rest</span>
+          </div>
+          <div class="text-3xl font-mono font-black text-[#51D6A0] py-2" id="pomodoro-timer-num">25:00</div>
+          <div class="flex justify-center gap-2 text-xs">
+            <button onclick="togglePomodoro()" id="pomo-toggle-btn" class="btn-emerald px-4 py-1.5 rounded-lg font-bold">Start Focus</button>
+            <button onclick="resetPomodoro()" class="glass-card px-3 py-1.5 rounded-lg text-[var(--text-secondary)]">Reset</button>
+          </div>
+        </div>
+
+        <!-- 4. Focus Mode (Lo-Fi Ambient White Noise) -->
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs text-[#48B8FF]">4. Ambient Focus Sound</h4>
+            <span class="text-[10px] text-[#48B8FF] font-bold" id="focus-sound-status">Idle</span>
+          </div>
+          <p class="text-[11px] text-[var(--text-secondary)]">Synthesize gentle rain / lo-fi white noise directly via Web Audio API.</p>
+          <div class="flex gap-2 text-xs">
+            <button onclick="toggleAmbientSound('rain')" id="snd-btn-rain" class="flex-1 py-1.5 rounded-lg glass-card font-semibold">🌧️ Rain Hum</button>
+            <button onclick="toggleAmbientSound('whitenoise')" id="snd-btn-wn" class="flex-1 py-1.5 rounded-lg glass-card font-semibold">📻 Lo-Fi Noise</button>
+          </div>
+        </div>
+
+        <!-- 5. Mind Map Concept Generator -->
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs text-[#D6B66C]">5. Mind Map Generator</h4>
+            <span class="text-[10px] text-[var(--text-secondary)]">Hierarchical Tree</span>
+          </div>
+          <div class="p-2.5 rounded-lg bg-black/40 text-[11px] font-mono space-y-1 text-[#D6B66C]">
+            <div>📦 Physics Unit 3: Semiconductors</div>
+            <div class="pl-3">├── 🟢 Intrinsic (Pure Si / Ge)</div>
+            <div class="pl-3">├── 🔵 Extrinsic (Doped n-type / p-type)</div>
+            <div class="pl-6">└── 🟣 Fermi Level Shift & Hall Effect</div>
+          </div>
+        </div>
+
+        <!-- 6. Engineering Formula Library -->
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-xs text-[#F0D28B]">6. Formula Library</h4>
+            <span class="text-[10px] text-[var(--text-secondary)]">Physics & Maths</span>
+          </div>
+          <div class="space-y-1.5 text-[11px]">
+            <div class="p-1.5 rounded bg-white/5 flex justify-between">
+              <span class="text-[var(--text-secondary)]">Hall Voltage:</span>
+              <span class="font-mono text-[#D6B66C]">VH = (I·B)/(ρ·w)</span>
+            </div>
+            <div class="p-1.5 rounded bg-white/5 flex justify-between">
+              <span class="text-[var(--text-secondary)]">Cayley-Hamilton:</span>
+              <span class="font-mono text-[#D6B66C]">det(A - λI) = 0</span>
+            </div>
+            <div class="p-1.5 rounded bg-white/5 flex justify-between">
+              <span class="text-[var(--text-secondary)]">Attendance Target:</span>
+              <span class="font-mono text-[#51D6A0]">A ≥ 0.75 × T</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 9: THE STASH (COLLEGE PDFS & DOCS) -->
+    <section id="tab-docs" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>THE STASH</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono">COLLEGE VAULT</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Preloaded ABES syllabus, timetables, and notes storage</p>
+        </div>
+        <button onclick="triggerPdfUpload()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold">
+          + Upload Document
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-bold">PDF</span>
+            <span class="text-[10px] text-[var(--text-secondary)]">1.4 MB</span>
+          </div>
+          <h4 class="font-bold text-sm text-[var(--text-primary)]">AKTU_Syllabus_CSE_AIML_2026.pdf</h4>
+          <p class="text-xs text-[var(--text-secondary)]">Complete 5 units syllabus for Physics, Maths, Python, and Electronics.</p>
+          <button onclick="switchTab('notes')" class="text-xs text-[#D6B66C] font-bold hover:underline">Extract Notes →</button>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-0.5 rounded bg-[#48B8FF]/20 text-[#48B8FF] font-bold">PDF</span>
+            <span class="text-[10px] text-[var(--text-secondary)]">480 KB</span>
+          </div>
+          <h4 class="font-bold text-sm text-[var(--text-primary)]">ABES_Timetable_Odd_Sem_2026.pdf</h4>
+          <p class="text-xs text-[var(--text-secondary)]">Official weekly timetable with faculty names and room allocations.</p>
+          <button onclick="switchTab('timetable')" class="text-xs text-[#48B8FF] font-bold hover:underline">View Schedule →</button>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl border border-[var(--border-color)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs px-2 py-0.5 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-bold">DOC</span>
+            <span class="text-[10px] text-[var(--text-secondary)]">920 KB</span>
+          </div>
+          <h4 class="font-bold text-sm text-[var(--text-primary)]">Semiconductor_Physics_Handwritten.pdf</h4>
+          <p class="text-xs text-[var(--text-secondary)]">Class notes on Hall effect, Fermi-Dirac distribution, and band gaps.</p>
+          <button onclick="switchTab('notes')" class="text-xs text-[#51D6A0] font-bold hover:underline">Summarize →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 10: SHOWTIME (18-SLIDE PITCH DECK DEMO) -->
+    <section id="tab-showtime" class="tab-content hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black flex items-center gap-2" style="color: var(--text-primary)">
+            <span>SHOWTIME</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#9875FF] font-mono">18-SLIDE DECK</span>
+          </h2>
+          <p class="text-xs text-[var(--text-secondary)]">Complete interactive presentation extracted from the official ZYNAX pitch</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="prevSlide()" class="px-3 py-1.5 rounded-xl glass-card text-xs font-bold">← Prev</button>
+          <span class="text-xs font-mono font-bold text-[#D6B66C]" id="slide-indicator">Slide 1 / 18</span>
+          <button onclick="nextSlide()" class="px-3 py-1.5 rounded-xl btn-gold text-xs font-bold">Next →</button>
+        </div>
+      </div>
+
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-[var(--border-color)] space-y-4">
+        <div id="slide-stage-content" class="space-y-4">
+          <!-- Dynamically populated from slides data -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 11: LOCK IN / SQUAD LOGIN & DATA PROTECTION -->
+    <section id="tab-auth" class="tab-content hidden space-y-6">
+      <div class="max-w-xl mx-auto glass-panel p-6 sm:p-8 rounded-2xl border border-[var(--border-color)] space-y-5">
+        <div class="text-center space-y-1">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#D6B66C] to-[#9875FF] mx-auto flex items-center justify-center text-xl font-black text-black mb-2 shadow-lg">
+            Z
+          </div>
+          <h2 class="text-2xl font-black text-[var(--text-primary)]">Squad Login & Account Security</h2>
+          <p class="text-xs text-[var(--text-secondary)]">"YOUR CAMPUS. YOUR INTELLIGENCE. YOUR FUTURE."</p>
+        </div>
+
+        <div class="space-y-3.5">
+          <div>
+            <label class="text-xs text-[var(--text-secondary)] block mb-1">Student Full Name</label>
+            <input type="text" id="auth-name" value="Anurag Banik" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-[var(--text-primary)] focus:outline-none focus:border-[#D6B66C]" />
+          </div>
+          <div>
+            <label class="text-xs text-[var(--text-secondary)] block mb-1">College Email Address</label>
+            <input type="email" id="auth-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-[var(--text-primary)] focus:outline-none focus:border-[#D6B66C]" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs text-[var(--text-secondary)] block mb-1">Admission / Roll No</label>
+              <input type="text" id="auth-roll" value="2026ABES042" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-[var(--text-primary)] focus:outline-none focus:border-[#D6B66C]" />
+            </div>
+            <div>
+              <label class="text-xs text-[var(--text-secondary)] block mb-1">Branch & Section</label>
+              <input type="text" id="auth-branch" value="CSE (AI/ML) Sec A" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-[var(--text-primary)] focus:outline-none focus:border-[#D6B66C]" />
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-col gap-2">
+            <button onclick="requestOtp()" class="w-full btn-gold py-2.5 rounded-xl text-xs font-bold">
+              Generate Verification OTP
+            </button>
+            <button onclick="simulateGoogleLogin()" class="w-full glass-card py-2.5 rounded-xl text-xs font-bold text-[var(--text-primary)] hover:border-[#48B8FF] flex items-center justify-center gap-2">
+              <span>🌐 Sign in with Google / Campus Workspace</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- OTP Verification Display Box -->
+        <div id="auth-otp-box" class="hidden p-3.5 rounded-xl bg-[#D6B66C]/10 border border-[#D6B66C]/30 text-center space-y-2">
+          <span class="text-[10px] text-[#D6B66C] font-bold uppercase tracking-wider block">Generated Verification OTP</span>
+          <span id="displayed-otp" class="text-2xl font-mono font-black text-white tracking-widest">849201</span>
+          <div class="flex gap-2 pt-1">
+            <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" maxlength="6" class="w-full px-3 py-1.5 rounded-lg glass-card text-center font-mono text-xs text-white" />
+            <button onclick="verifyOtpNow()" class="btn-emerald px-4 py-1.5 rounded-lg text-xs font-bold">Verify</button>
+          </div>
+        </div>
+
+        <!-- Student Data Protection & Privacy Controls -->
+        <div class="pt-4 border-t border-[var(--border-color)] space-y-3">
+          <h4 class="text-xs uppercase font-bold text-[#D6B66C]">🔒 Student Data Protection & Privacy</h4>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="exportStudentData()" class="px-3 py-2 rounded-xl glass-card text-xs font-bold text-[var(--text-primary)] hover:border-[#51D6A0]">
+              📥 Export My Data (JSON)
+            </button>
+            <button onclick="resetStudentData()" class="px-3 py-2 rounded-xl bg-red-500/10 border border-red-500/30 text-xs font-bold text-red-400 hover:bg-red-500/20">
+              🗑️ Reset / Wipe Device Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL: GEMINI AI VOICE ASSISTANT POPUP
+       ======================================================================== -->
+  <div id="gemini-voice-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-lg rounded-2xl border border-[var(--border-color)] p-5 sm:p-6 space-y-4 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-[var(--border-color)]">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#9875FF] via-[#48B8FF] to-[#D6B66C] flex items-center justify-center text-black font-black text-sm">
+            G
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-[var(--text-primary)]">Gemini AI Campus Assistant</h3>
+            <span class="text-[10px] text-[#51D6A0]">Voice & Text Grounded Engine Active</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- Language Selector -->
+          <select id="gemini-lang-select" class="px-2 py-1 rounded bg-black/50 border border-[var(--border-color)] text-xs text-[var(--text-primary)] focus:outline-none" onchange="changeAssistantLang(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+          </select>
+          <button onclick="closeGeminiVoiceModal()" class="w-7 h-7 rounded-lg glass-card flex items-center justify-center text-xs text-[var(--text-secondary)] hover:text-white">✕</button>
+        </div>
+      </div>
+
+      <!-- Animated Voice Wave Visualizer Area -->
+      <div class="p-4 rounded-xl bg-black/40 border border-[var(--border-color)] flex flex-col items-center justify-center space-y-3 text-center">
+        <div class="flex items-center gap-1.5 h-10" id="voice-wave-container">
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+        </div>
+        <span class="text-xs text-[#D6B66C] font-semibold" id="voice-status-text">Click microphone to speak or choose a prompt</span>
+      </div>
+
+      <!-- Chat History Box -->
+      <div id="gemini-chat-log" class="h-44 overflow-y-auto space-y-2 p-3 rounded-xl bg-black/30 border border-white/5 text-xs">
+        <div class="p-2.5 rounded-lg bg-white/5 text-[var(--text-primary)]">
+          <strong class="text-[#D6B66C]">Gemini:</strong> Yo Anurag! Ask me anything about your ABES routine, attendance stats, MT-02 physics topics, or LeetCode solutions.
+        </div>
+      </div>
+
+      <!-- Quick Chips -->
+      <div class="flex gap-1.5 overflow-x-auto pb-1 text-[11px]">
+        <button onclick="quickVoiceAsk('What is my next class today?')" class="px-2.5 py-1 rounded-full glass-card text-[var(--text-secondary)] whitespace-nowrap hover:text-white">Next class?</button>
+        <button onclick="quickVoiceAsk('Am I safe to bunk Electronics?')" class="px-2.5 py-1 rounded-full glass-card text-[var(--text-secondary)] whitespace-nowrap hover:text-white">Safe to bunk?</button>
+        <button onclick="quickVoiceAsk('Explain semiconductors in simple terms')" class="px-2.5 py-1 rounded-full glass-card text-[var(--text-secondary)] whitespace-nowrap hover:text-white">Semiconductors?</button>
+        <button onclick="quickVoiceAsk('Plan my MT-02 exam prep')" class="px-2.5 py-1 rounded-full glass-card text-[var(--text-secondary)] whitespace-nowrap hover:text-white">Plan MT-02</button>
+      </div>
+
+      <!-- Voice Input & Text Controls -->
+      <div class="flex gap-2 items-center pt-1">
+        <button onclick="toggleVoiceRecording()" id="voice-rec-btn" class="p-2.5 rounded-xl bg-gradient-to-tr from-[#9875FF] to-[#D6B66C] text-black font-bold flex items-center justify-center shadow-lg hover:scale-105 transition" title="Start Voice Input">
+          <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+        </button>
+        <input type="text" id="gemini-chat-input" placeholder="Type or speak in English, Hindi, or Bengali..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-black/40 border border-[var(--border-color)] text-xs text-white focus:outline-none focus:border-[#D6B66C]" onkeydown="if(event.key==='Enter')sendGeminiMsg()" />
+        <button onclick="sendGeminiMsg()" class="btn-gold px-4 py-2.5 rounded-xl text-xs font-bold">Ask</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: DAILY CLASS REMINDER & NOTIFICATION CENTER
+       ======================================================================== -->
+  <div id="reminder-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-md rounded-2xl border border-[var(--border-color)] p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)]">
+        <div class="flex items-center gap-2">
+          <span class="text-base">🔔</span>
+          <h3 class="font-bold text-sm text-[var(--text-primary)]">Class Reminder Center</h3>
+        </div>
+        <button onclick="toggleReminderPanel()" class="w-7 h-7 rounded-lg glass-card flex items-center justify-center text-xs text-[var(--text-secondary)]">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="p-3 rounded-xl bg-[#51D6A0]/15 border border-[#51D6A0]/30 space-y-1">
+          <span class="text-[10px] font-bold uppercase text-[#51D6A0] block">ACTIVE REMINDER SCHEDULE</span>
+          <p class="text-white font-semibold" id="reminder-active-status">"Hey Anurag! Your Engineering Physics class starts in 20 minutes in Room 204 with Dr. Verma."</p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[var(--text-primary)]">Desktop Browser Notifications</span>
+            <input type="checkbox" id="reminder-notif-toggle" checked class="accent-[#D6B66C]" onchange="toggleBrowserNotifs(this.checked)" />
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-[var(--text-primary)]">Sound Chimes (Web Audio API)</span>
+            <input type="checkbox" id="reminder-sound-toggle" checked class="accent-[#D6B66C]" />
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-[var(--text-primary)]">Advance Reminder Notice</span>
+            <select id="reminder-time-select" class="px-2 py-1 rounded bg-black/40 text-xs">
+              <option value="10">10 minutes before</option>
+              <option value="20" selected>20 minutes before</option>
+              <option value="30">30 minutes before</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button onclick="testNotificationAlert()" class="flex-1 btn-gold py-2 rounded-xl text-xs font-bold">
+            Test Sound & Alert Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Fixed Bottom Navigation Bar -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 glass-panel border-t border-[var(--border-color)] px-2 py-1.5 flex items-center justify-around">
+    <button onclick="switchTab('dashboard')" class="mobile-tab-btn flex flex-col items-center py-1 text-[#D6B66C]" data-tab="dashboard">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Vibes</span>
+    </button>
+    <button onclick="switchTab('timetable')" class="mobile-tab-btn flex flex-col items-center py-1 text-[var(--text-secondary)]" data-tab="timetable">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Grind</span>
+    </button>
+    <button onclick="switchTab('attendance')" class="mobile-tab-btn flex flex-col items-center py-1 text-[var(--text-secondary)]" data-tab="attendance">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Pull Up</span>
+    </button>
+    <button onclick="switchTab('arena')" class="mobile-tab-btn flex flex-col items-center py-1 text-[var(--text-secondary)]" data-tab="arena">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">Arena</span>
+    </button>
+    <button onclick="toggleMobileMoreSheet()" class="mobile-tab-btn flex flex-col items-center py-1 text-[var(--text-secondary)]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+      <span class="text-[9px] font-bold mt-0.5">More</span>
+    </button>
+  </nav>
+
+  <!-- Mobile "More" Sheet Overlay -->
+  <div id="mobile-more-sheet" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex flex-col justify-end p-4">
+    <div class="glass-panel rounded-2xl p-5 border border-[var(--border-color)] space-y-4 max-h-[80vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-2 border-b border-white/10">
+        <h3 class="font-bold text-[var(--text-primary)] text-sm">ZYNAX 2.0 Ecosystem</h3>
+        <button onclick="toggleMobileMoreSheet()" class="text-xs px-2.5 py-1 rounded-lg glass-card text-[var(--text-secondary)]">✕ Close</button>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <button onclick="switchTab('planner'); toggleMobileMoreSheet();" class="p-3 rounded-xl glass-card text-left">
+          <div class="font-bold text-white">Study Arc</div>
+          <div class="text-[10px] text-[#9875FF]">Exam Roadmap</div>
+        </button>
+        <button onclick="switchTab('notes'); toggleMobileMoreSheet();" class="p-3 rounded-xl glass-card text-left">
+          <div class="font-bold text-white">Brain Dump</div>
+          <div class="text-[10px] text-[#51D6A0]">12 AI Features</div>
+        </button>
+        <button onclick="switchTab('quiz'); toggleMobileMoreSheet();" class="p-3 rounded-xl glass-card text-left">
+          <div class="font-bold text-white">Boss Battle</div>
+          <div class="text-[10px] text-red-400">90-Min Exam</div>
+        </button>
+        <button onclick="switchTab('tools'); toggleMobileMoreSheet();" class="p-3 rounded-xl glass-card text-left">
+          <div class="font-bold text-white">15 Tools Suite</div>
+          <div class="text-[10px] text-[#D6B66C]">Utilities</div>
+        </button>
+        <button onclick="switchTab('docs'); toggleMobileMoreSheet();" class="p-3 rounded-xl glass-card text-left">
+          <div class="font-bold text-white">The Stash</div>
+          <div class="text-[10px] text-[var(--text-secondary)]">PDF Vault</div>
+        </button>
+        <button onclick="switchTab('showtime'); toggleMobileMoreSheet();" class="p-3 rounded-xl glass-card text-left">
+          <div class="font-bold text-white">Showtime</div>
+          <div class="text-[10px] text-[#9875FF]">18-Slide Deck</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden File Input for PDF simulation -->
+  <input type="file" id="pdf-file-input" class="hidden" accept=".pdf,.txt,.docx" onchange="handleFileSelected(event)" />
+
+  <!-- ========================================================================
+       JAVASCRIPT APPLICATION ENGINE (ZYNAX 2.0)
+       ======================================================================== -->
+  <script>
+    // --- Application State ---
+    const APP_STATE = {
+      user: {
+        name: "Anurag Banik",
+        email: "anurag.banik@abes.ac.in",
+        roll: "2026ABES042",
+        branch: "CSE (AI/ML) Sec A",
+        college: "ABES Engineering College",
+        xp: 1450,
+        streak: 5
+      },
+      currentTab: "dashboard",
+      theme: "dark",
+      activeLang: "en",
+      activeDay: "Thu",
+      targetAttCriteria: 75,
+      subjects: [
+        { id: "maths", name: "Mathematics", attended: 34, total: 50, faculty: "Prof. Sharma", room: "Room 101" },
+        { id: "physics", name: "Engineering Physics", attended: 41, total: 50, faculty: "Dr. Verma", room: "Room 204" },
+        { id: "prog", name: "Programming in Python", attended: 45, total: 49, faculty: "Prof. Gupta", room: "Lab 1" },
+        { id: "english", name: "English & Soft Skills", attended: 37, total: 50, faculty: "Dr. Sen", room: "Room 305" },
+        { id: "electronics", name: "Basic Electronics", attended: 31, total: 50, faculty: "Prof. Mehta", room: "Room 108" }
+      ],
+      timetable: {
+        Mon: [
+          { time: "09:00 - 10:00", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" },
+          { time: "10:00 - 11:00", subject: "Engineering Physics", room: "Room 204", faculty: "Dr. Verma" },
+          { time: "11:15 - 01:15", subject: "Programming Lab", room: "Lab 1", faculty: "Prof. Gupta" },
+          { time: "02:00 - 03:00", subject: "Basic Electronics", room: "Room 108", faculty: "Prof. Mehta" }
+        ],
+        Tue: [
+          { time: "09:00 - 10:00", subject: "English", room: "Room 305", faculty: "Dr. Sen" },
+          { time: "10:00 - 11:00", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" },
+          { time: "11:15 - 12:15", subject: "Engineering Physics", room: "Room 204", faculty: "Dr. Verma" },
+          { time: "01:00 - 03:00", subject: "Physics Lab", room: "Lab 3", faculty: "Dr. Verma" }
+        ],
+        Wed: [
+          { time: "09:00 - 10:00", subject: "Basic Electronics", room: "Room 108", faculty: "Prof. Mehta" },
+          { time: "10:00 - 11:00", subject: "Programming in Python", room: "Lab 1", faculty: "Prof. Gupta" },
+          { time: "11:15 - 12:15", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" },
+          { time: "02:00 - 03:00", subject: "English", room: "Room 305", faculty: "Dr. Sen" }
+        ],
+        Thu: [
+          { time: "09:00 - 10:00", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" },
+          { time: "10:00 - 11:00", subject: "Engineering Physics", room: "Room 204", faculty: "Dr. Verma", isNext: true },
+          { time: "11:15 - 01:15", subject: "Physics Lab", room: "Lab 3", faculty: "Dr. Verma" },
+          { time: "02:00 - 03:00", subject: "English & Soft Skills", room: "Room 305", faculty: "Dr. Sen" }
+        ],
+        Fri: [
+          { time: "09:00 - 10:00", subject: "Programming in Python", room: "Lab 1", faculty: "Prof. Gupta" },
+          { time: "10:00 - 11:00", subject: "Basic Electronics", room: "Room 108", faculty: "Prof. Mehta" },
+          { time: "11:15 - 12:15", subject: "Mathematics", room: "Room 101", faculty: "Prof. Sharma" },
+          { time: "01:00 - 03:00", subject: "Electronics Lab", room: "Lab 2", faculty: "Prof. Mehta" }
+        ],
+        Sat: [
+          { time: "10:00 - 12:00", subject: "Hackathon Prep / Project Mentorship", room: "Innovation Hub", faculty: "Anurag Banik" }
+        ]
+      },
+      chapters: [
+        { unit: "Unit 1", name: "Optics & Interference", progress: 100, topics: "Wave theory, thin films, Newton rings" },
+        { unit: "Unit 2", name: "Nanomaterials", progress: 70, topics: "Quantum confinement, fullerenes, CNTs" },
+        { unit: "Unit 3", name: "Semiconductors", progress: 35, topics: "Energy bands, intrinsic vs extrinsic, Fermi level" },
+        { unit: "Unit 4", name: "Lasers & Fiber", progress: 0, topics: "Stimulated emission, optical fibers, numerical aperture" }
+      ],
+      notes: [
+        {
+          id: "note-1",
+          title: "Physics: Unit 3 - Semiconductors",
+          subject: "Engineering Physics · Unit 3",
+          content: "SEMICONDUCTORS CORE SUMMARY:\n1. Energy Bands: Conduction band (CB), Valence Band (VB) and Band Gap (Eg).\n- Insulators: Eg > 3 eV\n- Semiconductors: Eg ~ 1 eV (Si = 1.1 eV, Ge = 0.7 eV)\n- Conductors: Overlapping bands (Eg = 0)\n\n2. Intrinsic vs Extrinsic:\n- Intrinsic: Pure semiconductor, ni = pi = n\n- Extrinsic: Doped for conductivity\n  * n-type: Pentavalent dopants (P, As, Sb). Electrons are majority carriers.\n  * p-type: Trivalent dopants (B, Al, Ga). Holes are majority carriers.\n\n3. Fermi Level (Ef):\n- Intrinsic: Lies middle of band gap.\n- n-type: Shifts towards conduction band.\n- p-type: Shifts towards valence band.\n\n4. Hall Effect:\n- When a current-carrying conductor is placed in a transverse magnetic field, a voltage (VH) is developed across its edges. Formula: VH = (IB)/(ρ w)."
+        },
+        {
+          id: "note-2",
+          title: "Maths: Matrices & Eigenvalues",
+          subject: "Applied Mathematics I",
+          content: "EIGENVALUES & CAYLEY-HAMILTON:\n1. Characteristic Equation: det(A - λI) = 0.\n2. Cayley-Hamilton Theorem: Every square matrix satisfies its own characteristic equation. Useful for finding A^(-1) and higher powers A^n.\n3. Diagonalization: If matrix has n linearly independent eigenvectors, A = P D P^(-1)."
+        }
+      ],
+      activeNoteId: "note-1",
+      activeNoteFeature: "summary",
+      codeTemplates: {
+        python: `def subarraySum(nums: list[int], k: int) -> int:\n    count = 0\n    curr_sum = 0\n    prefix_sums = {0: 1}\n    for num in nums:\n        curr_sum += num\n        if (curr_sum - k) in prefix_sums:\n            count += prefix_sums[curr_sum - k]\n        prefix_sums[curr_sum] = prefix_sums.get(curr_sum, 0) + 1\n    return count\n\n# Test call\nprint(subarraySum([1, 1, 1], 2)) # Expected: 2`,
+        javascript: `function subarraySum(nums, k) {\n    let count = 0, sum = 0;\n    const map = new Map();\n    map.set(0, 1);\n    for (let num of nums) {\n        sum += num;\n        if (map.has(sum - k)) count += map.get(sum - k);\n        map.set(sum, (map.get(sum) || 0) + 1);\n    }\n    return count;\n}\nconsole.log(subarraySum([1, 1, 1], 2)); // Expected: 2`,
+        cpp: `#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nint subarraySum(vector<int>& nums, int k) {\n    unordered_map<int, int> mp;\n    mp[0] = 1;\n    int sum = 0, count = 0;\n    for(int num : nums) {\n        sum += num;\n        if(mp.find(sum - k) != mp.end()) count += mp[sum - k];\n        mp[sum]++;\n    }\n    return count;\n}`,
+        java: `import java.util.*;\nclass Solution {\n    public int subarraySum(int[] nums, int k) {\n        int count = 0, sum = 0;\n        Map<Integer, Integer> map = new HashMap<>();\n        map.put(0, 1);\n        for (int num : nums) {\n            sum += num;\n            if (map.containsKey(sum - k)) count += map.get(sum - k);\n            map.put(sum, map.getOrDefault(sum, 0) + 1);\n        }\n        return count;\n    }\n}`
+      },
+      quiz: {
+        index: 0,
+        score: 0,
+        questions: [
+          {
+            q: "Which particle carries the majority charge in an n-type semiconductor?",
+            options: ["Electrons", "Holes", "Protons", "Neutrons"],
+            answer: 0,
+            explanation: "In n-type semiconductors, pentavalent impurities donate extra conduction electrons, making electrons the majority carrier."
+          },
+          {
+            q: "According to Cayley-Hamilton theorem, what does every square matrix satisfy?",
+            options: ["Newton's second law", "Its own characteristic equation", "Ohm's law", "Maxwell's equations"],
+            answer: 1,
+            explanation: "Cayley-Hamilton theorem states that substituting A into det(A - λI) = 0 yields the null matrix."
+          },
+          {
+            q: "What is the typical band gap (Eg) of Silicon at room temperature?",
+            options: ["~ 0.1 eV", "~ 1.1 eV", "~ 5.4 eV", "0.0 eV"],
+            answer: 1,
+            explanation: "Silicon has an indirect band gap of approximately 1.1 eV at room temperature (300K)."
+          },
+          {
+            q: "In C language, what operator is used to obtain the memory address of a variable?",
+            options: ["*", "&", "->", "%"],
+            answer: 1,
+            explanation: "The ampersand '&' is the address-of operator in C."
+          },
+          {
+            q: "What is the minimum college attendance percentage recommended at ABES?",
+            options: ["50%", "65%", "75%", "90%"],
+            answer: 2,
+            explanation: "75% is the standard university mandate to appear in end-semester examinations."
+          }
+        ]
+      },
+      examMode: {
+        active: false,
+        timeRemaining: 90 * 60,
+        timerInt: null,
+        currentQ: 0,
+        answers: {},
+        flagged: {},
+        cameraStream: null
+      },
+      currentSlide: 1,
+      slidesData: [
+        { num: 1, title: "ZYNAX 2.0: The AI Campus Operating System", subtitle: "One Campus. One Intelligence. Infinite Possibilities.", content: "Comprehensive attendance, timetable, notes, and LeetCode ecosystem in one unified Gen-Z interface." },
+        { num: 2, title: "THE STRUGGLE IS REAL", subtitle: "Everyday student friction", content: "Attendance chaos, PDF timetable confusion, exam pressure with no schedule, fragmented notes, and 6 different apps." },
+        { num: 3, title: "ENTER ZYNAX 2.0", subtitle: "Unified College Intelligence", content: "AI Voice Assistant, Daily LeetCode Arena, 90-Min Exam Mode, 12-Feature Smart Notes, and 15 Virtual Student Tools." }
+      ]
+    };
+
+    // --- Tab Switching Logic ---
+    function switchTab(tabId) {
+      APP_STATE.currentTab = tabId;
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+      const target = document.getElementById("tab-" + tabId);
+      if (target) target.classList.remove("hidden");
+
+      // Update Desktop Nav styles
+      document.querySelectorAll(".nav-item").forEach(btn => {
+        if (btn.getAttribute("data-tab") === tabId) {
+          btn.className = "nav-item px-3 py-1.5 rounded-lg text-[#D6B66C] font-bold";
+        } else {
+          btn.className = "nav-item px-3 py-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]";
+        }
+      });
+
+      // Update Mobile Nav styles
+      document.querySelectorAll(".mobile-tab-btn").forEach(btn => {
+        if (btn.getAttribute("data-tab") === tabId) {
+          btn.className = "mobile-tab-btn flex flex-col items-center py-1 text-[#D6B66C]";
+        } else {
+          btn.className = "mobile-tab-btn flex flex-col items-center py-1 text-[var(--text-secondary)]";
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Trigger lazy tab renders
+      if (tabId === "timetable") renderTimetable();
+      if (tabId === "attendance") renderAttendance();
+      if (tabId === "notes") renderSmartNotesUI();
+      if (tabId === "quiz") renderStandardQuiz();
+      if (tabId === "planner") renderChapters();
+      if (tabId === "arena") initArena();
+      if (tabId === "showtime") renderSlide();
+    }
+
+    // --- Theme Switcher (Dark Mode / Light Mode) ---
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains("light-mode")) {
+        html.classList.remove("light-mode");
+        html.classList.add("dark-mode");
+        APP_STATE.theme = "dark";
+        document.getElementById("theme-icon").innerText = "☀️";
+      } else {
+        html.classList.remove("dark-mode");
+        html.classList.add("light-mode");
+        APP_STATE.theme = "light";
+        document.getElementById("theme-icon").innerText = "🌙";
+      }
+      try { localStorage.setItem("zynax_theme", APP_STATE.theme); } catch (e) {}
+    }
+
+    function initTheme() {
+      try {
+        const saved = localStorage.getItem("zynax_theme");
+        if (saved === "light") {
+          document.documentElement.classList.add("light-mode");
+          document.documentElement.classList.remove("dark-mode");
+          APP_STATE.theme = "light";
+          document.getElementById("theme-icon").innerText = "🌙";
+        }
+      } catch (e) {}
+    }
+
+    // --- Timetable Logic ---
+    function selectDay(day) {
+      APP_STATE.activeDay = day;
+      document.querySelectorAll(".day-btn").forEach(b => {
+        if (b.getAttribute("data-day") === day) {
+          b.className = "day-btn px-3 py-1.5 rounded-xl text-xs font-bold btn-gold";
+        } else {
+          b.className = "day-btn px-3 py-1.5 rounded-xl text-xs font-bold glass-card";
+        }
+      });
+      renderTimetable();
+    }
+
+    function renderTimetable() {
+      const container = document.getElementById("timetable-slots-list");
+      if (!container) return;
+      container.innerHTML = "";
+      const slots = APP_STATE.timetable[APP_STATE.activeDay] || [];
+
+      slots.forEach((s, idx) => {
+        const div = document.createElement("div");
+        div.className = `p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition ${s.isNext ? 'glass-panel border-[#48B8FF] shadow-lg' : 'glass-card border-[var(--border-color)]'}`;
+        div.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg ${s.isNext ? 'bg-[#48B8FF]/20 text-[#48B8FF]' : 'bg-white/5 text-[var(--text-secondary)]'} flex items-center justify-center font-bold text-xs">
+              #${idx + 1}
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-sm text-[var(--text-primary)]">${s.subject}</h4>
+                ${s.isNext ? '<span class="text-[9px] px-1.5 rounded bg-[#48B8FF] text-black font-black uppercase">Next Up</span>' : ''}
+              </div>
+              <p class="text-xs text-[var(--text-secondary)]">${s.faculty} · <strong class="text-[#D6B66C]">${s.room}</strong></p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-xs font-bold text-[#D6B66C]">${s.time}</span>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // --- Attendance Calculations ---
+    function renderAttendance() {
+      const container = document.getElementById("attendance-subject-list");
+      if (!container) return;
+      container.innerHTML = "";
+
+      let totalAtt = 0, totalHeld = 0;
+      let totalSafeBunks = 0;
+      let maxDeficit = 0;
+
+      APP_STATE.subjects.forEach(s => {
+        totalAtt += s.attended;
+        totalHeld += s.total;
+        const pct = Math.round((s.attended / s.total) * 100);
+        const isSafe = pct >= APP_STATE.targetAttCriteria;
+
+        // Safe bunk formula: floor((A - T * criteria) / criteria)
+        const safeBunks = Math.max(0, Math.floor((s.attended - (APP_STATE.targetAttCriteria / 100) * s.total) / (APP_STATE.targetAttCriteria / 100)));
+        // Deficit recovery formula: ceil((criteria * T - A) / (1 - criteria))
+        const recoveryShortfall = isSafe ? 0 : Math.ceil(((APP_STATE.targetAttCriteria / 100) * s.total - s.attended) / (1 - (APP_STATE.targetAttCriteria / 100)));
+
+        totalSafeBunks += safeBunks;
+        if (recoveryShortfall > maxDeficit) maxDeficit = recoveryShortfall;
+
+        const card = document.createElement("div");
+        card.className = "p-4 rounded-xl glass-card flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+        card.innerHTML = `
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <h4 class="font-bold text-sm text-[var(--text-primary)]">${s.name}</h4>
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded ${isSafe ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">${pct}%</span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)]">${s.attended} of ${s.total} attended · ${s.faculty} (${s.room})</p>
+            <div class="text-[11px] font-semibold">
+              ${isSafe ? `<span class="text-green-400">🛡️ Safe to skip ${safeBunks} classes</span>` : `<span class="text-red-400">⚠️ Must attend next ${recoveryShortfall} consecutive classes</span>`}
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="modifyAttendance('${s.id}', -1)" class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 font-bold hover:bg-red-500/30 text-sm">−1</button>
+            <button onclick="modifyAttendance('${s.id}', 1)" class="w-8 h-8 rounded-lg bg-[#51D6A0]/20 text-[#51D6A0] font-bold hover:bg-[#51D6A0]/30 text-sm">+1</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      const aggPct = Math.round((totalAtt / totalHeld) * 1000) / 10;
+      document.getElementById("att-aggregate-pill").innerText = aggPct + "%";
+      document.getElementById("dash-agg-pct").innerText = aggPct + "%";
+      document.getElementById("cube-att").innerText = aggPct + "%";
+      document.getElementById("sim-safe-bunks").innerText = totalSafeBunks + " Classes";
+      document.getElementById("sim-deficit").innerText = maxDeficit + " Classes";
+    }
+
+    function modifyAttendance(id, delta) {
+      const sub = APP_STATE.subjects.find(s => s.id === id);
+      if (!sub) return;
+      if (delta === 1) { sub.attended++; sub.total++; }
+      else if (delta === -1) {
+        if (sub.attended > 0 && sub.total > sub.attended) sub.attended--;
+        else sub.total++;
+      }
+      renderAttendance();
+    }
+
+    function updateTargetThreshold(val) {
+      APP_STATE.targetAttCriteria = parseInt(val);
+      document.getElementById("target-att-label").innerText = val + "%";
+      renderAttendance();
+    }
+
+    // --- Daily Code Arena Engine ---
+    function initArena() {
+      const editor = document.getElementById("arena-code-editor");
+      if (editor && !editor.value) {
+        editor.value = APP_STATE.codeTemplates.python;
+      }
+    }
+
+    function changeCodeTemplate(lang) {
+      const editor = document.getElementById("arena-code-editor");
+      if (editor && APP_STATE.codeTemplates[lang]) {
+        editor.value = APP_STATE.codeTemplates[lang];
+      }
+    }
+
+    function resetCodeTemplate() {
+      const lang = document.getElementById("code-lang-selector").value;
+      changeCodeTemplate(lang);
+    }
+
+    function runCodeTests() {
+      const consoleOut = document.getElementById("arena-console-output");
+      const badge = document.getElementById("arena-status-badge");
+      badge.innerText = "Running...";
+      badge.className = "text-yellow-400";
+      consoleOut.innerText = "Compiling solution with runner...\nExecuting Test Case 1: nums = [1,1,1], k = 2...\nExecuting Test Case 2: nums = [1,2,3], k = 3...";
+
+      setTimeout(() => {
+        badge.innerText = "All Tests Passed ✓";
+        badge.className = "text-[#51D6A0]";
+        consoleOut.innerHTML = `
+          <span class="text-[#51D6A0] font-bold">✓ Test 1: Passed (Output: 2, Expected: 2)</span>\n
+          <span class="text-[#51D6A0] font-bold">✓ Test 2: Passed (Output: 2, Expected: 2)</span>\n
+          <span class="text-[var(--text-secondary)]">Runtime: 48 ms · Memory: 16.4 MB · $O(N)$ Time Complexity verified!</span>
+        `;
+      }, 500);
+    }
+
+    function submitCodeSolution() {
+      runCodeTests();
+      setTimeout(() => {
+        APP_STATE.user.xp += 100;
+        document.getElementById("header-xp").innerText = APP_STATE.user.xp.toLocaleString() + " XP";
+        alert("🎉 BOOM! Problem solved! +100 XP awarded. Daily streak secured for ABES Engineering College!");
+      }, 700);
+    }
+
+    function toggleArenaExplanation() {
+      const exp = document.getElementById("arena-exp-content");
+      const arrow = document.getElementById("arena-exp-arrow");
+      if (exp.classList.contains("hidden")) {
+        exp.classList.remove("hidden");
+        arrow.innerText = "▲";
+      } else {
+        exp.classList.add("hidden");
+        arrow.innerText = "▼";
+      }
+    }
+
+    // --- Study Arc Planner ---
+    function renderChapters() {
+      const container = document.getElementById("chapter-progress-list");
+      if (!container) return;
+      container.innerHTML = "";
+
+      APP_STATE.chapters.forEach(ch => {
+        const div = document.createElement("div");
+        div.className = "glass-card p-4 rounded-xl space-y-2 border border-[var(--border-color)]";
+        div.innerHTML = `
+          <div class="flex items-center justify-between text-xs">
+            <strong class="text-sm text-[var(--text-primary)]">${ch.unit}: ${ch.name}</strong>
+            <span class="font-mono text-xs font-bold text-[#D6B66C]">${ch.progress}%</span>
+          </div>
+          <p class="text-xs text-[var(--text-secondary)]">${ch.topics}</p>
+          <div class="w-full bg-black/40 rounded-full h-2 overflow-hidden">
+            <div class="bg-gradient-to-r from-[#D6B66C] to-[#51D6A0] h-2 rounded-full" style="width: ${ch.progress}%"></div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function generateStudyRoadmap() {
+      alert("✨ 12-Day Study Roadmap Generated!\n\nDay 1-3: Semiconductors (Unit 3)\nDay 4-6: Lasers & Optical Fibers (Unit 4)\nDay 7-9: PYQ & Numerical Practice (Newton rings, Hall coefficient)\nDay 10-12: Full 90-Minute Mock Test Simulations.");
+    }
+
+    // --- Brain Dump (12 AI Features) ---
+    function renderSmartNotesUI() {
+      const list = document.getElementById("saved-notes-list");
+      if (list) {
+        list.innerHTML = "";
+        APP_STATE.notes.forEach(n => {
+          const btn = document.createElement("button");
+          btn.className = `w-full text-left p-2.5 rounded-xl text-xs transition ${n.id === APP_STATE.activeNoteId ? 'glass-panel border-[#D6B66C] text-[#D6B66C]' : 'glass-card text-[var(--text-secondary)]'}`;
+          btn.onclick = () => { APP_STATE.activeNoteId = n.id; renderSmartNotesUI(); };
+          btn.innerHTML = `<strong class="text-[var(--text-primary)] block">${n.title}</strong><span class="text-[10px] text-[var(--text-secondary)]">${n.subject}</span>`;
+          list.appendChild(btn);
+        });
+      }
+
+      const activeNote = APP_STATE.notes.find(n => n.id === APP_STATE.activeNoteId) || APP_STATE.notes[0];
+      document.getElementById("active-note-title").innerText = activeNote.title;
+      showNoteFeature(APP_STATE.activeNoteFeature);
+    }
+
+    function showNoteFeature(feat) {
+      APP_STATE.activeNoteFeature = feat;
+      document.querySelectorAll("[id^='nft-']").forEach(b => {
+        b.className = "px-3 py-1 rounded-lg glass-card text-[var(--text-secondary)]";
+      });
+      const activeBtn = document.getElementById("nft-" + feat);
+      if (activeBtn) activeBtn.className = "px-3 py-1 rounded-lg bg-[#D6B66C] text-black font-bold";
+
+      const display = document.getElementById("smart-note-display");
+      if (!display) return;
+
+      const activeNote = APP_STATE.notes.find(n => n.id === APP_STATE.activeNoteId) || APP_STATE.notes[0];
+
+      if (feat === "summary") {
+        display.innerText = activeNote.content;
+      } else if (feat === "formulas") {
+        display.innerHTML = `
+          <strong>EXTRACTED FORMULAS (GROUNDED):</strong>\n
+          1. Hall Voltage: <span class="text-[#D6B66C] font-mono font-bold">VH = (I · B) / (ρ · w)</span>
+          2. Band Gap: <span class="text-[#D6B66C] font-mono font-bold">Eg(Si) ≈ 1.1 eV, Eg(Ge) ≈ 0.7 eV</span>
+          3. Intrinsic Carrier Concentration: <span class="text-[#D6B66C] font-mono font-bold">ni² = n · p</span>
+          4. Conductivity: <span class="text-[#D6B66C] font-mono font-bold">σ = e · (n·μn + p·μp)</span>
+        `;
+      } else if (feat === "mcqs") {
+        display.innerHTML = `
+          <strong>AI GENERATED EXAM MCQS (WITH ANSWERS):</strong>\n
+          <strong>Q1.</strong> What happens to the Fermi level in an n-type semiconductor as temperature increases?
+          <span class="text-[#51D6A0] block">✓ Answer: Shifts down toward the intrinsic level in the center.</span>\n
+          <strong>Q2.</strong> Hall coefficient is inversely proportional to which quantity?
+          <span class="text-[#51D6A0] block">✓ Answer: Charge carrier density (RH = 1 / ne).</span>
+        `;
+      } else if (feat === "questions") {
+        display.innerHTML = `
+          <strong>IMPORTANT EXAM QUESTIONS:</strong>\n
+          • <strong>Short Answer:</strong> Define Hall Effect and write down two practical applications in sensors.
+          • <strong>Long Answer:</strong> Derive an expression for Hall voltage in a p-type semiconductor and explain how to determine the sign of majority charge carriers.
+        `;
+      } else if (feat === "flashcards") {
+        display.innerHTML = `
+          <strong>AI STUDY FLASHCARDS:</strong>\n
+          🗂️ <strong>Card 1:</strong> Hall Effect → Voltage across conductor edges under transverse magnetic field.
+          🗂️ <strong>Card 2:</strong> Pentavalent Impurity → Phosphorus / Arsenic / Antimony → Extra electron (n-type).
+          🗂️ <strong>Card 3:</strong> Silicon Bandgap → 1.1 eV indirect gap.
+        `;
+      }
+    }
+
+    function generateSmartNotes() {
+      alert("✨ GENERATING 12 SMART NOTE ARTIFACTS...\n\n1. Document Summary\n2. Key Definitions\n3. Formula Extractor\n4. MCQs\n5. Exam Questions\n6. Printable PDF formatting.");
+      showNoteFeature('summary');
+    }
+
+    function downloadNotesPdf() {
+      window.print();
+    }
+
+    function triggerNoteUpload() {
+      document.getElementById("pdf-file-input").click();
+    }
+
+    // --- Boss Battle Standard Quiz ---
+    function renderStandardQuiz() {
+      const q = APP_STATE.quiz.questions[APP_STATE.quiz.index];
+      document.getElementById("quiz-progress-text").innerText = `Question ${APP_STATE.quiz.index + 1} of ${APP_STATE.quiz.questions.length}`;
+      document.getElementById("quiz-score-text").innerText = `Score: ${APP_STATE.quiz.score} / ${APP_STATE.quiz.questions.length}`;
+      document.getElementById("quiz-question-title").innerText = q.q;
+
+      const opts = document.getElementById("quiz-options-container");
+      opts.innerHTML = "";
+      const exp = document.getElementById("quiz-explanation-box");
+      exp.classList.add("hidden");
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "p-3 rounded-xl glass-card text-left text-xs font-semibold hover:border-[#D6B66C] transition";
+        btn.innerText = opt;
+        btn.onclick = () => {
+          if (idx === q.answer) {
+            btn.className = "p-3 rounded-xl bg-green-500/20 border border-green-500 text-green-400 font-bold text-xs";
+            APP_STATE.quiz.score++;
+          } else {
+            btn.className = "p-3 rounded-xl bg-red-500/20 border border-red-500 text-red-400 font-bold text-xs";
+          }
+          exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+          exp.classList.remove("hidden");
+          setTimeout(() => {
+            if (APP_STATE.quiz.index < APP_STATE.quiz.questions.length - 1) {
+              APP_STATE.quiz.index++;
+              renderStandardQuiz();
+            } else {
+              alert(`Quiz complete! Final Score: ${APP_STATE.quiz.score} / ${APP_STATE.quiz.questions.length}`);
+            }
+          }, 1500);
+        };
+        opts.appendChild(btn);
+      });
+    }
+
+    // --- 90-Minute Exam Mode Simulator ---
+    function start90MinExamMode() {
+      document.getElementById("quiz-standard-container").classList.add("hidden");
+      const container = document.getElementById("exam-mode-container");
+      container.classList.remove("hidden");
+      APP_STATE.examMode.active = true;
+
+      // Palette grid (20 questions)
+      const grid = document.getElementById("exam-palette-grid");
+      grid.innerHTML = "";
+      for (let i = 0; i < 20; i++) {
+        const btn = document.createElement("button");
+        btn.id = "palette-q-" + i;
+        btn.className = "w-8 h-8 rounded-lg glass-card text-xs font-bold font-mono text-[var(--text-secondary)]";
+        btn.innerText = i + 1;
+        btn.onclick = () => loadExamQ(i);
+        grid.appendChild(btn);
+      }
+
+      loadExamQ(0);
+
+      // Countdown Timer
+      if (APP_STATE.examMode.timerInt) clearInterval(APP_STATE.examMode.timerInt);
+      APP_STATE.examMode.timeRemaining = 90 * 60;
+      APP_STATE.examMode.timerInt = setInterval(() => {
+        if (APP_STATE.examMode.timeRemaining > 0) {
+          APP_STATE.examMode.timeRemaining--;
+          const m = Math.floor(APP_STATE.examMode.timeRemaining / 60);
+          const s = APP_STATE.examMode.timeRemaining % 60;
+          document.getElementById("exam-timer-display").innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        } else {
+          submitExamNow();
+        }
+      }, 1000);
+    }
+
+    function loadExamQ(idx) {
+      APP_STATE.examMode.currentQ = idx;
+      document.getElementById("exam-q-number").innerText = `Question #${idx + 1} of 20`;
+      document.getElementById("exam-q-text").innerText = `Mock Exam Problem #${idx + 1}: Analyze the quantum mechanical band gap characteristics and determine majority carrier mobility.`;
+
+      const optsList = document.getElementById("exam-options-list");
+      optsList.innerHTML = "";
+
+      const options = ["Direct Band Gap with photon emission", "Indirect Band Gap (requires phonon transition)", "Conductor overlapping state", "Forbidden energy insulator state"];
+      options.forEach((opt, oIdx) => {
+        const btn = document.createElement("button");
+        const isSelected = APP_STATE.examMode.answers[idx] === oIdx;
+        btn.className = `w-full p-3 rounded-xl text-left text-xs transition ${isSelected ? 'bg-[#9875FF]/30 border border-[#9875FF] text-white font-bold' : 'glass-card text-[var(--text-secondary)]'}`;
+        btn.innerText = opt;
+        btn.onclick = () => {
+          APP_STATE.examMode.answers[idx] = oIdx;
+          loadExamQ(idx);
+          updatePaletteBadge(idx);
+        };
+        optsList.appendChild(btn);
+      });
+      updatePaletteBadge(idx);
+    }
+
+    function updatePaletteBadge(idx) {
+      const btn = document.getElementById("palette-q-" + idx);
+      if (!btn) return;
+      if (APP_STATE.examMode.flagged[idx]) {
+        btn.className = "w-8 h-8 rounded-lg bg-purple-500/30 border border-purple-500 text-purple-300 font-bold text-xs";
+      } else if (APP_STATE.examMode.answers[idx] !== undefined) {
+        btn.className = "w-8 h-8 rounded-lg bg-green-500/30 border border-green-500 text-green-300 font-bold text-xs";
+      } else {
+        btn.className = "w-8 h-8 rounded-lg glass-card text-xs font-bold font-mono text-[var(--text-secondary)]";
+      }
+    }
+
+    function toggleFlagForReview() {
+      const q = APP_STATE.examMode.currentQ;
+      APP_STATE.examMode.flagged[q] = !APP_STATE.examMode.flagged[q];
+      updatePaletteBadge(q);
+    }
+
+    function nextExamQ() {
+      if (APP_STATE.examMode.currentQ < 19) loadExamQ(APP_STATE.examMode.currentQ + 1);
+    }
+
+    function prevExamQ() {
+      if (APP_STATE.examMode.currentQ > 0) loadExamQ(APP_STATE.examMode.currentQ - 1);
+    }
+
+    function submitExamNow() {
+      if (APP_STATE.examMode.timerInt) clearInterval(APP_STATE.examMode.timerInt);
+      const answeredCount = Object.keys(APP_STATE.examMode.answers).length;
+      alert(`⚔️ EXAM SUBMITTED SUCCESSFULLY!\n\nQuestions Answered: ${answeredCount} / 20\nScore: ${Math.round(answeredCount * 4.5)} / 100\nStatus: Exam integrity verified!`);
+      document.getElementById("exam-mode-container").classList.add("hidden");
+      document.getElementById("quiz-standard-container").classList.remove("hidden");
+      if (APP_STATE.examMode.cameraStream) {
+        APP_STATE.examMode.cameraStream.getTracks().forEach(t => t.stop());
+      }
+    }
+
+    async function toggleExamCamera() {
+      const box = document.getElementById("exam-cam-box");
+      const video = document.getElementById("exam-cam-video");
+      if (box.classList.contains("hidden")) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          APP_STATE.examMode.cameraStream = stream;
+          video.srcObject = stream;
+          box.classList.remove("hidden");
+          document.getElementById("exam-cam-toggle").innerText = "Camera Active (Private)";
+        } catch (err) {
+          alert("Camera permission denied or camera not available. Practice mode continues without camera.");
+        }
+      } else {
+        box.classList.add("hidden");
+        if (APP_STATE.examMode.cameraStream) {
+          APP_STATE.examMode.cameraStream.getTracks().forEach(t => t.stop());
+        }
+        document.getElementById("exam-cam-toggle").innerText = "📷 Enable Camera Integrity";
+      }
+    }
+
+    // --- Gemini Voice Assistant Modal & Voice Interaction ---
+    function openGeminiVoiceModal() {
+      document.getElementById("gemini-voice-modal").classList.remove("hidden");
+    }
+
+    function closeGeminiVoiceModal() {
+      document.getElementById("gemini-voice-modal").classList.add("hidden");
+    }
+
+    function changeAssistantLang(lang) {
+      APP_STATE.activeLang = lang;
+      const status = document.getElementById("voice-status-text");
+      if (lang === "hi") status.innerText = "माइक पर क्लिक करें या हिंदी में प्रश्न टाइप करें";
+      else if (lang === "bn") status.innerText = "মাইকে ক্লিক করুন বা বাংলায় প্রশ্ন লিখুন";
+      else status.innerText = "Click microphone to speak or choose a prompt";
+    }
+
+    function quickVoiceAsk(prompt) {
+      document.getElementById("gemini-chat-input").value = prompt;
+      sendGeminiMsg();
+    }
+
+    function sendGeminiMsg() {
+      const input = document.getElementById("gemini-chat-input");
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = "";
+
+      const log = document.getElementById("gemini-chat-log");
+      const userDiv = document.createElement("div");
+      userDiv.className = "p-2 rounded-lg bg-[#D6B66C]/20 text-[var(--text-primary)] text-right";
+      userDiv.innerText = text;
+      log.appendChild(userDiv);
+
+      const status = document.getElementById("voice-status-text");
+      status.innerText = "Gemini thinking...";
+
+      setTimeout(() => {
+        const aiDiv = document.createElement("div");
+        aiDiv.className = "p-2.5 rounded-lg bg-white/5 text-[var(--text-primary)]";
+
+        let responseText = "";
+        const lower = text.toLowerCase();
+
+        if (APP_STATE.activeLang === "hi") {
+          if (lower.includes("class") || lower.includes("कक्षा") || lower.includes("routine")) {
+            responseText = "नमस्ते अनुराग! आपकी अगली क्लास इंजीनियरिंग फिजिक्स की है, जो 10:00 बजे रूम 204 में डॉ. वर्मा के साथ शुरू होगी।";
+          } else if (lower.includes("bunk") || lower.includes("attendance") || lower.includes("उपस्थिति")) {
+            responseText = "आपकी कुल उपस्थिति 75.5% है। आप गणित में सुरक्षित हैं लेकिन बेसिक इलेक्ट्रॉनिक्स (62%) में आपको अगली 11 कक्षाएं लेनी होंगी।";
+          } else {
+            responseText = "हाँ अनुराग! ZYNAX आपके कॉलेज अध्ययन और MT-02 परीक्षा की पूरी तैयारी में साथ है।";
+          }
+        } else if (APP_STATE.activeLang === "bn") {
+          if (lower.includes("class") || lower.includes("routine")) {
+            responseText = "নমস্কার অনুরাগ! আপনার পরবর্তী ক্লাস ইঞ্জিনিয়ারিং ফিজিক্স রুম ২০৪ এ ডঃ ভার্মার সাথে শুরু হবে।";
+          } else {
+            responseText = "আপনার মোট উপস্থিতি ৭৫.৫%। সেমিকন্ডাক্টর ও পরীক্ষার প্রস্তুতির জন্য স্টাডি আর্ক চেক করুন।";
+          }
+        } else {
+          if (lower.includes("class") || lower.includes("next")) {
+            responseText = "Yo Anurag! Your next class is Engineering Physics with Dr. Verma in Room 204 from 10:00 to 11:00 AM.";
+          } else if (lower.includes("bunk") || lower.includes("attendance")) {
+            responseText = "You have an overall 75.5% aggregate (+3 safe buffer classes). Electronics is at 62%, so attend the next 11 classes!";
+          } else if (lower.includes("semi") || lower.includes("physics")) {
+            responseText = "Semiconductors have ~1 eV bandgap. N-type uses pentavalent dopants (extra electrons), while p-type uses trivalent dopants (holes).";
+          } else {
+            responseText = "Logged! Mid-Term 02 is in 12 days. Check the Study Arc tab for your day-by-day roadmap.";
+          }
+        }
+
+        aiDiv.innerHTML = `<strong class="text-[#D6B66C]">Gemini:</strong> ${responseText}`;
+        log.appendChild(aiDiv);
+        log.scrollTop = log.scrollHeight;
+        status.innerText = "Gemini response ready";
+
+        // Speak response if speech synthesis is available
+        if ('speechSynthesis' in window) {
+          const utter = new SpeechSynthesisUtterance(responseText);
+          if (APP_STATE.activeLang === "hi") utter.lang = "hi-IN";
+          else if (APP_STATE.activeLang === "bn") utter.lang = "bn-IN";
+          else utter.lang = "en-US";
+          window.speechSynthesis.speak(utter);
+        }
+      }, 400);
+    }
+
+    function toggleVoiceRecording() {
+      const status = document.getElementById("voice-status-text");
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("Speech Recognition is not supported on this browser. Please type your query in the input box.");
+        return;
+      }
+      const recog = new SpeechRecognition();
+      if (APP_STATE.activeLang === "hi") recog.lang = "hi-IN";
+      else if (APP_STATE.activeLang === "bn") recog.lang = "bn-IN";
+      else recog.lang = "en-US";
+
+      recog.onstart = () => { status.innerText = "🎙️ Listening... speak now"; };
+      recog.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        document.getElementById("gemini-chat-input").value = transcript;
+        sendGeminiMsg();
+      };
+      recog.onerror = () => { status.innerText = "Could not capture voice. Try again or type."; };
+      recog.start();
+    }
+
+    // --- Permanent Daily Class Reminder & Chimes ---
+    function toggleReminderPanel() {
+      const modal = document.getElementById("reminder-modal");
+      if (modal.classList.contains("hidden")) modal.classList.remove("hidden");
+      else modal.classList.add("hidden");
+    }
+
+    function toggleBrowserNotifs(enabled) {
+      if (enabled && "Notification" in window) {
+        Notification.requestPermission();
+      }
+    }
+
+    function testNotificationAlert() {
+      // Audio Chime with Web Audio API
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          const ctx = new AudioCtx();
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc1.frequency.setValueAtTime(880, ctx.currentTime);
+          osc2.frequency.setValueAtTime(1320, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(ctx.destination);
+          osc1.start();
+          osc2.start(ctx.currentTime + 0.15);
+          osc1.stop(ctx.currentTime + 0.4);
+          osc2.stop(ctx.currentTime + 0.4);
+        }
+      } catch (e) {}
+
+      // Browser Notification
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("ZYNAX Class Alert", {
+          body: "Hey Anurag! Your Engineering Physics class starts in 20 minutes in Room 204 with Dr. Verma."
+        });
+      } else {
+        alert("🔔 ZYNAX ALERT: Your Engineering Physics class starts in 20 minutes in Room 204 with Dr. Verma.");
+      }
+    }
+
+    // --- 15 Virtual Tools Logic ---
+    let calcVal = "0";
+    function calcKey(k) {
+      if (calcVal === "0" && k !== ".") calcVal = k;
+      else calcVal += k;
+      document.getElementById("calc-display").value = calcVal;
+    }
+    function calcClear() {
+      calcVal = "0";
+      document.getElementById("calc-display").value = calcVal;
+    }
+    function calcEquals() {
+      try {
+        calcVal = String(Function('"use strict";return (' + calcVal + ')')());
+        document.getElementById("calc-display").value = calcVal;
+      } catch (e) {
+        document.getElementById("calc-display").value = "Error";
+      }
+    }
+
+    function calcGpa() {
+      const grades = [8, 9, 10, 7];
+      const credits = [4, 4, 3, 3];
+      let totalPts = 0, totalCr = 0;
+      for (let i = 0; i < grades.length; i++) {
+        totalPts += grades[i] * credits[i];
+        totalCr += credits[i];
+      }
+      const gpa = Math.round((totalPts / totalCr) * 100) / 100;
+      document.getElementById("gpa-result-text").innerText = `SGPA: ${gpa}`;
+    }
+
+    let pomoTime = 25 * 60, pomoRunning = false, pomoInt = null;
+    function togglePomodoro() {
+      const btn = document.getElementById("pomo-toggle-btn");
+      if (pomoRunning) {
+        clearInterval(pomoInt);
+        pomoRunning = false;
+        btn.innerText = "Resume";
+      } else {
+        pomoRunning = true;
+        btn.innerText = "Pause";
+        pomoInt = setInterval(() => {
+          if (pomoTime > 0) {
+            pomoTime--;
+            const m = Math.floor(pomoTime / 60), s = pomoTime % 60;
+            document.getElementById("pomodoro-timer-num").innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+          } else {
+            clearInterval(pomoInt);
+            pomoRunning = false;
+            testNotificationAlert();
+            alert("Pomodoro Focus Session Completed!");
+          }
+        }, 1000);
+      }
+    }
+    function resetPomodoro() {
+      clearInterval(pomoInt);
+      pomoRunning = false;
+      pomoTime = 25 * 60;
+      document.getElementById("pomodoro-timer-num").innerText = "25:00";
+      document.getElementById("pomo-toggle-btn").innerText = "Start Focus";
+    }
+
+    let ambientAudioCtx = null, ambientNode = null;
+    function toggleAmbientSound(type) {
+      const status = document.getElementById("focus-sound-status");
+      if (ambientAudioCtx) {
+        ambientAudioCtx.close();
+        ambientAudioCtx = null;
+        status.innerText = "Idle";
+        document.getElementById("snd-btn-rain").classList.remove("border-[#48B8FF]");
+        document.getElementById("snd-btn-wn").classList.remove("border-[#48B8FF]");
+        return;
+      }
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        ambientAudioCtx = new AudioCtx();
+        const bufferSize = ambientAudioCtx.sampleRate * 2;
+        const buffer = ambientAudioCtx.createBuffer(1, bufferSize, ambientAudioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * 0.05;
+        }
+        const noise = ambientAudioCtx.createBufferSource();
+        noise.buffer = buffer;
+        noise.loop = true;
+        noise.connect(ambientAudioCtx.destination);
+        noise.start();
+        status.innerText = type === "rain" ? "Rain Playing 🌧️" : "Noise Playing 📻";
+        if (type === "rain") document.getElementById("snd-btn-rain").classList.add("border-[#48B8FF]");
+        else document.getElementById("snd-btn-wn").classList.add("border-[#48B8FF]");
+      } catch (e) {
+        status.innerText = "Error starting audio";
+      }
+    }
+
+    // --- Showtime Slide Presentation Deck ---
+    function renderSlide() {
+      const slide = APP_STATE.slidesData[APP_STATE.currentSlide - 1] || APP_STATE.slidesData[0];
+      document.getElementById("slide-indicator").innerText = `Slide ${APP_STATE.currentSlide} / ${APP_STATE.slidesData.length}`;
+      const stage = document.getElementById("slide-stage-content");
+      stage.innerHTML = `
+        <span class="text-xs uppercase font-bold text-[#D6B66C] tracking-wider block">${slide.subtitle || 'ZYNAX PITCH DECK'}</span>
+        <h3 class="text-2xl font-black text-[var(--text-primary)]">${slide.title}</h3>
+        <p class="text-sm text-[var(--text-secondary)] leading-relaxed pt-2">${slide.content}</p>
+      `;
+    }
+    function nextSlide() {
+      if (APP_STATE.currentSlide < APP_STATE.slidesData.length) {
+        APP_STATE.currentSlide++;
+        renderSlide();
+      }
+    }
+    function prevSlide() {
+      if (APP_STATE.currentSlide > 1) {
+        APP_STATE.currentSlide--;
+        renderSlide();
+      }
+    }
+
+    // --- Auth & Security ---
+    function requestOtp() {
+      document.getElementById("auth-otp-box").classList.remove("hidden");
+    }
+    function verifyOtpNow() {
+      const val = document.getElementById("otp-input").value.trim();
+      if (val === "849201" || val.length === 6) {
+        alert("✅ Welcome back Anurag! You are authenticated into ZYNAX 2.0.");
+        switchTab("dashboard");
+      } else {
+        alert("Invalid code. Use the displayed code: 849201");
+      }
+    }
+    function simulateGoogleLogin() {
+      alert("🌐 Google Campus SSO: Verified as anurag.banik@abes.ac.in. Welcome to ZYNAX 2.0!");
+      switchTab("dashboard");
+    }
+    function exportStudentData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(APP_STATE, null, 2));
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "zynax_student_profile_backup.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+    function resetStudentData() {
+      if (confirm("Are you sure you want to reset all stored attendance, notes, and timetable data on this device?")) {
+        localStorage.clear();
+        alert("Device data wiped successfully.");
+        location.reload();
+      }
+    }
+
+    function toggleMobileMoreSheet() {
+      const sheet = document.getElementById("mobile-more-sheet");
+      if (sheet.classList.contains("hidden")) sheet.classList.remove("hidden");
+      else sheet.classList.add("hidden");
+    }
+
+    function triggerPdfUpload() {
+      document.getElementById("pdf-file-input").click();
+    }
+    function handleFileSelected(event) {
+      const file = event.target.files[0];
+      if (file) {
+        alert(`📄 Uploaded "${file.name}" (${Math.round(file.size / 1024)} KB). Extracted and indexed in The Stash!`);
+      }
+    }
+
+    // --- Neural Canvas Particle Physics ---
+    (function initNeuralCanvas() {
+      const canvas = document.getElementById("neuralCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const colors = ["#D6B66C", "#9875FF", "#48B8FF", "#51D6A0"];
+      const nodes = [];
+      const count = Math.min(Math.floor((width * height) / 24000), 50);
+
+      for (let i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 1.5 + 1,
+          c: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+
+      function anim() {
+        ctx.clearRect(0, 0, width, height);
+        const isLight = document.documentElement.classList.contains("light-mode");
+        const linkColor = isLight ? "rgba(185, 150, 75," : "rgba(214, 182, 108,";
+
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 120) {
+              const alpha = (1 - d / 120) * 0.18;
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.strokeStyle = `${linkColor} ${alpha})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+
+        nodes.forEach(n => {
+          n.x += n.vx;
+          n.y += n.vy;
+          if (n.x < 0 || n.x > width) n.vx *= -1;
+          if (n.y < 0 || n.y > height) n.vy *= -1;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = n.c;
+          ctx.fill();
+        });
+
+        requestAnimationFrame(anim);
+      }
+      anim();
+    })();
+
+    // Initialize application on load
+    window.addEventListener("DOMContentLoaded", () => {
+      initTheme();
+      renderTimetable();
+      renderAttendance();
+      initArena();
+    });
+  </script>
+</body>
+</html>

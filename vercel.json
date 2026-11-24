@@ -1,8 +1,12 @@
 {
-  "installCommand": "npm install --omit=dev --no-audit --no-fund",
-  "build": {
-    "env": {
-      "VITE_AUTH_ENABLED": "false"
+  "version": 2,
+  "buildCommand": "node scripts/build.mjs",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  }
+  ]
 }

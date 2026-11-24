@@ -189,56 +189,79 @@ STUDENT_IDENTITY_JS = r'''
       if (backDomain) backDomain.innerText = `${p.branch || 'CSE (AI/ML)'} · Autonomous Agent Ecosystems`;
       if (backStrength) backStrength.innerText = `Algorithmic Problem Solving & Neural Nets (${leetSolved} Problems)`;
 
-      speakWithFemaleVoice("Student strengths analyzed and verified based on your active academic profile and coding achievements.", APP.activeLang || "en");
+      speakWithFemaleVoice("Student strengths analyzed and verified based on your active academic profile and coding achievements.");
       alert("⚡ AI Student Strengths Analyzed!\nAll metrics updated with verified problem solving and academic records.");
     }
 
     // =========================================================================
-    // AI VOICE WELCOME EXPERIENCE (FEMALE VOICE)
+    // AI VOICE WELCOME EXPERIENCE (SOFT ELEGANT FEMALE VOICE)
     // =========================================================================
 
     function triggerLoginWelcome(studentName) {
       const pName = studentName || (APP.studentProfile && APP.studentProfile.name) || "Anurag";
       const firstName = pName.split(" ")[0] || "Anurag";
 
+      // 1. Show Animated Full-Screen Welcome Modal
+      const modal = document.getElementById("zynax-welcome-modal");
+      const modalUser = document.getElementById("welcome-modal-username");
+      if (modalUser) modalUser.innerText = firstName;
+      if (modal) {
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        modal.classList.add("opacity-100");
+      }
+
+      // 2. Update Dashboard Greeting Banner
       const banner = document.getElementById("zynax-welcome-banner");
       if (banner) {
         banner.classList.remove("hidden");
         const heading = document.getElementById("welcome-banner-heading");
         const scriptEl = document.getElementById("welcome-banner-script");
-        const dict = (typeof ZYNAX_TRANSLATIONS !== 'undefined' && ZYNAX_TRANSLATIONS[APP.activeLang || 'en']) ? ZYNAX_TRANSLATIONS[APP.activeLang || 'en'] : null;
-
-        const spokenText = dict ? dict.welcome_spoken.replace("{NAME}", firstName) : `Welcome, ${firstName}! Welcome to ZYNAX. Your campus, your intelligence, your 4-year companion.`;
-        if (heading) heading.innerText = dict ? dict.welcome_banner_title.replace("{NAME}", firstName) : `Welcome to ZYNAX, ${firstName}!`;
-        if (scriptEl) scriptEl.innerText = `"${spokenText}"`;
-
-        if (!APP.voiceMuted) {
-          speakWithFemaleVoice(spokenText, APP.activeLang || "en");
-        }
+        if (heading) heading.innerText = `Welcome to ZYNAX, ${firstName}!`;
+        if (scriptEl) scriptEl.innerText = `"Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion."`;
       }
+
+      // 3. Exact greeting spoken in soft, pleasant female voice
+      const exactGreeting = `Welcome, ${firstName}! Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion.`;
+
+      if (!APP.voiceMuted) {
+        speakWithFemaleVoice(exactGreeting);
+      }
+    }
+
+    function dismissWelcomeModal() {
+      const modal = document.getElementById("zynax-welcome-modal");
+      if (modal) {
+        modal.classList.remove("opacity-100");
+        modal.classList.add("opacity-0", "pointer-events-none");
+      }
+      switchTab("dashboard");
     }
 
     function replayWelcomeGreeting() {
       const firstName = (APP.studentProfile && APP.studentProfile.name) ? APP.studentProfile.name.split(" ")[0] : "Anurag";
-      const dict = (typeof ZYNAX_TRANSLATIONS !== 'undefined' && ZYNAX_TRANSLATIONS[APP.activeLang || 'en']) ? ZYNAX_TRANSLATIONS[APP.activeLang || 'en'] : null;
-      const spokenText = dict ? dict.welcome_spoken.replace("{NAME}", firstName) : `Welcome, ${firstName}! Welcome to ZYNAX. Your campus, your intelligence, your 4-year companion.`;
-      
-      const banner = document.getElementById("zynax-welcome-banner");
-      if (banner) banner.classList.remove("hidden");
-      
-      speakWithFemaleVoice(spokenText, APP.activeLang || "en");
+      const exactGreeting = `Welcome, ${firstName}! Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion.`;
+
+      // Trigger animated wave bars
+      document.querySelectorAll(".voice-wave-bar").forEach(el => el.classList.add("animate-pulse"));
+
+      speakWithFemaleVoice(exactGreeting);
     }
 
     function toggleWelcomeMute() {
       APP.voiceMuted = !APP.voiceMuted;
-      const label = document.getElementById("welcome-mute-label");
-      const dict = (typeof ZYNAX_TRANSLATIONS !== 'undefined' && ZYNAX_TRANSLATIONS[APP.activeLang || 'en']) ? ZYNAX_TRANSLATIONS[APP.activeLang || 'en'] : null;
+      const modalLabel = document.getElementById("welcome-mute-label");
+      const modalIcon = document.getElementById("welcome-mute-icon");
+      const dashLabel = document.getElementById("welcome-dash-mute-label");
 
       if (APP.voiceMuted) {
         if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-        if (label) label.innerText = dict ? dict.btn_unmute : "Unmute";
+        if (modalLabel) modalLabel.innerText = "Unmute";
+        if (modalIcon) modalIcon.innerText = "🔇";
+        if (dashLabel) dashLabel.innerText = "Unmute";
       } else {
-        if (label) label.innerText = dict ? dict.btn_mute : "Mute";
+        if (modalLabel) modalLabel.innerText = "Mute";
+        if (modalIcon) modalIcon.innerText = "🔈";
+        if (dashLabel) dashLabel.innerText = "Mute";
         replayWelcomeGreeting();
       }
     }

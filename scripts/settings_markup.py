@@ -12,7 +12,7 @@ SETTINGS_HTML = r'''
         <div>
           <h2 class="text-xl font-black flex items-center gap-2 text-white">
             <span>⚙️ SETTINGS &amp; PROFILE</span>
-            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold">8 CATEGORIES</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold">7 CATEGORIES</span>
           </h2>
           <p class="text-xs text-[#7F8B85]">Manage personal student profile, credentials, appearance, voice AI, and academic privacy.</p>
         </div>
@@ -44,17 +44,14 @@ SETTINGS_HTML = r'''
             <button onclick="switchSettingsCategory('voice')" id="set-cat-voice" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
               <span>🎙️</span><span>4. Voice Assistant</span>
             </button>
-            <button onclick="switchSettingsCategory('language')" id="set-cat-language" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🌐</span><span>5. Language</span>
-            </button>
             <button onclick="switchSettingsCategory('privacy')" id="set-cat-privacy" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🛡️</span><span>6. Privacy &amp; Security</span>
+              <span>🛡️</span><span>5. Privacy &amp; Security</span>
             </button>
             <button onclick="switchSettingsCategory('memory')" id="set-cat-memory" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🧠</span><span>7. AI Memory</span>
+              <span>🧠</span><span>6. AI Memory</span>
             </button>
             <button onclick="switchSettingsCategory('account')" id="set-cat-account" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🎓</span><span>8. Account &amp; Status</span>
+              <span>🎓</span><span>7. Account &amp; Status</span>
             </button>
           </div>
         </div>
@@ -284,29 +281,7 @@ SETTINGS_HTML = r'''
             </div>
           </div>
 
-          <!-- 5. LANGUAGE PREFERENCES -->
-          <div id="settings-panel-language" class="settings-panel hidden space-y-4">
-            <div class="ref-card p-5 space-y-4">
-              <h3 class="text-sm font-black text-white">🌐 Campus Multi-Language Support</h3>
-              <p class="text-xs text-[#7F8B85]">Bestie AI, voice assistant, and exam helpers converse fluently in your selected language.</p>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <label class="p-3 rounded-xl ref-card flex items-center gap-2 cursor-pointer border hover:border-[#D6B66C]">
-                  <input type="radio" name="lang-pref" value="en" checked onchange="setGlobalLanguage('en')" class="accent-[#D6B66C]" />
-                  <div><strong class="text-white block">English</strong><span class="text-[9px] text-[#7F8B85]">Default Campus OS</span></div>
-                </label>
-                <label class="p-3 rounded-xl ref-card flex items-center gap-2 cursor-pointer border hover:border-[#D6B66C]">
-                  <input type="radio" name="lang-pref" value="hi" onchange="setGlobalLanguage('hi')" class="accent-[#D6B66C]" />
-                  <div><strong class="text-white block">हिंदी (Hindi)</strong><span class="text-[9px] text-[#7F8B85]">प्राकृतिक हिंदी संवाद</span></div>
-                </label>
-                <label class="p-3 rounded-xl ref-card flex items-center gap-2 cursor-pointer border hover:border-[#D6B66C]">
-                  <input type="radio" name="lang-pref" value="bn" onchange="setGlobalLanguage('bn')" class="accent-[#D6B66C]" />
-                  <div><strong class="text-white block">বাংলা (Bengali)</strong><span class="text-[9px] text-[#7F8B85]">স্বাভাবিক বাংলা কথোপকথন</span></div>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- 6. PRIVACY & SECURITY -->
+          <!-- 5. PRIVACY & SECURITY -->
           <div id="settings-panel-privacy" class="settings-panel hidden space-y-4">
             <div class="ref-card p-5 space-y-4">
               <h3 class="text-sm font-black text-white">🛡️ Privacy &amp; Data Isolation</h3>

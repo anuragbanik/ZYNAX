@@ -353,9 +353,9 @@ STUDENT_ID_HTML = r'''
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-cyan-300 font-bold text-[11px] flex items-center gap-1"><span>🗣️</span> Communication</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">TRILINGUAL</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">PROFESSIONAL</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-comm">Fluent Technical English, Hindi, &amp; Bengali Communication</p>
+                  <p class="text-[11px] text-white font-medium" id="str-comm">Fluent Professional English Communication &amp; Technical Writing</p>
                 </div>
               </div>
 

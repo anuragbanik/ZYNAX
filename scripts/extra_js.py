@@ -13,39 +13,28 @@ EXTRA_JS = r'''
     // FEMALE VOICE SPEECH SYNTHESIS ENGINE (GEMINI ASSISTANT & EXAM READERS)
     // =========================================================================
 
-    function speakWithFemaleVoice(text, lang) {
+    function speakWithFemaleVoice(text) {
       if (!("speechSynthesis" in window)) return;
       window.speechSynthesis.cancel();
 
       // Clean markdown or tags if present
       const cleanText = text.replace(/<[^>]*>/g, "").replace(/\*\*/g, "").replace(/#{1,6}\s/g, "");
       const utter = new SpeechSynthesisUtterance(cleanText);
-      const activeLang = lang || APP.activeLang || "en";
+      utter.lang = "en-US"; // English only
 
       const voices = window.speechSynthesis.getVoices();
-      let targetVoice = null;
-
-      if (activeLang === "hi") {
-        utter.lang = "hi-IN";
-        targetVoice = voices.find(v => v.lang.startsWith("hi") && (/female|woman|kalpana|swara/i.test(v.name) || !/male|david|george/i.test(v.name))) || voices.find(v => v.lang.startsWith("hi"));
-      } else if (activeLang === "bn") {
-        utter.lang = "bn-IN";
-        targetVoice = voices.find(v => v.lang.startsWith("bn")) || voices.find(v => v.lang.startsWith("hi"));
-      } else {
-        utter.lang = "en-US";
-        // Prefer natural female voices across OS and browsers
-        targetVoice = voices.find(v => 
-          /zira|samantha|victoria|karen|jenny|female|google uk english female|google us english|alloy|nova|hazel/i.test(v.name) && 
-          v.lang.startsWith("en")
-        ) || voices.find(v => /female|woman/i.test(v.name)) || voices.find(v => v.lang.startsWith("en"));
-      }
+      // Select the softest, most natural English female voice available
+      const targetVoice = voices.find(v => 
+        /google uk english female|google us english|zira|samantha|victoria|karen|jenny|hazel|fiona|moira|female/i.test(v.name) && 
+        v.lang.startsWith("en")
+      ) || voices.find(v => /female|woman/i.test(v.name) && v.lang.startsWith("en")) || voices.find(v => v.lang.startsWith("en"));
 
       if (targetVoice) utter.voice = targetVoice;
 
-      // Natural, bright feminine vocal settings
-      const userSettings = APP.voiceSettings || { rate: 1.0, pitch: 1.15 };
-      utter.rate = userSettings.rate || 1.0;
-      utter.pitch = userSettings.pitch || 1.15;
+      // Soft, pleasant, elegant feminine vocal settings (moderate speaking speed, no robotic sound)
+      const userSettings = APP.voiceSettings || { rate: 0.95, pitch: 1.08 };
+      utter.rate = userSettings.rate || 0.95;
+      utter.pitch = userSettings.pitch || 1.08;
 
       // Animate wave elements during speech
       utter.onstart = () => {
@@ -81,7 +70,7 @@ EXTRA_JS = r'''
       }
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
       const rec = new SR();
-      rec.lang = APP.activeLang === "hi" ? "hi-IN" : APP.activeLang === "bn" ? "bn-IN" : "en-US";
+      rec.lang = "en-US";
       rec.interimResults = false;
 
       const input = document.getElementById("gemini-chat-input");
@@ -573,7 +562,7 @@ EXTRA_JS = r'''
 
     // Settings Category Switcher
     function switchSettingsCategory(catId) {
-      const categories = ['profile', 'appearance', 'notifications', 'voice', 'language', 'privacy', 'memory', 'account'];
+      const categories = ['profile', 'appearance', 'notifications', 'voice', 'privacy', 'memory', 'account'];
       categories.forEach(c => {
         const panel = document.getElementById("settings-panel-" + c);
         const btn = document.getElementById("set-cat-" + c);
@@ -795,14 +784,8 @@ EXTRA_JS = r'''
       if (c) c.style.display = show ? "block" : "none";
     }
 
-    function setGlobalLanguage(lang) {
-      if (typeof applyLanguage === "function") {
-        applyLanguage(lang);
-      } else {
-        APP.activeLang = lang;
-        localStorage.setItem("zynax-lang", lang);
-      }
-    }
+    // English-only mode: all campus intelligence runs permanently in English
+    APP.activeLang = "en";
 
 
     // =========================================================================

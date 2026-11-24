@@ -334,13 +334,6 @@
         <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#51D6A0] animate-pulse"></span>
       </button>
 
-      <!-- Quick Multi-Language Switcher Pill -->
-      <div class="hidden sm:flex items-center gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/[0.08]" title="Switch Campus Language (English / हिंदी / বাংলা)">
-        <button onclick="setGlobalLanguage('en')" data-lang="en" class="lang-switch-btn px-2 py-0.5 rounded-lg bg-[#D6B66C] text-black font-bold text-[10px]">EN</button>
-        <button onclick="setGlobalLanguage('hi')" data-lang="hi" class="lang-switch-btn px-2 py-0.5 rounded-lg text-[#8C9690] hover:text-white font-semibold text-[10px]">HI</button>
-        <button onclick="setGlobalLanguage('bn')" data-lang="bn" class="lang-switch-btn px-2 py-0.5 rounded-lg text-[#8C9690] hover:text-white font-semibold text-[10px]">BN</button>
-      </div>
-
       <!-- Theme Switcher -->
       <button onclick="toggleTheme()" class="p-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#8C9690] hover:text-[#D6B66C] transition" title="Toggle Theme">
         <span id="theme-icon" class="text-xs">☀️</span>
@@ -490,9 +483,9 @@
 
 
       <!-- =================================================================
-           AI VOICE WELCOME BANNER (FEMALE VOICE ENGINE)
+           DASHBOARD AI VOICE COMPANION BADGE (REPLAY & VOICE CONTROLS)
            ================================================================= -->
-      <div id="zynax-welcome-banner" class="hidden ref-card p-4 border border-[#D6B66C]/40 bg-gradient-to-r from-[#171D19] via-[#101412] to-[#17131F] shadow-2xl relative overflow-hidden transition-all duration-500">
+      <div id="zynax-welcome-banner" class="ref-card p-4 border border-[#D6B66C]/40 bg-gradient-to-r from-[#171D19] via-[#101412] to-[#17131F] shadow-2xl relative overflow-hidden transition-all duration-500">
         <!-- Background Ambient Glow -->
         <div class="absolute -top-12 -right-12 w-48 h-48 bg-[#D6B66C]/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-[#9875FF]/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -513,15 +506,15 @@
             <div class="space-y-0.5">
               <div class="flex items-center gap-2">
                 <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#D8CEFF] font-mono-code font-bold uppercase tracking-wider">
-                  🎙️ AI CAMPUS GREETING
+                  🎙️ AI CAMPUS COMPANION
                 </span>
-                <span class="text-[9px] text-[#51D6A0] font-mono-code font-bold">FEMALE VOICE ACTIVE</span>
+                <span class="text-[9px] text-[#51D6A0] font-mono-code font-bold">ENGLISH FEMALE VOICE</span>
               </div>
-              <h2 class="text-sm sm:text-base font-black text-white" id="welcome-banner-heading" data-i18n="welcome_banner_title">
+              <h2 class="text-sm sm:text-base font-black text-white" id="welcome-banner-heading">
                 Welcome to ZYNAX, Anurag!
               </h2>
-              <p class="text-xs text-[#C4D0C9] italic font-medium" id="welcome-banner-script" data-i18n="welcome_banner_sub">
-                "Welcome, Anurag! Welcome to ZYNAX. Your campus, your intelligence, your 4-year companion."
+              <p class="text-xs text-[#C4D0C9] italic font-medium" id="welcome-banner-script">
+                "Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion."
               </p>
             </div>
           </div>
@@ -529,13 +522,10 @@
           <!-- Right Controls -->
           <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
             <button onclick="replayWelcomeGreeting()" class="btn-gold px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md">
-              <span>🔊</span><span data-i18n="btn_replay">Replay Greeting</span>
+              <span>🔊</span><span>Replay Greeting</span>
             </button>
-            <button onclick="toggleWelcomeMute()" id="welcome-mute-btn" class="glass-card px-3 py-1.5 rounded-xl text-xs font-semibold text-[#8C9690] hover:text-white transition">
-              <span id="welcome-mute-label" data-i18n="btn_mute">Mute</span>
-            </button>
-            <button onclick="dismissWelcomeBanner()" class="p-1.5 rounded-xl bg-white/[0.04] text-[#8C9690] hover:text-white transition" title="Dismiss Welcome Banner">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <button onclick="toggleWelcomeMute()" id="welcome-dash-mute-btn" class="glass-card px-3 py-1.5 rounded-xl text-xs font-semibold text-[#8C9690] hover:text-white transition">
+              <span id="welcome-dash-mute-label">Mute</span>
             </button>
           </div>
         </div>
@@ -803,9 +793,9 @@
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-cyan-300 font-bold text-[11px] flex items-center gap-1"><span>🗣️</span> Communication</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">TRILINGUAL</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">PROFESSIONAL</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-comm">Fluent Technical English, Hindi, &amp; Bengali Communication</p>
+                  <p class="text-[11px] text-white font-medium" id="str-comm">Fluent Professional English Communication &amp; Technical Writing</p>
                 </div>
               </div>
 
@@ -2474,7 +2464,7 @@
         <div>
           <h2 class="text-xl font-black flex items-center gap-2 text-white">
             <span>⚙️ SETTINGS &amp; PROFILE</span>
-            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold">8 CATEGORIES</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold">7 CATEGORIES</span>
           </h2>
           <p class="text-xs text-[#7F8B85]">Manage personal student profile, credentials, appearance, voice AI, and academic privacy.</p>
         </div>
@@ -2506,17 +2496,14 @@
             <button onclick="switchSettingsCategory('voice')" id="set-cat-voice" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
               <span>🎙️</span><span>4. Voice Assistant</span>
             </button>
-            <button onclick="switchSettingsCategory('language')" id="set-cat-language" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🌐</span><span>5. Language</span>
-            </button>
             <button onclick="switchSettingsCategory('privacy')" id="set-cat-privacy" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🛡️</span><span>6. Privacy &amp; Security</span>
+              <span>🛡️</span><span>5. Privacy &amp; Security</span>
             </button>
             <button onclick="switchSettingsCategory('memory')" id="set-cat-memory" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🧠</span><span>7. AI Memory</span>
+              <span>🧠</span><span>6. AI Memory</span>
             </button>
             <button onclick="switchSettingsCategory('account')" id="set-cat-account" class="settings-nav-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-[#87928B] hover:text-white">
-              <span>🎓</span><span>8. Account &amp; Status</span>
+              <span>🎓</span><span>7. Account &amp; Status</span>
             </button>
           </div>
         </div>
@@ -2746,29 +2733,7 @@
             </div>
           </div>
 
-          <!-- 5. LANGUAGE PREFERENCES -->
-          <div id="settings-panel-language" class="settings-panel hidden space-y-4">
-            <div class="ref-card p-5 space-y-4">
-              <h3 class="text-sm font-black text-white">🌐 Campus Multi-Language Support</h3>
-              <p class="text-xs text-[#7F8B85]">Bestie AI, voice assistant, and exam helpers converse fluently in your selected language.</p>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <label class="p-3 rounded-xl ref-card flex items-center gap-2 cursor-pointer border hover:border-[#D6B66C]">
-                  <input type="radio" name="lang-pref" value="en" checked onchange="setGlobalLanguage('en')" class="accent-[#D6B66C]" />
-                  <div><strong class="text-white block">English</strong><span class="text-[9px] text-[#7F8B85]">Default Campus OS</span></div>
-                </label>
-                <label class="p-3 rounded-xl ref-card flex items-center gap-2 cursor-pointer border hover:border-[#D6B66C]">
-                  <input type="radio" name="lang-pref" value="hi" onchange="setGlobalLanguage('hi')" class="accent-[#D6B66C]" />
-                  <div><strong class="text-white block">हिंदी (Hindi)</strong><span class="text-[9px] text-[#7F8B85]">प्राकृतिक हिंदी संवाद</span></div>
-                </label>
-                <label class="p-3 rounded-xl ref-card flex items-center gap-2 cursor-pointer border hover:border-[#D6B66C]">
-                  <input type="radio" name="lang-pref" value="bn" onchange="setGlobalLanguage('bn')" class="accent-[#D6B66C]" />
-                  <div><strong class="text-white block">বাংলা (Bengali)</strong><span class="text-[9px] text-[#7F8B85]">স্বাভাবিক বাংলা কথোপকথন</span></div>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- 6. PRIVACY & SECURITY -->
+          <!-- 5. PRIVACY & SECURITY -->
           <div id="settings-panel-privacy" class="settings-panel hidden space-y-4">
             <div class="ref-card p-5 space-y-4">
               <h3 class="text-sm font-black text-white">🛡️ Privacy &amp; Data Isolation</h3>
@@ -3095,14 +3060,9 @@
             <h3 class="font-bold text-sm text-white">🎙️ Bestie AI — Gemini Campus Companion</h3>
             <span class="text-[9px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code font-bold">TinyFish API</span>
           </div>
-          <p class="text-[11px] text-[#7F8B85]">Connected: sk-tinyfish-shMmh...zaHPEU · EN/HI/BN</p>
+          <p class="text-[11px] text-[#7F8B85]">Connected: sk-tinyfish-shMmh...zaHPEU · English Voice Active</p>
         </div>
         <div class="flex items-center gap-2">
-          <select id="gemini-lang-select" class="px-2 py-1 rounded bg-black/50 border border-white/[0.1] text-xs text-white" onchange="changeAssistantLang(this.value)">
-            <option value="en">English</option>
-            <option value="hi">हिंदी (Hindi)</option>
-            <option value="bn">বাংলা (Bengali)</option>
-          </select>
           <button onclick="closeGeminiVoiceModal()" class="w-7 h-7 rounded-lg glass-card flex items-center justify-center text-xs hover:border-red-400">✕</button>
         </div>
       </div>
@@ -3113,7 +3073,7 @@
 
       <div id="gemini-chat-log" class="h-44 overflow-y-auto space-y-2 p-3 rounded-xl bg-black/40 border border-white/5 text-xs font-sans">
         <div class="p-2.5 rounded-xl bg-[#9875FF]/20 text-[#C2B5FF]">
-          <strong>Bestie AI:</strong> Yo Anurag! Ask me anything in English, Hindi, or Bengali about your attendance, next LeetCode contest, SIH hackathons, or your 4-year degree roadmap!
+          <strong>Bestie AI:</strong> Yo Anurag! Ask me anything about your attendance, next LeetCode contest, SIH hackathons, or your 4-year degree roadmap!
         </div>
       </div>
 
@@ -4406,8 +4366,8 @@ public class Solution {
         log.appendChild(aiMsg);
         log.scrollTop = log.scrollHeight;
 
-        // Speak aloud with natural Gemini female voice
-        speakWithFemaleVoice(reply, lang);
+        // Speak aloud with soft natural Gemini female voice in English
+        speakWithFemaleVoice(reply);
       }, 600);
     }
 
@@ -4841,265 +4801,6 @@ public class Solution {
 
 
     // =========================================================================
-    // CENTRALIZED MULTI-LANGUAGE TRANSLATION DICTIONARY (EN, HI, BN)
-    // =========================================================================
-
-    const ZYNAX_TRANSLATIONS = {
-      en: {
-        app_tagline: "Your Campus. Your Intelligence. 4-Year Companion.",
-        tab_vibe: "Vibe Check",
-        tab_vibe_sub: "Today",
-        tab_arena: "Code Arena",
-        tab_arena_sub: "Contests",
-        tab_unstop: "Unstop Radar",
-        tab_unstop_sub: "Hackathons",
-        tab_journey: "4-Year AI",
-        tab_journey_sub: "Companion",
-        tab_resume: "Resume AI",
-        tab_resume_sub: "LinkedIn",
-        tab_timetable: "Daily Grind",
-        tab_timetable_sub: "Timetable",
-        tab_attendance: "Pull Up",
-        tab_attendance_sub: "Attendance",
-        tab_planner: "Study Arc",
-        tab_planner_sub: "Planner",
-        tab_bestie: "Bestie AI",
-        tab_bestie_sub: "Voice/Chat",
-        tab_notes: "Brain Dump",
-        tab_notes_sub: "Notes",
-        tab_exam: "ABES Exam Lab",
-        tab_exam_sub: "PYQ Vault",
-        tab_tools: "Virtual Tools",
-        tab_tools_sub: "15 Tools",
-        tab_docs: "The Stash",
-        tab_docs_sub: "PDFs",
-        tab_showtime: "Showtime",
-        tab_showtime_sub: "Slides",
-        tab_auth: "Lock In",
-        tab_auth_sub: "Auth",
-        
-        card_nextup: "NEXT UP",
-        card_bossfight: "BOSS FIGHT",
-        card_chapters: "CHAPTERS LEFT",
-        card_dontforget: "DON'T FORGET",
-        card_overall_att: "OVERALL ATTENDANCE",
-        card_att_buffer: "ATTENDANCE BUFFER",
-        card_study_streak: "STUDY STREAK",
-        card_target_sgpa: "TARGET SGPA",
-        btn_ask_bestie: "Ask Bestie AI",
-        
-        campus_id_title: "MY CAMPUS IDENTITY",
-        campus_id_subtitle: "Interactive 3D digital credentials with AI-powered strength analysis & photo studio enhancement.",
-        flip_card_btn: "Flip Card",
-        download_pdf_btn: "Download ID (PDF)",
-        share_profile_btn: "Share Profile",
-        upload_new_photo: "Upload Photo",
-        reanalyze_ai: "Re-analyze Strengths",
-        your_strengths_title: "Your Strengths & AI Analysis",
-        strengths_desc: "AI evaluates voluntary student inputs (skills, solved problems, hackathon projects, academic records) to reveal verified abilities and growth pathways.",
-
-        welcome_spoken: "Welcome, {NAME}! Welcome to ZYNAX. Your campus, your intelligence, your 4-year companion.",
-        welcome_banner_title: "Welcome to ZYNAX 3.5, {NAME}!",
-        welcome_banner_sub: "Your campus, your intelligence, your 4-year companion.",
-        btn_replay: "Replay Audio 🔊",
-        btn_mute: "Mute",
-        btn_unmute: "Unmute"
-      },
-      hi: {
-        app_tagline: "आपका कैंपस। आपकी बुद्धिमत्ता। 4-वर्षीय साथी।",
-        tab_vibe: "वाइब चेक",
-        tab_vibe_sub: "आज का दिन",
-        tab_arena: "कोड एरेना",
-        tab_arena_sub: "प्रतियोगिताएं",
-        tab_unstop: "अनस्टॉप रडार",
-        tab_unstop_sub: "हैकाथॉन",
-        tab_journey: "4-वर्षीय AI",
-        tab_journey_sub: "साथी",
-        tab_resume: "रेज़्यूमे AI",
-        tab_resume_sub: "लिंक्डइन",
-        tab_timetable: "डेली ग्राइंड",
-        tab_timetable_sub: "समय सारणी",
-        tab_attendance: "पुल अप",
-        tab_attendance_sub: "उपस्थिति",
-        tab_planner: "स्टडी आर्क",
-        tab_planner_sub: "योजनाकार",
-        tab_bestie: "बेस्टी AI",
-        tab_bestie_sub: "आवाज़/चैट",
-        tab_notes: "ब्रेन डंप",
-        tab_notes_sub: "नोट्स",
-        tab_exam: "एबीईएस परीक्षा लैब",
-        tab_exam_sub: "पीवाईक्यू वॉल्ट",
-        tab_tools: "वर्चुअल टूल्स",
-        tab_tools_sub: "15 उपकरण",
-        tab_docs: "द स्टैश",
-        tab_docs_sub: "पीडीएफ़",
-        tab_showtime: "शो-टाइम",
-        tab_showtime_sub: "स्लाइड्स",
-        tab_auth: "लॉग इन",
-        tab_auth_sub: "प्रमाणीकरण",
-
-        card_nextup: "अगली कक्षा",
-        card_bossfight: "मुख्य परीक्षा",
-        card_chapters: "बचे हुए अध्याय",
-        card_dontforget: "याद रखें",
-        card_overall_att: "कुल उपस्थिति",
-        card_att_buffer: "उपस्थिति बफर",
-        card_study_streak: "अध्ययन स्ट्रीक",
-        card_target_sgpa: "लक्ष्य एसजीपीए",
-        btn_ask_bestie: "बेस्टी AI से पूछें",
-
-        campus_id_title: "मेरी कैंपस पहचान",
-        campus_id_subtitle: "AI-संचालित ताकत विश्लेषण और फोटो स्टूडियो संवर्धन के साथ इंटरैक्टिव 3D डिजिटल पहचान पत्र।",
-        flip_card_btn: "कार्ड पलटें",
-        download_pdf_btn: "आईडी पीडीएफ डाउनलोड करें",
-        share_profile_btn: "प्रोफाइल साझा करें",
-        upload_new_photo: "फोटो अपलोड करें",
-        reanalyze_ai: "पुनः विश्लेषण करें",
-        your_strengths_title: "आपकी ताकत और क्षमताएं",
-        strengths_desc: "AI सत्यापित क्षमताओं और विकास के अवसरों को उजागर करने के लिए स्वैच्छिक छात्र इनपुट का विश्लेषण करता है।",
-
-        welcome_spoken: "स्वागत है, {NAME}! ZYNAX में आपका स्वागत है। आपका कैंपस, आपकी बुद्धिमत्ता, आपका 4-वर्षीय साथी।",
-        welcome_banner_title: "ZYNAX 3.5 में आपका स्वागत है, {NAME}!",
-        welcome_banner_sub: "आपका कैंपस, आपकी बुद्धिमत्ता, आपका 4-वर्षीय साथी।",
-        btn_replay: "ऑडियो दोबारा सुनें 🔊",
-        btn_mute: "म्यूट करें",
-        btn_unmute: "अनम्यूट करें"
-      },
-      bn: {
-        app_tagline: "আপনার ক্যাম্পাস। আপনার বুদ্ধিমত্তা। ৪-বছরের সঙ্গী।",
-        tab_vibe: "ভাইব চেক",
-        tab_vibe_sub: "আজকের দিন",
-        tab_arena: "কোড এরিনা",
-        tab_arena_sub: "প্রতিযোগিতা",
-        tab_unstop: "আনস্টপ রাডার",
-        tab_unstop_sub: "হ্যাকাথন",
-        tab_journey: "৪-বছরের AI",
-        tab_journey_sub: "সঙ্গী",
-        tab_resume: "রেজিউমে AI",
-        tab_resume_sub: "লিঙ্কডইন",
-        tab_timetable: "ডেইলি গ্রাইন্ড",
-        tab_timetable_sub: "সময়সূচী",
-        tab_attendance: "পুল আপ",
-        tab_attendance_sub: "উপস্থিতি",
-        tab_planner: "স্টাডি আর্ক",
-        tab_planner_sub: "প্ল্যানার",
-        tab_bestie: "বেস্টি AI",
-        tab_bestie_sub: "ভয়েস/চ্যাট",
-        tab_notes: "ব্রেন ডাম্প",
-        tab_notes_sub: "নোটস",
-        tab_exam: "এবিইএস পরীক্ষা ল্যাব",
-        tab_exam_sub: "পিওয়াইকিউ ভল্ট",
-        tab_tools: "ভার্চুয়াল টুলস",
-        tab_tools_sub: "১৫টি টুল",
-        tab_docs: "দ্য স্ট্যাশ",
-        tab_docs_sub: "পিডিএফ",
-        tab_showtime: "শো-টাইম",
-        tab_showtime_sub: "স্লাইড",
-        tab_auth: "লগ ইন",
-        tab_auth_sub: "অথেন্টিকেশন",
-
-        card_nextup: "পরবর্তী ক্লাস",
-        card_bossfight: "মূল পরীক্ষা",
-        card_chapters: "বাকি থাকা অধ্যায়",
-        card_dontforget: "ভুলবেন না",
-        card_overall_att: "মোট উপস্থিতি",
-        card_att_buffer: "উপস্থিতি বাফার",
-        card_study_streak: "স্টাডি স্ট্রিক",
-        card_target_sgpa: "টার্গেট এসজিপিএ",
-        btn_ask_bestie: "বেস্টি AI কে জিজ্ঞাসা করুন",
-
-        campus_id_title: "আমার ক্যাম্পাস পরিচয়",
-        campus_id_subtitle: "AI চালিত শক্তি বিশ্লেষণ এবং ফটো স্টুডিও বর্ধন সহ ইন্টারেক্টিভ 3D ডিজিটাল আইডি।",
-        flip_card_btn: "কার্ড উল্টান",
-        download_pdf_btn: "আইডি পিডিএফ ডাউনলোড করুন",
-        share_profile_btn: "প্রোফাইল শেয়ার করুন",
-        upload_new_photo: "ছবি আপলোড করুন",
-        reanalyze_ai: "পুনরায় শক্তি বিশ্লেষণ",
-        your_strengths_title: "আপনার দক্ষতা ও শক্তি",
-        strengths_desc: "AI যাচাইকৃত ক্ষমতা এবং বৃদ্ধির পথ প্রদর্শন করতে ছাত্রের ইনপুট বিশ্লেষণ করে।",
-
-        welcome_spoken: "স্বাগতম, {NAME}! ZYNAX-এ আপনাকে স্বাগতম। আপনার ক্যাম্পাস, আপনার বুদ্ধিমত্তা, আপনার ৪-বছরের সঙ্গী।",
-        welcome_banner_title: "ZYNAX 3.5-এ স্বাগতম, {NAME}!",
-        welcome_banner_sub: "আপনার ক্যাম্পাস, আপনার বুদ্ধিমত্তা, আপনার ৪-বছরের সঙ্গী।",
-        btn_replay: "অডিও পুনরায় শুনুন 🔊",
-        btn_mute: "মিউট",
-        btn_unmute: "আনমিউট"
-      }
-    };
-
-    function applyLanguage(lang) {
-      const targetLang = (lang && ZYNAX_TRANSLATIONS[lang]) ? lang : "en";
-      APP.activeLang = targetLang;
-      localStorage.setItem("zynax-lang", targetLang);
-
-      const dict = ZYNAX_TRANSLATIONS[targetLang];
-      if (!dict) return;
-
-      // Update data-i18n elements
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (dict[key]) {
-          let text = dict[key];
-          if (text.includes("{NAME}")) {
-            const firstName = (APP.studentProfile && APP.studentProfile.name) ? APP.studentProfile.name.split(" ")[0] : "Anurag";
-            text = text.replace("{NAME}", firstName);
-          }
-          el.innerText = text;
-        }
-      });
-
-      // Update Top Nav Pills
-      const navMap = [
-        { tab: "dashboard", title: dict.tab_vibe, sub: dict.tab_vibe_sub },
-        { tab: "arena", title: dict.tab_arena, sub: dict.tab_arena_sub },
-        { tab: "unstop", title: dict.tab_unstop, sub: dict.tab_unstop_sub },
-        { tab: "journey", title: dict.tab_journey, sub: dict.tab_journey_sub },
-        { tab: "resume", title: dict.tab_resume, sub: dict.tab_resume_sub },
-        { tab: "timetable", title: dict.tab_timetable, sub: dict.tab_timetable_sub },
-        { tab: "attendance", title: dict.tab_attendance, sub: dict.tab_attendance_sub },
-        { tab: "planner", title: dict.tab_planner, sub: dict.tab_planner_sub },
-        { tab: "bestie", title: dict.tab_bestie, sub: dict.tab_bestie_sub },
-        { tab: "notes", title: dict.tab_notes, sub: dict.tab_notes_sub },
-        { tab: "quiz", title: dict.tab_exam, sub: dict.tab_exam_sub },
-        { tab: "tools", title: dict.tab_tools, sub: dict.tab_tools_sub },
-        { tab: "docs", title: dict.tab_docs, sub: dict.tab_docs_sub },
-        { tab: "showtime", title: dict.tab_showtime, sub: dict.tab_showtime_sub },
-        { tab: "auth", title: dict.tab_auth, sub: dict.tab_auth_sub }
-      ];
-
-      navMap.forEach(item => {
-        const pill = document.querySelector(`.nav-tab-pill[data-tab="${item.tab}"]`);
-        if (pill) {
-          const titleEl = pill.querySelector(".pill-title");
-          const subEl = pill.querySelector(".pill-sub");
-          if (titleEl) titleEl.innerText = item.title;
-          if (subEl) subEl.innerText = item.sub;
-        }
-      });
-
-      // Update quick language pill state
-      document.querySelectorAll(".lang-switch-btn").forEach(btn => {
-        if (btn.getAttribute("data-lang") === targetLang) {
-          btn.className = "lang-switch-btn px-2 py-0.5 rounded-lg bg-[#D6B66C] text-black font-bold text-[10px]";
-        } else {
-          btn.className = "lang-switch-btn px-2 py-0.5 rounded-lg text-[#8C9690] hover:text-white font-semibold text-[10px]";
-        }
-      });
-
-      // Update radio in settings if present
-      const radios = document.querySelectorAll("input[name='lang-pref']");
-      radios.forEach(r => {
-        r.checked = (r.value === targetLang);
-      });
-    }
-
-    function setGlobalLanguage(lang) {
-      applyLanguage(lang);
-    }
-
-
-
-    // =========================================================================
     // 3D AI STUDENT IDENTITY CARD ENGINE (TILT, FLIP, & SHINE)
     // =========================================================================
 
@@ -5278,56 +4979,79 @@ public class Solution {
       if (backDomain) backDomain.innerText = `${p.branch || 'CSE (AI/ML)'} · Autonomous Agent Ecosystems`;
       if (backStrength) backStrength.innerText = `Algorithmic Problem Solving & Neural Nets (${leetSolved} Problems)`;
 
-      speakWithFemaleVoice("Student strengths analyzed and verified based on your active academic profile and coding achievements.", APP.activeLang || "en");
+      speakWithFemaleVoice("Student strengths analyzed and verified based on your active academic profile and coding achievements.");
       alert("⚡ AI Student Strengths Analyzed!\nAll metrics updated with verified problem solving and academic records.");
     }
 
     // =========================================================================
-    // AI VOICE WELCOME EXPERIENCE (FEMALE VOICE)
+    // AI VOICE WELCOME EXPERIENCE (SOFT ELEGANT FEMALE VOICE)
     // =========================================================================
 
     function triggerLoginWelcome(studentName) {
       const pName = studentName || (APP.studentProfile && APP.studentProfile.name) || "Anurag";
       const firstName = pName.split(" ")[0] || "Anurag";
 
+      // 1. Show Animated Full-Screen Welcome Modal
+      const modal = document.getElementById("zynax-welcome-modal");
+      const modalUser = document.getElementById("welcome-modal-username");
+      if (modalUser) modalUser.innerText = firstName;
+      if (modal) {
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        modal.classList.add("opacity-100");
+      }
+
+      // 2. Update Dashboard Greeting Banner
       const banner = document.getElementById("zynax-welcome-banner");
       if (banner) {
         banner.classList.remove("hidden");
         const heading = document.getElementById("welcome-banner-heading");
         const scriptEl = document.getElementById("welcome-banner-script");
-        const dict = (typeof ZYNAX_TRANSLATIONS !== 'undefined' && ZYNAX_TRANSLATIONS[APP.activeLang || 'en']) ? ZYNAX_TRANSLATIONS[APP.activeLang || 'en'] : null;
-
-        const spokenText = dict ? dict.welcome_spoken.replace("{NAME}", firstName) : `Welcome, ${firstName}! Welcome to ZYNAX. Your campus, your intelligence, your 4-year companion.`;
-        if (heading) heading.innerText = dict ? dict.welcome_banner_title.replace("{NAME}", firstName) : `Welcome to ZYNAX, ${firstName}!`;
-        if (scriptEl) scriptEl.innerText = `"${spokenText}"`;
-
-        if (!APP.voiceMuted) {
-          speakWithFemaleVoice(spokenText, APP.activeLang || "en");
-        }
+        if (heading) heading.innerText = `Welcome to ZYNAX, ${firstName}!`;
+        if (scriptEl) scriptEl.innerText = `"Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion."`;
       }
+
+      // 3. Exact greeting spoken in soft, pleasant female voice
+      const exactGreeting = `Welcome, ${firstName}! Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion.`;
+
+      if (!APP.voiceMuted) {
+        speakWithFemaleVoice(exactGreeting);
+      }
+    }
+
+    function dismissWelcomeModal() {
+      const modal = document.getElementById("zynax-welcome-modal");
+      if (modal) {
+        modal.classList.remove("opacity-100");
+        modal.classList.add("opacity-0", "pointer-events-none");
+      }
+      switchTab("dashboard");
     }
 
     function replayWelcomeGreeting() {
       const firstName = (APP.studentProfile && APP.studentProfile.name) ? APP.studentProfile.name.split(" ")[0] : "Anurag";
-      const dict = (typeof ZYNAX_TRANSLATIONS !== 'undefined' && ZYNAX_TRANSLATIONS[APP.activeLang || 'en']) ? ZYNAX_TRANSLATIONS[APP.activeLang || 'en'] : null;
-      const spokenText = dict ? dict.welcome_spoken.replace("{NAME}", firstName) : `Welcome, ${firstName}! Welcome to ZYNAX. Your campus, your intelligence, your 4-year companion.`;
-      
-      const banner = document.getElementById("zynax-welcome-banner");
-      if (banner) banner.classList.remove("hidden");
-      
-      speakWithFemaleVoice(spokenText, APP.activeLang || "en");
+      const exactGreeting = `Welcome, ${firstName}! Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion.`;
+
+      // Trigger animated wave bars
+      document.querySelectorAll(".voice-wave-bar").forEach(el => el.classList.add("animate-pulse"));
+
+      speakWithFemaleVoice(exactGreeting);
     }
 
     function toggleWelcomeMute() {
       APP.voiceMuted = !APP.voiceMuted;
-      const label = document.getElementById("welcome-mute-label");
-      const dict = (typeof ZYNAX_TRANSLATIONS !== 'undefined' && ZYNAX_TRANSLATIONS[APP.activeLang || 'en']) ? ZYNAX_TRANSLATIONS[APP.activeLang || 'en'] : null;
+      const modalLabel = document.getElementById("welcome-mute-label");
+      const modalIcon = document.getElementById("welcome-mute-icon");
+      const dashLabel = document.getElementById("welcome-dash-mute-label");
 
       if (APP.voiceMuted) {
         if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-        if (label) label.innerText = dict ? dict.btn_unmute : "Unmute";
+        if (modalLabel) modalLabel.innerText = "Unmute";
+        if (modalIcon) modalIcon.innerText = "🔇";
+        if (dashLabel) dashLabel.innerText = "Unmute";
       } else {
-        if (label) label.innerText = dict ? dict.btn_mute : "Mute";
+        if (modalLabel) modalLabel.innerText = "Mute";
+        if (modalIcon) modalIcon.innerText = "🔈";
+        if (dashLabel) dashLabel.innerText = "Mute";
         replayWelcomeGreeting();
       }
     }
@@ -5430,39 +5154,28 @@ public class Solution {
     // FEMALE VOICE SPEECH SYNTHESIS ENGINE (GEMINI ASSISTANT & EXAM READERS)
     // =========================================================================
 
-    function speakWithFemaleVoice(text, lang) {
+    function speakWithFemaleVoice(text) {
       if (!("speechSynthesis" in window)) return;
       window.speechSynthesis.cancel();
 
       // Clean markdown or tags if present
       const cleanText = text.replace(/<[^>]*>/g, "").replace(/\*\*/g, "").replace(/#{1,6}\s/g, "");
       const utter = new SpeechSynthesisUtterance(cleanText);
-      const activeLang = lang || APP.activeLang || "en";
+      utter.lang = "en-US"; // English only
 
       const voices = window.speechSynthesis.getVoices();
-      let targetVoice = null;
-
-      if (activeLang === "hi") {
-        utter.lang = "hi-IN";
-        targetVoice = voices.find(v => v.lang.startsWith("hi") && (/female|woman|kalpana|swara/i.test(v.name) || !/male|david|george/i.test(v.name))) || voices.find(v => v.lang.startsWith("hi"));
-      } else if (activeLang === "bn") {
-        utter.lang = "bn-IN";
-        targetVoice = voices.find(v => v.lang.startsWith("bn")) || voices.find(v => v.lang.startsWith("hi"));
-      } else {
-        utter.lang = "en-US";
-        // Prefer natural female voices across OS and browsers
-        targetVoice = voices.find(v => 
-          /zira|samantha|victoria|karen|jenny|female|google uk english female|google us english|alloy|nova|hazel/i.test(v.name) && 
-          v.lang.startsWith("en")
-        ) || voices.find(v => /female|woman/i.test(v.name)) || voices.find(v => v.lang.startsWith("en"));
-      }
+      // Select the softest, most natural English female voice available
+      const targetVoice = voices.find(v => 
+        /google uk english female|google us english|zira|samantha|victoria|karen|jenny|hazel|fiona|moira|female/i.test(v.name) && 
+        v.lang.startsWith("en")
+      ) || voices.find(v => /female|woman/i.test(v.name) && v.lang.startsWith("en")) || voices.find(v => v.lang.startsWith("en"));
 
       if (targetVoice) utter.voice = targetVoice;
 
-      // Natural, bright feminine vocal settings
-      const userSettings = APP.voiceSettings || { rate: 1.0, pitch: 1.15 };
-      utter.rate = userSettings.rate || 1.0;
-      utter.pitch = userSettings.pitch || 1.15;
+      // Soft, pleasant, elegant feminine vocal settings (moderate speaking speed, no robotic sound)
+      const userSettings = APP.voiceSettings || { rate: 0.95, pitch: 1.08 };
+      utter.rate = userSettings.rate || 0.95;
+      utter.pitch = userSettings.pitch || 1.08;
 
       // Animate wave elements during speech
       utter.onstart = () => {
@@ -5498,7 +5211,7 @@ public class Solution {
       }
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
       const rec = new SR();
-      rec.lang = APP.activeLang === "hi" ? "hi-IN" : APP.activeLang === "bn" ? "bn-IN" : "en-US";
+      rec.lang = "en-US";
       rec.interimResults = false;
 
       const input = document.getElementById("gemini-chat-input");
@@ -5990,7 +5703,7 @@ public class Solution {
 
     // Settings Category Switcher
     function switchSettingsCategory(catId) {
-      const categories = ['profile', 'appearance', 'notifications', 'voice', 'language', 'privacy', 'memory', 'account'];
+      const categories = ['profile', 'appearance', 'notifications', 'voice', 'privacy', 'memory', 'account'];
       categories.forEach(c => {
         const panel = document.getElementById("settings-panel-" + c);
         const btn = document.getElementById("set-cat-" + c);
@@ -6212,14 +5925,8 @@ public class Solution {
       if (c) c.style.display = show ? "block" : "none";
     }
 
-    function setGlobalLanguage(lang) {
-      if (typeof applyLanguage === "function") {
-        applyLanguage(lang);
-      } else {
-        APP.activeLang = lang;
-        localStorage.setItem("zynax-lang", lang);
-      }
-    }
+    // English-only mode: all campus intelligence runs permanently in English
+    APP.activeLang = "en";
 
 
     // =========================================================================
@@ -7140,6 +6847,9 @@ public class Solution {
 
     // =================== INIT ON LOAD ===================
     window.addEventListener("DOMContentLoaded", () => {
+      // Set English as permanent language
+      APP.activeLang = "en";
+
       // Load saved student profile if exists
       try {
         const savedProf = localStorage.getItem("ZYNAX_STUDENT_PROFILE");
@@ -7163,10 +6873,6 @@ public class Solution {
         if (savedVoice) APP.voiceSettings = JSON.parse(savedVoice);
       } catch(e){}
 
-      // Load saved language preference
-      const savedLang = localStorage.getItem("zynax-lang") || "en";
-      applyLanguage(savedLang);
-
       syncProfileAcrossApp();
       renderTopicProblems();
       renderVaultDocuments();
@@ -7174,16 +6880,22 @@ public class Solution {
       renderMockPapers();
       renderLeaderboardTable();
 
-      // Trigger Login Welcome Greeting once per session
+      // Keyboard shortcut to dismiss welcome modal (Escape or Enter)
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" || e.key === "Enter") {
+          const m = document.getElementById("zynax-welcome-modal");
+          if (m && !m.classList.contains("opacity-0")) {
+            dismissWelcomeModal();
+          }
+        }
+      });
+
+      // Trigger Login Welcome Greeting once per login session
       if (!sessionStorage.getItem("zynax_welcomed")) {
         sessionStorage.setItem("zynax_welcomed", "1");
         setTimeout(() => {
           triggerLoginWelcome(APP.studentProfile.name);
-        }, 600);
-      } else {
-        // Show welcome banner for easy replay
-        const banner = document.getElementById("zynax-welcome-banner");
-        if (banner) banner.classList.remove("hidden");
+        }, 500);
       }
       renderTimetable();
       renderAttendance();
@@ -7198,5 +6910,84 @@ public class Solution {
       switchTab("dashboard");
     });
   </script>
+
+<!-- =================================================================
+     PREMIUM ANIMATED WELCOME SCREEN OVERLAY (FEMALE VOICE EXPERIENCE)
+     ================================================================= -->
+<div id="zynax-welcome-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#090B0A]/90 backdrop-blur-2xl transition-all duration-700 opacity-0 pointer-events-none">
+  <!-- Ambient Gold & Purple Glow Orbs -->
+  <div class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#D6B66C]/10 rounded-full blur-[100px] pointer-events-none"></div>
+  <div class="absolute bottom-1/4 right-1/3 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-[#9875FF]/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+  <!-- Central Welcome Modal Card -->
+  <div class="relative z-10 max-w-xl w-full mx-4 p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-[#161C19]/90 to-[#0F1311]/90 border border-[#D6B66C]/40 shadow-2xl shadow-black/80 text-center space-y-6">
+    
+    <!-- Floating ZYNAX 3D Logo -->
+    <div class="flex justify-center">
+      <div class="relative group">
+        <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#D6B66C] via-[#F0D28B] to-[#51D6A0] p-[2.5px] shadow-xl shadow-[#D6B66C]/20 animate-bounce duration-1000">
+          <div class="w-full h-full rounded-[14px] bg-[#0A0D0B] flex items-center justify-center font-black text-3xl text-transparent bg-clip-text bg-gradient-to-tr from-[#D6B66C] to-[#51D6A0]">
+            Z
+          </div>
+        </div>
+        <div class="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-full bg-[#9875FF] text-[9px] font-mono-code font-bold text-white shadow">
+          AI OS
+        </div>
+      </div>
+    </div>
+
+    <!-- Soft Fade-In Typography -->
+    <div class="space-y-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D6B66C]/15 border border-[#D6B66C]/30 text-[#D6B66C] text-xs font-mono-code font-bold tracking-wider uppercase">
+        <span>✨</span><span>CAMPUS INTELLIGENCE</span>
+      </div>
+      
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+        <span>Welcome, </span>
+        <span id="welcome-modal-username" class="text-transparent bg-clip-text bg-gradient-to-r from-[#D6B66C] via-[#F0D28B] to-[#51D6A0]">
+          Anurag
+        </span>!
+      </h1>
+
+      <p class="text-base sm:text-lg text-[#C4D0C9] font-medium leading-relaxed max-w-md mx-auto">
+        Welcome to ZYNAX — <span class="text-white font-semibold">Your Campus, Your Intelligence, Your Companion.</span>
+      </p>
+    </div>
+
+    <!-- Subtle Audio Waveform Visualizer (Active while speaking) -->
+    <div class="flex items-center justify-center gap-1.5 py-2">
+      <span class="w-1.5 h-4 bg-[#D6B66C] rounded-full voice-wave-bar"></span>
+      <span class="w-1.5 h-8 bg-[#9875FF] rounded-full voice-wave-bar"></span>
+      <span class="w-1.5 h-12 bg-[#48B8FF] rounded-full voice-wave-bar"></span>
+      <span class="w-1.5 h-7 bg-[#51D6A0] rounded-full voice-wave-bar"></span>
+      <span class="w-1.5 h-3 bg-[#D6B66C] rounded-full voice-wave-bar"></span>
+    </div>
+
+    <!-- Controls & Transition Actions -->
+    <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <!-- Enter Dashboard Button -->
+      <button onclick="dismissWelcomeModal()" class="w-full sm:w-auto btn-gold px-7 py-3 rounded-2xl text-sm font-bold shadow-xl shadow-[#D6B66C]/20 hover:scale-105 active:scale-95 transition flex items-center justify-center gap-2">
+        <span>Enter Dashboard</span>
+        <span>→</span>
+      </button>
+
+      <!-- Replay Greeting Button -->
+      <button onclick="replayWelcomeGreeting()" class="w-full sm:w-auto glass-card px-4 py-3 rounded-2xl text-xs font-bold text-[#D6B66C] hover:bg-[#D6B66C]/10 transition flex items-center justify-center gap-1.5" title="Replay English Female Voice Greeting">
+        <span>🔊</span><span>Replay Voice</span>
+      </button>
+
+      <!-- Mute/Unmute Button -->
+      <button onclick="toggleWelcomeMute()" id="welcome-mute-btn" class="w-full sm:w-auto glass-card px-4 py-3 rounded-2xl text-xs font-semibold text-[#8C9690] hover:text-white transition flex items-center justify-center gap-1.5" title="Toggle Audio">
+        <span id="welcome-mute-icon">🔈</span>
+        <span id="welcome-mute-label">Mute</span>
+      </button>
+    </div>
+
+    <div class="text-[11px] text-[#7F8B85] font-mono-code pt-1">
+      Soft Natural Female Voice · English Edition · Press Escape or Enter to proceed
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

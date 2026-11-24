@@ -536,6 +536,39 @@ EXTRA_JS = r'''
           dataIsolated: true
         }, null, 2);
       }
+
+      // 7. 3D AI Student Identity Card Sync
+      const cardName = document.getElementById("card-display-name");
+      const cardRoll = document.getElementById("card-display-roll");
+      const cardBranch = document.getElementById("card-display-branch");
+      const cardSec = document.getElementById("card-display-sec");
+      const cardPhotoImg = document.getElementById("card-photo-img");
+      const cardPhotoFallback = document.getElementById("card-photo-fallback");
+      const cardPhotoBadge = document.getElementById("card-photo-badge");
+
+      if (cardName) cardName.innerText = p.name || "Anurag Banik";
+      if (cardRoll) cardRoll.innerText = p.roll || "2026ABES042";
+      if (cardBranch) cardBranch.innerText = p.branch || "CSE (AI & Machine Learning)";
+      if (cardSec) cardSec.innerText = `Sec ${(p.section || 'Sec A').replace('Sec ','')} · Year ${p.currentYear || '1'}`;
+
+      const photoSrc = (p.activePhotoFilter === "original") ? (p.originalPhotoUrl || p.avatarDataUrl) : (p.enhancedPhotoUrl || p.avatarDataUrl);
+      if (cardPhotoImg && cardPhotoFallback) {
+        if (photoSrc) {
+          cardPhotoImg.src = photoSrc;
+          cardPhotoImg.classList.remove("hidden");
+          cardPhotoFallback.classList.add("hidden");
+        } else {
+          cardPhotoImg.classList.add("hidden");
+          cardPhotoFallback.classList.remove("hidden");
+          cardPhotoFallback.innerText = initials;
+        }
+      }
+      if (cardPhotoBadge) {
+        cardPhotoBadge.innerText = (p.activePhotoFilter === "original") ? "ORIGINAL" : "ENHANCED";
+        cardPhotoBadge.className = (p.activePhotoFilter === "original")
+          ? "absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#48B8FF] text-[8px] font-bold text-black shadow"
+          : "absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#9875FF] text-[8px] font-bold text-white shadow";
+      }
     }
 
     // Settings Category Switcher
@@ -763,10 +796,12 @@ EXTRA_JS = r'''
     }
 
     function setGlobalLanguage(lang) {
-      APP.activeLang = lang;
-      const sel = document.getElementById("lang-select");
-      if (sel) sel.value = lang;
-      alert(`🌐 Campus language switched to ${lang === 'hi' ? 'हिंदी (Hindi)' : lang === 'bn' ? 'বাংলা (Bengali)' : 'English'}. Bestie AI and Exam Voice assistance updated!`);
+      if (typeof applyLanguage === "function") {
+        applyLanguage(lang);
+      } else {
+        APP.activeLang = lang;
+        localStorage.setItem("zynax-lang", lang);
+      }
     }
 
 

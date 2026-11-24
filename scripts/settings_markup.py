@@ -103,6 +103,10 @@ SETTINGS_HTML = r'''
                     <button onclick="removeProfilePicture()" class="glass-card px-3 py-1.5 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/20 flex items-center gap-1.5">
                       <span>🗑️</span><span>Remove</span>
                     </button>
+                    <!-- 3D Student ID Card View -->
+                    <button onclick="switchTab('dashboard'); setTimeout(() => { const el = document.getElementById('section-campus-identity'); if (el) el.scrollIntoView({behavior:'smooth'}); }, 100);" class="btn-gold px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
+                      <span>🪪</span><span>View 3D Campus ID Card</span>
+                    </button>
                   </div>
                   <p class="text-[10px] text-[#7F8B85]">Supported formats: JPG, PNG, WEBP (Max 5MB). Photo updates automatically in the top navigation, greeting, leaderboard, and 4-Year AI companion.</p>
                 </div>

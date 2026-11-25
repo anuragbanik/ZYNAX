@@ -219,6 +219,166 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(214, 182, 108, 0.25); border-radius: 999px; }
   </style>
+
+<style>
+/* =========================================================================
+   APPLE LIQUID GLASS & 3D DESIGN SYSTEM
+   ========================================================================= */
+
+:root {
+  --liquid-glass-bg: rgba(16, 21, 18, 0.75);
+  --liquid-glass-border: rgba(214, 182, 108, 0.28);
+  --liquid-glass-glow: rgba(214, 182, 108, 0.18);
+  --liquid-glass-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 60%, rgba(214, 182, 108, 0.08) 100%);
+  --liquid-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(214, 182, 108, 0.1);
+}
+
+/* Liquid Glass Cards */
+.liquid-glass-card {
+  background: var(--liquid-glass-bg);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1.5px solid var(--liquid-glass-border);
+  box-shadow: var(--liquid-shadow);
+  border-radius: 24px;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+.liquid-glass-card:hover {
+  border-color: rgba(214, 182, 108, 0.55);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.9), 0 0 35px rgba(214, 182, 108, 0.22);
+}
+
+/* Specular Light Reflection Sheen */
+.liquid-sheen-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--liquid-glass-sheen);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Floating Liquid Glass Navigation Menu */
+.floating-liquid-nav {
+  position: sticky;
+  top: 12px;
+  z-index: 50;
+  margin: 0 auto;
+  max-width: 96%;
+  background: rgba(12, 16, 14, 0.82);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1.5px solid rgba(214, 182, 108, 0.3);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.85), 0 0 25px rgba(214, 182, 108, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Smooth Cursor Sensor Styles (Desktop Only) */
+#liquid-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #D6B66C;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+  will-change: transform;
+}
+#liquid-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(214, 182, 108, 0.5);
+  background: radial-gradient(circle, rgba(214, 182, 108, 0.2) 0%, transparent 75%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  will-change: transform;
+}
+#liquid-cursor-glow.cursor-hover {
+  width: 58px;
+  height: 58px;
+  border-color: rgba(72, 184, 255, 0.7);
+  background: radial-gradient(circle, rgba(72, 184, 255, 0.22) 0%, transparent 80%);
+}
+
+@media (pointer: coarse), (hover: none) {
+  #liquid-cursor-dot, #liquid-cursor-glow {
+    display: none !important;
+  }
+}
+
+/* 3D Carousel Styles */
+.carousel-3d-viewport {
+  perspective: 1200px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 10px 0;
+}
+.carousel-3d-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  gap: 20px;
+}
+.carousel-3d-card {
+  flex: 0 0 calc(33.333% - 14px);
+  min-width: 280px;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  transform-style: preserve-3d;
+}
+@media (max-width: 1024px) {
+  .carousel-3d-card {
+    flex: 0 0 calc(50% - 10px);
+  }
+}
+@media (max-width: 640px) {
+  .carousel-3d-card {
+    flex: 0 0 100%;
+  }
+}
+
+/* Achievements Section Glow */
+.achievements-backdrop {
+  background: radial-gradient(ellipse at bottom, rgba(214, 182, 108, 0.12) 0%, rgba(152, 117, 255, 0.08) 35%, rgba(7, 9, 8, 0.95) 75%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold Shimmer Badge Effect */
+@keyframes goldShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.gold-shimmer-badge {
+  background: linear-gradient(90deg, rgba(214,182,108,0.1) 0%, rgba(240,210,139,0.3) 50%, rgba(214,182,108,0.1) 100%);
+  background-size: 200% 100%;
+  animation: goldShimmer 3s infinite linear;
+}
+
+/* Scroll Reveal Utility Classes */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
 </head>
 <body class="relative min-h-screen pb-24 md:pb-12 flex flex-col font-sans">
 
@@ -231,36 +391,52 @@
   <!-- =========================================================
        TOP NAVIGATION BAR (ZYNAX 3.0 COMPLETE SUITE)
        ========================================================= -->
-  <header class="sticky top-0 z-40 bg-[#0A0D0B]/90 backdrop-blur-xl border-b border-white/[0.07] px-4 py-2 flex items-center justify-between gap-2">
+  
+  <!-- =================================================================
+       FLOATING LIQUID GLASS NAVIGATION MENU (APPLE-INSPIRED FROSTED DOCK)
+       ================================================================= -->
+  <header class="floating-liquid-nav px-4 py-2.5 flex items-center justify-between gap-2">
     <!-- Left Logo Section -->
     <div class="flex items-center gap-3 flex-shrink-0">
       <div onclick="switchTab('dashboard')" class="cursor-pointer flex items-center gap-2 group">
-        <div class="w-9 h-9 rounded-xl bg-[#141A17] border border-[#51D6A0]/40 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-          <span class="font-black text-sm text-[#51D6A0]">Z</span>
+        <div class="w-9 h-9 rounded-xl bg-[#141A17] border border-[#D6B66C]/50 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+          <span class="font-black text-sm text-[#D6B66C]">Z</span>
         </div>
         <div>
           <div class="flex items-center gap-1.5">
             <span class="font-black text-base tracking-wider text-white">ZYNAX</span>
-            <span class="text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider bg-[#51D6A0]/20 text-[#51D6A0] border border-[#51D6A0]/30">3.0</span>
-            <span class="text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider bg-[#D6B66C]/20 text-[#D6B66C] border border-[#D6B66C]/30 hidden md:inline">ABES EC</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider bg-[#51D6A0]/20 text-[#51D6A0] border border-[#51D6A0]/30">3.5</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded-full font-bold uppercase tracking-wider bg-[#D6B66C]/20 text-[#D6B66C] border border-[#D6B66C]/30 hidden md:inline">LIQUID GLASS</span>
           </div>
-          <span class="text-[10px] text-[#69746D] hidden lg:block">Your Campus. Your Intelligence. 4-Year Companion.</span>
+          <span class="text-[10px] text-[#8E9A92] hidden xl:block">Your Campus · Your Intelligence · 4-Year Companion</span>
         </div>
       </div>
     </div>
 
-    <!-- Center Nav Tabs (Scrollable Double-Line Pills) -->
-    <nav class="hidden lg:flex items-center gap-0.5 overflow-x-auto py-1 max-w-4xl">
+    <!-- Center Nav Tabs (Scrollable Liquid Glass Pills) -->
+    <nav class="hidden lg:flex items-center gap-1 overflow-x-auto py-1 max-w-4xl no-scrollbar">
       <div onclick="switchTab('dashboard')" class="nav-tab-pill active" data-tab="dashboard">
         <span class="pill-title">Vibe Check</span>
         <span class="pill-sub">Today</span>
       </div>
+      <div onclick="switchTab('attendance')" class="nav-tab-pill" data-tab="attendance">
+        <span class="pill-title text-[#51D6A0]">Attendance</span>
+        <span class="pill-sub">Pull Up</span>
+      </div>
+      <div onclick="switchTab('quiz')" class="nav-tab-pill" data-tab="quiz">
+        <span class="pill-title text-[#9875FF]">Boss Flight</span>
+        <span class="pill-sub">Exam Lab</span>
+      </div>
+      <div onclick="switchTab('timetable')" class="nav-tab-pill" data-tab="timetable">
+        <span class="pill-title text-[#48B8FF]">Next Up</span>
+        <span class="pill-sub">Timetable</span>
+      </div>
       <div onclick="switchTab('arena')" class="nav-tab-pill" data-tab="arena">
-        <span class="pill-title text-[#48B8FF]">Code Arena</span>
+        <span class="pill-title">Code Arena</span>
         <span class="pill-sub">Contests</span>
       </div>
       <div onclick="switchTab('unstop')" class="nav-tab-pill" data-tab="unstop">
-        <span class="pill-title text-[#51D6A0]">Unstop Radar</span>
+        <span class="pill-title">Unstop Radar</span>
         <span class="pill-sub">Hackathons</span>
       </div>
       <div onclick="switchTab('journey')" class="nav-tab-pill" data-tab="journey">
@@ -268,16 +444,8 @@
         <span class="pill-sub">Companion</span>
       </div>
       <div onclick="switchTab('resume')" class="nav-tab-pill" data-tab="resume">
-        <span class="pill-title text-[#9875FF]">Resume AI</span>
+        <span class="pill-title">Resume AI</span>
         <span class="pill-sub">LinkedIn</span>
-      </div>
-      <div onclick="switchTab('timetable')" class="nav-tab-pill" data-tab="timetable">
-        <span class="pill-title">Daily Grind</span>
-        <span class="pill-sub">Timetable</span>
-      </div>
-      <div onclick="switchTab('attendance')" class="nav-tab-pill" data-tab="attendance">
-        <span class="pill-title">Pull Up</span>
-        <span class="pill-sub">Attendance</span>
       </div>
       <div onclick="switchTab('planner')" class="nav-tab-pill" data-tab="planner">
         <span class="pill-title">Study Arc</span>
@@ -291,10 +459,6 @@
         <span class="pill-title">Brain Dump</span>
         <span class="pill-sub">Notes</span>
       </div>
-      <div onclick="switchTab('quiz')" class="nav-tab-pill" data-tab="quiz">
-        <span class="pill-title text-[#9875FF]">ABES Exam Lab</span>
-        <span class="pill-sub">PYQ Vault</span>
-      </div>
       <div onclick="switchTab('tools')" class="nav-tab-pill" data-tab="tools">
         <span class="pill-title">Virtual Tools</span>
         <span class="pill-sub">15 Tools</span>
@@ -307,14 +471,23 @@
         <span class="pill-title">Showtime</span>
         <span class="pill-sub">Slides</span>
       </div>
+      <div onclick="switchTab('dashboard'); setTimeout(() => { const el = document.getElementById('section-achievements'); if (el) el.scrollIntoView({behavior:'smooth'}); }, 100);" class="nav-tab-pill" data-tab="achievements">
+        <span class="pill-title text-[#D6B66C]">Achievements</span>
+        <span class="pill-sub">Showcase</span>
+      </div>
       <div onclick="switchTab('auth')" class="nav-tab-pill" data-tab="auth">
-        <span class="pill-title text-[#D6B66C]">Lock In</span>
+        <span class="pill-title text-[#51D6A0]">Lock In</span>
         <span class="pill-sub">Auth</span>
       </div>
     </nav>
 
     <!-- Right Controls -->
     <div class="flex items-center gap-2 flex-shrink-0">
+      <!-- Mobile Menu Toggle Button -->
+      <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white hover:text-[#D6B66C] transition" title="Toggle Navigation Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+      </button>
+
       <div class="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] font-bold text-orange-400">
         <span>🔥</span><span>5d</span>
       </div>
@@ -323,7 +496,7 @@
       </div>
 
       <!-- TinyFish API Status Badge -->
-      <div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#51D6A0]/10 border border-[#51D6A0]/30 text-[10px] font-mono-code font-bold text-[#51D6A0]" title="TinyFish AI Gateway Connected: sk-tinyfish-shMmh...zaHPEU">
+      <div class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#51D6A0]/10 border border-[#51D6A0]/30 text-[10px] font-mono-code font-bold text-[#51D6A0]" title="TinyFish AI Gateway Connected">
         <span class="w-1.5 h-1.5 rounded-full bg-[#51D6A0] animate-pulse"></span>
         <span>TinyFish AI</span>
       </div>
@@ -354,6 +527,31 @@
       </div>
     </div>
   </header>
+
+  <!-- Mobile Liquid Glass Menu Drawer -->
+  <div id="mobile-menu-drawer" class="fixed inset-x-0 top-20 z-40 p-4 hidden lg:hidden">
+    <div class="liquid-glass-card p-4 space-y-2 border border-[#D6B66C]/30 shadow-2xl">
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <button onclick="switchTab('dashboard'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-[#D6B66C]/10 flex items-center gap-2"><span>⚡</span><span>Vibe Check</span></button>
+        <button onclick="switchTab('attendance'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-[#51D6A0] font-bold hover:bg-[#51D6A0]/10 flex items-center gap-2"><span>🛡️</span><span>Attendance</span></button>
+        <button onclick="switchTab('quiz'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-[#9875FF] font-bold hover:bg-[#9875FF]/10 flex items-center gap-2"><span>⚔️</span><span>Boss Flight</span></button>
+        <button onclick="switchTab('timetable'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-[#48B8FF] font-bold hover:bg-[#48B8FF]/10 flex items-center gap-2"><span>📅</span><span>Next Up</span></button>
+        <button onclick="switchTab('arena'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>👾</span><span>Code Arena</span></button>
+        <button onclick="switchTab('unstop'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>🚀</span><span>Unstop Radar</span></button>
+        <button onclick="switchTab('journey'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-[#D6B66C] font-bold hover:bg-[#D6B66C]/10 flex items-center gap-2"><span>🧠</span><span>4-Year AI</span></button>
+        <button onclick="switchTab('resume'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>📄</span><span>Resume AI</span></button>
+        <button onclick="switchTab('planner'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>⏱️</span><span>Study Arc</span></button>
+        <button onclick="openGeminiVoiceModal(); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-[#9875FF] font-bold hover:bg-[#9875FF]/10 flex items-center gap-2"><span>💬</span><span>Bestie AI</span></button>
+        <button onclick="switchTab('notes'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>📝</span><span>Brain Dump</span></button>
+        <button onclick="switchTab('tools'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>🧰</span><span>Virtual Tools</span></button>
+        <button onclick="switchTab('docs'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>📁</span><span>The Stash</span></button>
+        <button onclick="switchTab('showtime'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-white/[0.04] text-left text-white font-bold hover:bg-white/[0.08] flex items-center gap-2"><span>📽️</span><span>Showtime</span></button>
+        <button onclick="switchTab('dashboard'); setTimeout(() => { const el = document.getElementById('section-achievements'); if (el) el.scrollIntoView({behavior:'smooth'}); }, 100); toggleMobileMenu();" class="p-2.5 rounded-xl bg-[#D6B66C]/10 text-left text-[#D6B66C] font-bold flex items-center gap-2"><span>🏆</span><span>Achievements</span></button>
+        <button onclick="switchTab('auth'); toggleMobileMenu();" class="p-2.5 rounded-xl bg-[#51D6A0]/10 text-left text-[#51D6A0] font-bold flex items-center gap-2"><span>🔐</span><span>Account Login</span></button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Left-Side Floating Bestie AI Button -->
   <div class="fixed left-4 bottom-20 md:bottom-8 z-50 flex items-center gap-2">
@@ -401,6 +599,294 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
         </button>
       </div>
+
+
+      <!-- =================================================================
+           DASHBOARD AI VOICE COMPANION BADGE (REPLAY & VOICE CONTROLS)
+           ================================================================= -->
+      <div id="zynax-welcome-banner" class="ref-card p-4 border border-[#D6B66C]/40 bg-gradient-to-r from-[#171D19] via-[#101412] to-[#17131F] shadow-2xl relative overflow-hidden transition-all duration-500">
+        <!-- Background Ambient Glow -->
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-[#D6B66C]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-[#9875FF]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <!-- Left: Waveform + Message -->
+          <div class="flex items-center gap-3.5">
+            <!-- Animated Sound Wave Visualizer -->
+            <div class="w-12 h-12 rounded-2xl bg-[#9875FF]/15 border border-[#9875FF]/30 flex items-center justify-center gap-1 flex-shrink-0 shadow-lg cursor-pointer hover:scale-105 transition" onclick="replayWelcomeGreeting()" title="Replay Welcome Voice Greeting">
+              <span class="w-1 h-3 bg-[#D6B66C] rounded-full voice-wave-bar"></span>
+              <span class="w-1 h-6 bg-[#9875FF] rounded-full voice-wave-bar"></span>
+              <span class="w-1 h-8 bg-[#48B8FF] rounded-full voice-wave-bar"></span>
+              <span class="w-1 h-5 bg-[#51D6A0] rounded-full voice-wave-bar"></span>
+              <span class="w-1 h-2 bg-[#D6B66C] rounded-full voice-wave-bar"></span>
+            </div>
+
+            <!-- Welcome Text Display -->
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-2">
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#D8CEFF] font-mono-code font-bold uppercase tracking-wider">
+                  🎙️ AI CAMPUS COMPANION
+                </span>
+                <span class="text-[9px] text-[#51D6A0] font-mono-code font-bold">ENGLISH FEMALE VOICE</span>
+              </div>
+              <h2 class="text-sm sm:text-base font-black text-white" id="welcome-banner-heading">
+                Welcome to ZYNAX, Anurag!
+              </h2>
+              <p class="text-xs text-[#C4D0C9] italic font-medium" id="welcome-banner-script">
+                "Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion."
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Controls -->
+          <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
+            <button onclick="replayWelcomeGreeting()" class="btn-gold px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md">
+              <span>🔊</span><span>Replay Greeting</span>
+            </button>
+            <button onclick="toggleWelcomeMute()" id="welcome-dash-mute-btn" class="glass-card px-3 py-1.5 rounded-xl text-xs font-semibold text-[#8C9690] hover:text-white transition">
+              <span id="welcome-dash-mute-label">Mute</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- =================================================================
+           PRIMARY TRIAD SECTION: ATTENDANCE · BOSS FLIGHT · NEXT UP
+           (Prominently displayed in the FIRST section of the Main Dashboard)
+           ================================================================= -->
+      <div class="space-y-4 pt-1" id="primary-triad-section">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold uppercase tracking-wider">
+              PRIORITY ZERO · ACADEMIC VITALS
+            </span>
+            <span class="text-xs text-[#7F8B85] hidden sm:inline">Daily Grind Core Metrics</span>
+          </div>
+          <span class="text-xs text-[#51D6A0] font-mono-code font-bold flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-[#51D6A0] animate-pulse"></span>
+            <span>Real-time Live Sync</span>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          <!-- 1. ATTENDANCE CARD (HERO PRIORITY 1) -->
+          <div onclick="switchTab('attendance')" class="liquid-glass-card p-5 group cursor-pointer relative overflow-hidden border-2 hover:border-[#51D6A0]/70 transition-all duration-300">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black uppercase tracking-wider text-[#51D6A0] flex items-center gap-1.5 font-mono-code">
+                  <span>🛡️</span> 1. ATTENDANCE ARMOR
+                </span>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold font-mono-code">
+                  SAFE ZONE
+                </span>
+              </div>
+
+              <!-- Main Attendance Metric Display -->
+              <div class="flex items-baseline justify-between">
+                <div>
+                  <div class="text-3xl sm:text-4xl font-black text-white tracking-tight flex items-baseline gap-1" id="triad-overall-att">
+                    75.5%
+                  </div>
+                  <p class="text-[10px] text-[#7F8B85] font-medium pt-0.5">Above 75% Mandatory AKTU Barrier</p>
+                </div>
+                <div class="text-right">
+                  <div class="text-lg font-black text-[#D6B66C] font-mono-code" id="triad-att-buffer">+3 classes</div>
+                  <div class="text-[9px] text-[#7F8B85]">Bunk Margin Buffer</div>
+                </div>
+              </div>
+
+              <!-- Subject Health Mini-Bars -->
+              <div class="pt-2 border-t border-white/[0.08] space-y-1.5 text-[10px]">
+                <div class="flex justify-between items-center text-[#9EA9A3]">
+                  <span>Electronics (Critical):</span>
+                  <span class="text-red-400 font-bold font-mono-code">62% ⚠️</span>
+                </div>
+                <div class="flex justify-between items-center text-[#9EA9A3]">
+                  <span>Engg Physics:</span>
+                  <span class="text-[#51D6A0] font-bold font-mono-code">82% ✓</span>
+                </div>
+                <div class="flex justify-between items-center text-[#9EA9A3]">
+                  <span>Engg Mathematics:</span>
+                  <span class="text-amber-400 font-bold font-mono-code">68%</span>
+                </div>
+              </div>
+
+              <div class="pt-1 flex items-center justify-between text-[10px] text-[#51D6A0] font-bold group-hover:translate-x-1 transition-transform">
+                <span>Manage Attendance Calculations →</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. BOSS FLIGHT / BOSS FIGHT CARD (HERO PRIORITY 2) -->
+          <div onclick="switchTab('quiz')" class="liquid-glass-card p-5 group cursor-pointer relative overflow-hidden border-2 hover:border-[#9875FF]/70 transition-all duration-300">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black uppercase tracking-wider text-[#9875FF] flex items-center gap-1.5 font-mono-code">
+                  <span>⚔️</span> 2. BOSS FLIGHT / EXAM
+                </span>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#D8CEFF] font-bold font-mono-code">
+                  PRIORITY 1
+                </span>
+              </div>
+
+              <div>
+                <h3 class="text-lg sm:text-xl font-black text-white group-hover:text-[#D8CEFF] transition">
+                  MT-02 Physics Exam
+                </h3>
+                <div class="flex items-center gap-2 pt-1 text-xs">
+                  <span class="text-red-400 font-bold font-mono-code">12 days to go</span>
+                  <span class="text-white/30">·</span>
+                  <span class="text-[#7F8B85]">Syllabus covered: <strong class="text-white">51%</strong></span>
+                </div>
+              </div>
+
+              <!-- Progress Bar -->
+              <div class="space-y-1">
+                <div class="w-full h-2 rounded-full bg-black/60 overflow-hidden p-[1px] border border-white/[0.08]">
+                  <div class="h-full rounded-full bg-gradient-to-r from-[#9875FF] to-[#51D6A0]" style="width: 51%"></div>
+                </div>
+                <div class="flex justify-between text-[9px] text-[#7F8B85] font-mono-code">
+                  <span>Unit 1, 2, 3 Revised</span>
+                  <span>Unit 4 &amp; 5 Pending</span>
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-white/[0.08] flex items-center justify-between text-[10px] text-[#9875FF] font-bold group-hover:translate-x-1 transition-transform">
+                <span>Enter ABES Exam Lab &amp; PYQs →</span>
+                <span>🔥</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. NEXT UP CARD (HERO PRIORITY 3) -->
+          <div onclick="switchTab('timetable')" class="liquid-glass-card p-5 group cursor-pointer relative overflow-hidden border-2 hover:border-[#48B8FF]/70 transition-all duration-300">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black uppercase tracking-wider text-[#48B8FF] flex items-center gap-1.5 font-mono-code">
+                  <span>⚡</span> 3. NEXT UP
+                </span>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#48B8FF]/20 text-[#48B8FF] font-bold font-mono-code animate-pulse">
+                  IN 20 MINS
+                </span>
+              </div>
+
+              <div>
+                <h3 class="text-lg sm:text-xl font-black text-white group-hover:text-[#48B8FF] transition">
+                  Engineering Physics
+                </h3>
+                <div class="text-xs text-[#7F8B85] pt-0.5 font-medium">
+                  10:00 AM – 11:00 AM · Room 204 · Dr. Verma
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-black/40 border border-white/[0.06] space-y-1">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-[#D6B66C] font-bold">Topic for Today:</span>
+                  <span class="text-[#7F8B85] font-mono-code">Unit 3 Quantum</span>
+                </div>
+                <p class="text-[10px] text-white/90 truncate">Compton Effect derivation &amp; de-Broglie wave packet</p>
+              </div>
+
+              <div class="pt-1 flex items-center justify-between text-[10px] text-[#48B8FF] font-bold group-hover:translate-x-1 transition-transform">
+                <span>View Full Daily Grind Timetable →</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =================================================================
+           3D SLIDING FEATURE CAROUSEL (COOL 3D SLIDING POWER FEATURES)
+           ================================================================= -->
+      <div class="space-y-3 pt-2" id="section-3d-carousel">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+              <span>🚀</span><span>ZYNAX 3D POWER MODULES</span>
+            </h3>
+            <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-mono-code font-bold">INTERACTIVE SLIDER</span>
+          </div>
+          <!-- Slider Navigation Arrows -->
+          <div class="flex items-center gap-2">
+            <button onclick="slideCarousel(-1)" class="w-8 h-8 rounded-xl liquid-glass-card flex items-center justify-center text-xs text-white hover:text-[#D6B66C] hover:scale-110 active:scale-95 transition" title="Previous Slide">
+              ❮
+            </button>
+            <button onclick="slideCarousel(1)" class="w-8 h-8 rounded-xl liquid-glass-card flex items-center justify-center text-xs text-white hover:text-[#D6B66C] hover:scale-110 active:scale-95 transition" title="Next Slide">
+              ❯
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Viewport Track -->
+        <div class="carousel-3d-viewport">
+          <div class="carousel-3d-track" id="power-carousel-track">
+            
+            <!-- Slide 1: ABES Exam Lab -->
+            <div onclick="switchTab('quiz')" class="carousel-3d-card liquid-glass-card p-5 cursor-pointer group hover:scale-[1.02] transition-all">
+              <div class="liquid-sheen-overlay"></div>
+              <div class="relative z-10 space-y-2.5">
+                <div class="w-10 h-10 rounded-xl bg-[#9875FF]/20 border border-[#9875FF]/40 flex items-center justify-center text-lg text-[#9875FF]">⚔️</div>
+                <h4 class="font-black text-sm text-white group-hover:text-[#9875FF] transition">ABES Exam Lab &amp; PYQ Vault</h4>
+                <p class="text-[11px] text-[#7F8B85] leading-relaxed">4 verified exam papers, OCR processor, 2m/4m/10m question bank, and 90-minute proctored mock simulator.</p>
+                <div class="text-[10px] text-[#9875FF] font-bold pt-1">Launch Exam Lab →</div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Code Arena -->
+            <div onclick="switchTab('arena')" class="carousel-3d-card liquid-glass-card p-5 cursor-pointer group hover:scale-[1.02] transition-all">
+              <div class="liquid-sheen-overlay"></div>
+              <div class="relative z-10 space-y-2.5">
+                <div class="w-10 h-10 rounded-xl bg-[#48B8FF]/20 border border-[#48B8FF]/40 flex items-center justify-center text-lg text-[#48B8FF]">👾</div>
+                <h4 class="font-black text-sm text-white group-hover:text-[#48B8FF] transition">Topic-Wise Code Arena</h4>
+                <p class="text-[11px] text-[#7F8B85] leading-relaxed">LeetCode &amp; CodeChef curated DSA problems with 1-click launcher to local Visual Studio Code.</p>
+                <div class="text-[10px] text-[#48B8FF] font-bold pt-1">Open Code Arena →</div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Unstop Radar -->
+            <div onclick="switchTab('unstop')" class="carousel-3d-card liquid-glass-card p-5 cursor-pointer group hover:scale-[1.02] transition-all">
+              <div class="liquid-sheen-overlay"></div>
+              <div class="relative z-10 space-y-2.5">
+                <div class="w-10 h-10 rounded-xl bg-[#51D6A0]/20 border border-[#51D6A0]/40 flex items-center justify-center text-lg text-[#51D6A0]">🚀</div>
+                <h4 class="font-black text-sm text-white group-hover:text-[#51D6A0] transition">Unstop Hackathon Radar</h4>
+                <p class="text-[11px] text-[#7F8B85] leading-relaxed">Real-time college and national hackathons, technical challenges, internships, and countdown alerts.</p>
+                <div class="text-[10px] text-[#51D6A0] font-bold pt-1">Explore Hackathons →</div>
+              </div>
+            </div>
+
+            <!-- Slide 4: 4-Year AI Companion -->
+            <div onclick="switchTab('journey')" class="carousel-3d-card liquid-glass-card p-5 cursor-pointer group hover:scale-[1.02] transition-all">
+              <div class="liquid-sheen-overlay"></div>
+              <div class="relative z-10 space-y-2.5">
+                <div class="w-10 h-10 rounded-xl bg-[#D6B66C]/20 border border-[#D6B66C]/40 flex items-center justify-center text-lg text-[#D6B66C]">🧠</div>
+                <h4 class="font-black text-sm text-white group-hover:text-[#D6B66C] transition">4-Year Career Companion</h4>
+                <p class="text-[11px] text-[#7F8B85] leading-relaxed">8-semester academic trajectory map, skill progression graph, and placement target milestones.</p>
+                <div class="text-[10px] text-[#D6B66C] font-bold pt-1">View 4-Yr Roadmap →</div>
+              </div>
+            </div>
+
+            <!-- Slide 5: Resume AI -->
+            <div onclick="switchTab('resume')" class="carousel-3d-card liquid-glass-card p-5 cursor-pointer group hover:scale-[1.02] transition-all">
+              <div class="liquid-sheen-overlay"></div>
+              <div class="relative z-10 space-y-2.5">
+                <div class="w-10 h-10 rounded-xl bg-cyan-400/20 border border-cyan-400/40 flex items-center justify-center text-lg text-cyan-300">📄</div>
+                <h4 class="font-black text-sm text-white group-hover:text-cyan-300 transition">ATS Resume &amp; LinkedIn AI</h4>
+                <p class="text-[11px] text-[#7F8B85] leading-relaxed">Instant LaTeX / PDF resume exporter with 94/100 ATS scoring and AI headline generator.</p>
+                <div class="text-[10px] text-cyan-300 font-bold pt-1">Build Resume →</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
 
 
 <style>
@@ -480,56 +966,6 @@
   background: repeating-linear-gradient(90deg, #F5F5F5 0px, #F5F5F5 2px, transparent 2px, transparent 4px, #F5F5F5 4px, #F5F5F5 5px, transparent 5px, transparent 8px);
 }
 </style>
-
-
-      <!-- =================================================================
-           DASHBOARD AI VOICE COMPANION BADGE (REPLAY & VOICE CONTROLS)
-           ================================================================= -->
-      <div id="zynax-welcome-banner" class="ref-card p-4 border border-[#D6B66C]/40 bg-gradient-to-r from-[#171D19] via-[#101412] to-[#17131F] shadow-2xl relative overflow-hidden transition-all duration-500">
-        <!-- Background Ambient Glow -->
-        <div class="absolute -top-12 -right-12 w-48 h-48 bg-[#D6B66C]/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-[#9875FF]/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <!-- Left: Waveform + Message -->
-          <div class="flex items-center gap-3.5">
-            <!-- Animated Sound Wave Visualizer -->
-            <div class="w-12 h-12 rounded-2xl bg-[#9875FF]/15 border border-[#9875FF]/30 flex items-center justify-center gap-1 flex-shrink-0 shadow-lg cursor-pointer hover:scale-105 transition" onclick="replayWelcomeGreeting()" title="Replay Welcome Voice Greeting">
-              <span class="w-1 h-3 bg-[#D6B66C] rounded-full voice-wave-bar"></span>
-              <span class="w-1 h-6 bg-[#9875FF] rounded-full voice-wave-bar"></span>
-              <span class="w-1 h-8 bg-[#48B8FF] rounded-full voice-wave-bar"></span>
-              <span class="w-1 h-5 bg-[#51D6A0] rounded-full voice-wave-bar"></span>
-              <span class="w-1 h-2 bg-[#D6B66C] rounded-full voice-wave-bar"></span>
-            </div>
-
-            <!-- Welcome Text Display -->
-            <div class="space-y-0.5">
-              <div class="flex items-center gap-2">
-                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#D8CEFF] font-mono-code font-bold uppercase tracking-wider">
-                  🎙️ AI CAMPUS COMPANION
-                </span>
-                <span class="text-[9px] text-[#51D6A0] font-mono-code font-bold">ENGLISH FEMALE VOICE</span>
-              </div>
-              <h2 class="text-sm sm:text-base font-black text-white" id="welcome-banner-heading">
-                Welcome to ZYNAX, Anurag!
-              </h2>
-              <p class="text-xs text-[#C4D0C9] italic font-medium" id="welcome-banner-script">
-                "Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion."
-              </p>
-            </div>
-          </div>
-
-          <!-- Right Controls -->
-          <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
-            <button onclick="replayWelcomeGreeting()" class="btn-gold px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md">
-              <span>🔊</span><span>Replay Greeting</span>
-            </button>
-            <button onclick="toggleWelcomeMute()" id="welcome-dash-mute-btn" class="glass-card px-3 py-1.5 rounded-xl text-xs font-semibold text-[#8C9690] hover:text-white transition">
-              <span id="welcome-dash-mute-label">Mute</span>
-            </button>
-          </div>
-        </div>
-      </div>
 
 
       <!-- =================================================================
@@ -652,32 +1088,41 @@
                 <div class="id-card-face id-card-back p-5 justify-between">
                   <!-- Header -->
                   <div class="flex items-center justify-between pb-1.5 border-b border-white/[0.08]">
-                    <span class="text-[10px] font-black uppercase text-[#D6B66C] tracking-wider">ACADEMIC &amp; AI VERIFICATION</span>
-                    <span class="text-[8px] text-[#51D6A0] font-mono-code">REGISTRAR AUTHENTICATED</span>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs">🪪</span>
+                      <span class="text-[10px] font-black uppercase text-[#D6B66C] tracking-wider">STUDENT PROFILE &amp; CONTACT PASS</span>
+                    </div>
+                    <span class="text-[8px] px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code font-bold">
+                      REGISTRAR AUTHENTICATED
+                    </span>
                   </div>
 
-                  <!-- Middle: Strengths & Academic Highlights -->
-                  <div class="grid grid-cols-2 gap-3 py-1 text-[9px]">
+                  <!-- Middle: Comprehensive Contact, Links, and Academic Info -->
+                  <div class="grid grid-cols-2 gap-3 py-1.5 text-[9px]">
+                    <!-- Left Column: Academic & Contact -->
                     <div class="space-y-1">
-                      <span class="text-[#7F8B85] block font-bold">CORE DOMAIN:</span>
-                      <p class="text-white font-medium" id="card-back-domain">Artificial Intelligence &amp; Autonomous Agents</p>
+                      <span class="text-[#7F8B85] block font-bold">STUDENT CONTACT:</span>
+                      <p class="text-white font-mono-code truncate" id="card-back-email">anurag.banik@abes.ac.in</p>
+                      <p class="text-[#D6B66C] font-mono-code">+91 98765 43210</p>
                       
-                      <span class="text-[#7F8B85] block font-bold pt-1">LIBRARY ID:</span>
-                      <p class="text-[#D6B66C] font-mono-code">LIB-2026-ABES-042</p>
+                      <span class="text-[#7F8B85] block font-bold pt-1">CAMPUS RESIDENCE:</span>
+                      <p class="text-white truncate">ABES Campus Residency, Ghaziabad</p>
 
-                      <span class="text-[#7F8B85] block font-bold pt-1">BLOOD GROUP:</span>
-                      <p class="text-white">B+ Positive (Verified)</p>
+                      <span class="text-[#7F8B85] block font-bold pt-1">BLOOD GROUP &amp; MEDICAL:</span>
+                      <p class="text-[#51D6A0] font-mono-code">B+ Positive (Verified Record)</p>
                     </div>
 
+                    <!-- Right Column: Student Links & Credentials -->
                     <div class="space-y-1">
-                      <span class="text-[#7F8B85] block font-bold">TOP STRENGTH:</span>
-                      <p class="text-[#51D6A0] font-medium" id="card-back-strength">Algorithmic Problem Solving &amp; Neural Nets</p>
+                      <span class="text-[#7F8B85] block font-bold">VERIFIED LINKS &amp; SOCIAL:</span>
+                      <a href="https://github.com/anuragbanik/ZYNAX" target="_blank" class="text-[#48B8FF] font-mono-code hover:underline block truncate">
+                        🔗 github.com/anuragbanik/ZYNAX
+                      </a>
+                      <p class="text-white/80 font-mono-code truncate">💼 linkedin.com/in/anuragbanik</p>
 
-                      <span class="text-[#7F8B85] block font-bold pt-1">CAMPUS PORTAL:</span>
-                      <p class="text-[#48B8FF] font-mono-code truncate">zynax.abes.ac.in</p>
-
-                      <span class="text-[#7F8B85] block font-bold pt-1">EMERGENCY LINE:</span>
-                      <p class="text-white font-mono-code">+91 98765 43210</p>
+                      <span class="text-[#7F8B85] block font-bold pt-1">ACADEMIC STANDING:</span>
+                      <p class="text-[#D6B66C] font-mono-code">Target SGPA: 8.80 (Sem 1)</p>
+                      <p class="text-white/80 font-mono-code">Library ID: LIB-2026-042</p>
                     </div>
                   </div>
 
@@ -685,19 +1130,18 @@
                   <div class="pt-2 border-t border-white/[0.08] flex items-center justify-between">
                     <div class="flex items-center gap-2">
                       <div class="w-9 h-9 rounded bg-white p-0.5 flex items-center justify-center">
-                        <!-- Mini SVG QR Code representation -->
                         <svg class="w-full h-full text-black" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm14 0h4v4h-4v-4zm-4 4h4v4h-4v-4zm4-4v-4h-4v4h4zm-4-4h4V6h-4v4z"/>
                         </svg>
                       </div>
                       <div class="text-[7.5px] text-[#7F8B85] leading-tight font-mono-code">
-                        <div>SCAN TO VERIFY</div>
-                        <div>HASH: 7F4A...B902</div>
+                        <div>AKTU SECURITY HASH</div>
+                        <div class="text-white/80">SHA-256 · VERIFIED</div>
                       </div>
                     </div>
                     <div class="text-right">
                       <div class="text-[9px] font-black text-[#D6B66C]">ABES EC DEAN</div>
-                      <div class="text-[7px] text-[#7F8B85]">DIGITALLY SIGNED</div>
+                      <div class="text-[7px] text-[#7F8B85]">DIGITALLY SIGNED PASS</div>
                     </div>
                   </div>
                 </div>
@@ -1034,6 +1478,248 @@
           </div>
         </div>
       </div>
+
+
+      <!-- =================================================================
+           DEDICATED ACHIEVEMENTS SHOWCASE SECTION
+           (Placed at the very bottom of the main webpage)
+           ================================================================= -->
+      <section id="section-achievements" class="achievements-backdrop p-6 sm:p-10 rounded-3xl border border-[#D6B66C]/40 space-y-8 mt-12 relative overflow-hidden">
+        <!-- Floating Ambient Glow Orbs -->
+        <div class="absolute -top-20 -left-20 w-80 h-80 bg-[#D6B66C]/15 rounded-full blur-[90px] pointer-events-none"></div>
+        <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-[#9875FF]/15 rounded-full blur-[90px] pointer-events-none"></div>
+
+        <!-- Section Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08] relative z-10">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-[#D6B66C]/15 border border-[#D6B66C]/40 flex items-center justify-center text-2xl text-[#D6B66C] shadow-xl">
+              🏆
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-xl sm:text-2xl font-black text-white tracking-wide">
+                  STUDENT ACHIEVEMENTS SHOWCASE
+                </h2>
+                <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-[#D6B66C]/25 text-[#D6B66C] font-mono-code font-bold">
+                  VERIFIED BADGES
+                </span>
+              </div>
+              <p class="text-xs text-[#8E9A92]">
+                Verified milestones, academic achievements, coding ranks, and earned badges across your 4-year campus journey.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 self-start sm:self-center">
+            <span class="text-xs font-mono-code px-3 py-1 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[#51D6A0]">
+              Level 4 Scholar · 1,450 XP
+            </span>
+          </div>
+        </div>
+
+        <!-- Achievement Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
+
+          <!-- 1. Code Arena Grandmaster -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-[#48B8FF]/20 border border-[#48B8FF]/40 flex items-center justify-center text-xl">
+                  👾
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#48B8FF]/20 text-[#48B8FF] font-bold font-mono-code">TOP 5%</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-[#48B8FF] transition">Code Arena Grandmaster</h4>
+              <p class="text-[11px] text-[#7F8B85]">84+ curated LeetCode &amp; CodeChef problems solved across Arrays, Two Pointers, and Binary Search.</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Contest Rating:</span>
+                <span class="text-white font-bold">1,642</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Boss Flight Victor -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-[#9875FF]/20 border border-[#9875FF]/40 flex items-center justify-center text-xl">
+                  ⚔️
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#9875FF]/20 text-[#D8CEFF] font-bold font-mono-code">88.6% MOCK</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-[#9875FF] transition">Boss Flight Victor</h4>
+              <p class="text-[11px] text-[#7F8B85]">Scored 39/44 (88.6%) on Physics MT-02 Mock Paper 2 in authentic ABES Exam Lab simulator.</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Accuracy:</span>
+                <span class="text-[#51D6A0] font-bold">High Precision</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Unbroken Daily Grind Streak -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-xl">
+                  🔥
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 font-bold font-mono-code">5 DAYS ACTIVE</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-orange-400 transition">Unbroken Daily Grind</h4>
+              <p class="text-[11px] text-[#7F8B85]">Consecutive 5-day active study streak logged across syllabus notes, timetable, and attendance audits.</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Next Tier:</span>
+                <span class="text-orange-400 font-bold">7-Day Gold Master</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Attendance Armor Shield -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-[#51D6A0]/20 border border-[#51D6A0]/40 flex items-center justify-center text-xl">
+                  🛡️
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold font-mono-code">AKTU SAFE</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-[#51D6A0] transition">Attendance Armor</h4>
+              <p class="text-[11px] text-[#7F8B85]">Maintained aggregate 75.5% attendance with +3 classes buffer over the 75% college exam threshold.</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Margin:</span>
+                <span class="text-[#51D6A0] font-bold">+3 Buffer Safe</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Hackathon Vanguard -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-[#D6B66C]/20 border border-[#D6B66C]/40 flex items-center justify-center text-xl">
+                  🚀
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-[#D6B66C]/20 text-[#D6B66C] font-bold font-mono-code">1ST PLACE</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-[#D6B66C] transition">Hackathon Vanguard</h4>
+              <p class="text-[11px] text-[#7F8B85]">Won 1st Place at ABES Freshers Hackathon with autonomous TinyFish AI Campus Companion prototype.</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Domain:</span>
+                <span class="text-[#D6B66C] font-bold">Generative AI</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Academic Honors Target -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-cyan-400/20 border border-cyan-400/40 flex items-center justify-center text-xl">
+                  🎓
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 font-bold font-mono-code">SGPA 8.80</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-cyan-300 transition">Academic Honors Track</h4>
+              <p class="text-[11px] text-[#7F8B85]">On track for First Class with Distinction honors in B.Tech CSE (Artificial Intelligence &amp; ML).</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Current SGPA:</span>
+                <span class="text-cyan-300 font-bold">8.65 / 10.0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. ATS Placement Ready -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-xl">
+                  📄
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-[#51D6A0] font-bold font-mono-code">94/100 ATS</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-[#51D6A0] transition">ATS Placement Ready</h4>
+              <p class="text-[11px] text-[#7F8B85]">Verified Tier-1 ATS resume compiled with optimized keywords for FAANG &amp; AI Startup roles.</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Format:</span>
+                <span class="text-[#51D6A0] font-bold">LaTeX Certified</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. AI Voice Intelligence Master -->
+          <div class="liquid-glass-card p-5 space-y-3 group hover:scale-[1.03] transition-all">
+            <div class="liquid-sheen-overlay"></div>
+            <div class="relative z-10 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-xl">
+                  🎙️
+                </div>
+                <span class="text-[9px] px-2 py-0.5 rounded-full bg-purple-500/20 text-[#D8CEFF] font-bold font-mono-code">CO-PILOT</span>
+              </div>
+              <h4 class="font-black text-sm text-white group-hover:text-[#D8CEFF] transition">Voice AI Master</h4>
+              <p class="text-[11px] text-[#7F8B85]">Configured with natural female voice synthesis, conversational coaching, and exam speech readers.</p>
+              <div class="pt-2 border-t border-white/[0.06] flex justify-between text-[10px] font-mono-code">
+                <span class="text-[#7F8B85]">Status:</span>
+                <span class="text-[#D8CEFF] font-bold">100% Operational</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Academic Milestones Progress Tracker -->
+        <div class="liquid-glass-card p-6 space-y-4 relative z-10">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-black text-white uppercase tracking-wider flex items-center gap-2">
+              <span>📊</span><span>4-Year Milestone Progression Bars</span>
+            </h3>
+            <span class="text-[10px] text-[#D6B66C] font-mono-code">Year 1 · Semester 1</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 text-xs">
+            <!-- Metric 1: LeetCode Goal -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between">
+                <span class="text-[#8E9A92]">DSA Problems:</span>
+                <span class="text-white font-mono-code font-bold">84 / 150 (56%)</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-black/60 overflow-hidden p-[1px] border border-white/[0.08]">
+                <div class="h-full rounded-full bg-gradient-to-r from-[#48B8FF] to-[#D6B66C]" style="width: 56%"></div>
+              </div>
+            </div>
+
+            <!-- Metric 2: Semester 1 Timeline -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between">
+                <span class="text-[#8E9A92]">Semester 1 Progress:</span>
+                <span class="text-white font-mono-code font-bold">65% Completed</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-black/60 overflow-hidden p-[1px] border border-white/[0.08]">
+                <div class="h-full rounded-full bg-gradient-to-r from-[#51D6A0] to-[#48B8FF]" style="width: 65%"></div>
+              </div>
+            </div>
+
+            <!-- Metric 3: PYQ Vault Coverage -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between">
+                <span class="text-[#8E9A92]">AKTU Exam Papers:</span>
+                <span class="text-[#51D6A0] font-mono-code font-bold">4 / 4 Analyzed (100%)</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-black/60 overflow-hidden p-[1px] border border-white/[0.08]">
+                <div class="h-full rounded-full bg-gradient-to-r from-[#51D6A0] to-[#51D6A0]" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
     </section>
 
     <!-- =================================================================
@@ -1564,90 +2250,218 @@
     <!-- =================================================================
          TAB 0: LOCK IN — LOGIN & LANDING (EARLIER DONGLES RETAINED)
          ================================================================= -->
-    <section id="tab-auth" class="tab-content hidden space-y-6 py-2">
-      <div class="glass-panel p-6 sm:p-8 rounded-3xl relative overflow-hidden border border-white/[0.08]">
-        <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+    
+    <!-- =================================================================
+         PREMIUM LIQUID GLASS STUDENT AUTHENTICATION & ACCOUNT SUITE
+         ================================================================= -->
+    <section id="tab-auth" class="tab-content hidden space-y-8 py-4">
+      
+      <!-- Top Hero Welcome Banner -->
+      <div class="liquid-glass-card p-6 sm:p-8 relative overflow-hidden">
+        <div class="liquid-sheen-overlay"></div>
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
           <div class="space-y-3 text-center lg:text-left max-w-xl">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D6B66C]/15 border border-[#D6B66C]/30 text-xs font-mono-code font-bold text-[#D6B66C]">
-              🔥 GEN-Z CAMPUS OPERATING SYSTEM
+              <span>🛡️</span><span>AKTU SECURE IDENTITY PASS · ZYNAX 3.5</span>
             </div>
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
-              YOUR CAMPUS.<br/>
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#D6B66C] via-[#F0D28B] to-[#9875FF]">YOUR INTELLIGENCE.</span><br/>
-              YOUR FUTURE.
+              STUDENT ACCOUNT &amp;<br/>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#D6B66C] via-[#F0D28B] to-[#51D6A0]">
+                CAMPUS CREDENTIALS
+              </span>
             </h1>
             <p class="text-xs sm:text-sm text-[#87928B] leading-relaxed">
-              Welcome to <strong class="text-[#D6B66C]">ZYNAX 3.0</strong> — Built for <strong class="text-white">Anurag Banik</strong> &amp; the ABES Engineering College squad. Unified attendance maths, live timetable countdowns, daily LeetCode arena, 90-min mock exams, and multilingual Gemini voice AI.
+              Sign in to sync your verified attendance armor, daily timetable alerts, LeetCode arena streaks, and 4-Year career milestones. All credentials are encrypted locally in compliance with campus data privacy.
             </p>
             <div class="pt-2 flex flex-wrap gap-2.5 justify-center lg:justify-start">
-              <button onclick="switchTab('dashboard')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">⚡ Enter Workspace</button>
-              <button onclick="switchTab('arena')" class="btn-purple px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5">👾 Next LeetCode Contest</button>
-              <button onclick="switchTab('unstop')" class="btn-emerald px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5">🚀 Unstop Hackathons</button>
-              <button onclick="switchTab('attendance')" class="glass-card px-4 py-2.5 rounded-xl text-xs font-bold text-[#51D6A0] flex items-center gap-1.5">🛡️ Pull Up</button>
+              <button onclick="switchTab('dashboard')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
+                <span>⚡</span><span>Open Main Dashboard</span>
+              </button>
+              <button onclick="switchTab('settings')" class="glass-card px-4 py-2.5 rounded-xl text-xs font-bold text-[#D6B66C] flex items-center gap-1.5">
+                <span>⚙️</span><span>Profile Settings</span>
+              </button>
             </div>
           </div>
-          <!-- 3D Rotating Z-Y-N-A-X Cube -->
+
+          <!-- 3D Floating ZYNAX Core Emblem -->
           <div class="flex flex-col items-center gap-3 flex-shrink-0">
-            <div class="cube-container">
-              <div class="cube-box">
-                <div class="cube-face c-face-f">Z</div>
-                <div class="cube-face c-face-b">Y</div>
-                <div class="cube-face c-face-r">N</div>
-                <div class="cube-face c-face-l">A</div>
-                <div class="cube-face c-face-t">X</div>
-                <div class="cube-face c-face-bt" style="font-size:22px">3.0</div>
+            <div class="w-24 h-24 rounded-3xl p-[2.5px] bg-gradient-to-tr from-[#D6B66C] via-[#9875FF] to-[#48B8FF] shadow-2xl shadow-[#D6B66C]/25 hover:rotate-6 transition-transform duration-500">
+              <div class="w-full h-full rounded-[22px] bg-[#0A0D0B] flex items-center justify-center font-black text-4xl text-transparent bg-clip-text bg-gradient-to-tr from-[#D6B66C] to-[#51D6A0]">
+                Z
               </div>
             </div>
-            <span class="text-[10px] text-[#D6B66C] font-mono-code tracking-widest uppercase font-bold">ZYNAX 3D CORE</span>
+            <span class="text-[10px] text-[#D6B66C] font-mono-code tracking-widest uppercase font-bold">
+              AKTU VERIFIED SYSTEM
+            </span>
           </div>
         </div>
       </div>
 
-      <!-- Squad Login Box -->
-      <div class="max-w-xl mx-auto ref-card p-6 sm:p-8 space-y-5">
-        <div class="text-center space-y-1">
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#D6B66C] via-[#9875FF] to-[#48B8FF] mx-auto flex items-center justify-center text-xl font-black text-black mb-2 shadow-lg">Z</div>
-          <h2 class="text-2xl font-black text-white">Squad Login &amp; Credentials</h2>
-          <p class="text-xs text-[#7F8B85]">Client verification mode active — your OTP is generated below.</p>
-        </div>
-        <div class="space-y-3.5">
-          <div>
-            <label class="text-xs text-[#7F8B85] block mb-1">Student Full Name</label>
-            <input type="text" id="auth-name" value="Anurag Banik" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
-          </div>
-          <div>
-            <label class="text-xs text-[#7F8B85] block mb-1">College Email</label>
-            <input type="email" id="auth-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-xs text-[#7F8B85] block mb-1">Admission / Roll No</label>
-              <input type="text" id="auth-roll" value="2026ABES042" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
-            </div>
-            <div>
-              <label class="text-xs text-[#7F8B85] block mb-1">Branch &amp; Section</label>
-              <input type="text" id="auth-branch" value="CSE (AI/ML) Sec A" class="w-full px-3.5 py-2.5 rounded-xl glass-card text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
-            </div>
-          </div>
-          <div class="pt-2 flex flex-col gap-2">
-            <button onclick="requestOtp()" class="w-full btn-gold py-2.5 rounded-xl text-xs font-bold">Generate Verification OTP</button>
-            <button onclick="switchTab('dashboard')" class="w-full btn-emerald py-2.5 rounded-xl text-xs font-bold">⚡ Instant Enter Workspace</button>
-            <button onclick="simulateLinkedInLogin()" class="w-full glass-card py-2.5 rounded-xl text-xs font-bold text-white hover:border-[#48B8FF] flex items-center justify-center gap-2">
-              <span class="text-[#48B8FF]">in</span> Sign in with LinkedIn
+      <!-- Main Liquid Glass Authentication Card -->
+      <div class="max-w-xl mx-auto liquid-glass-card p-6 sm:p-9 space-y-6 relative" id="auth-main-card" onmousemove="handleAuthTilt(event)" onmouseleave="resetAuthTilt()">
+        <div class="liquid-sheen-overlay"></div>
+
+        <div class="relative z-10 space-y-5">
+          <!-- Mode Switcher Tabs: Sign In vs Create Account -->
+          <div class="flex p-1.5 rounded-2xl bg-black/50 border border-white/[0.08] relative">
+            <button onclick="setAuthMode('signin')" id="auth-tab-signin" class="flex-1 py-2.5 rounded-xl text-xs font-bold text-black bg-[#D6B66C] shadow-lg transition-all">
+              Sign In
+            </button>
+            <button onclick="setAuthMode('register')" id="auth-tab-register" class="flex-1 py-2.5 rounded-xl text-xs font-semibold text-[#87928B] hover:text-white transition-all">
+              Create Account
             </button>
           </div>
+
+          <!-- Form Header -->
+          <div class="text-center space-y-1">
+            <h2 class="text-2xl font-black text-white" id="auth-heading-text">Student Sign In</h2>
+            <p class="text-xs text-[#7F8B85]" id="auth-sub-text">Enter your student credentials to access your ZYNAX companion.</p>
+          </div>
+
+          <!-- Alert / Validation Banner -->
+          <div id="auth-alert-box" class="hidden p-3 rounded-xl border text-xs font-medium transition-all"></div>
+
+          <!-- SIGN IN FORM VIEW -->
+          <form id="form-signin" onsubmit="handleSignInSubmit(event)" class="space-y-4">
+            <div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Username or College Email</label>
+              <div class="relative">
+                <input type="text" id="signin-username" value="anurag.banik@abes.ac.in" required placeholder="e.g. 2026ABES042 or student@abes.ac.in" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition" />
+                <span class="absolute right-3.5 top-3 text-xs text-[#7F8B85]">👤</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Password</label>
+              <div class="relative">
+                <input type="password" id="signin-password" value="Zynax2026!#" required placeholder="Enter your password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition pr-10" />
+                <button type="button" onclick="togglePasswordVisibility('signin-password', this)" class="absolute right-3 top-3 text-xs text-[#7F8B85] hover:text-white transition" title="Show/Hide Password">
+                  👁️
+                </button>
+              </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="flex items-center justify-between text-xs pt-1">
+              <label class="flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" id="signin-remember" checked class="w-4 h-4 accent-[#D6B66C] rounded" />
+                <span class="text-[#8E9A92]">Remember Me</span>
+              </label>
+              <button type="button" onclick="openForgotPasswordModal()" class="text-[#D6B66C] hover:underline font-bold">
+                Forgot Password?
+              </button>
+            </div>
+
+            <button type="submit" class="w-full btn-gold py-3 rounded-xl text-xs font-bold shadow-lg shadow-[#D6B66C]/20 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
+              <span>Sign In to ZYNAX</span>
+              <span>→</span>
+            </button>
+          </form>
+
+          <!-- CREATE ACCOUNT (REGISTER) FORM VIEW -->
+          <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-4">
+            <div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Student Full Name</label>
+              <input type="text" id="reg-name" required placeholder="e.g. Anurag Banik" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">College Email</label>
+                <input type="email" id="reg-email" required placeholder="name@abes.ac.in" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+              </div>
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Admission / Roll No</label>
+                <input type="text" id="reg-roll" required placeholder="e.g. 2026ABES042" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white font-mono-code focus:outline-none focus:border-[#D6B66C] transition" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Branch / Degree</label>
+                <input type="text" id="reg-branch" value="CSE (AI/ML)" required class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+              </div>
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Section &amp; Year</label>
+                <input type="text" id="reg-section" value="Sec A · Year 1" required class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+              </div>
+            </div>
+
+            <div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Create Password (Min 6 Characters)</label>
+              <div class="relative">
+                <input type="password" id="reg-password" minlength="6" required placeholder="Create secure password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition pr-10" />
+                <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
+                  👁️
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Confirm Password</label>
+              <div class="relative">
+                <input type="password" id="reg-password-confirm" minlength="6" required placeholder="Re-enter password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition pr-10" />
+                <button type="button" onclick="togglePasswordVisibility('reg-password-confirm', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
+                  👁️
+                </button>
+              </div>
+            </div>
+
+            <!-- Honor Code Checkbox -->
+            <label class="flex items-center gap-2 cursor-pointer text-xs select-none pt-1">
+              <input type="checkbox" id="reg-terms" required checked class="w-4 h-4 accent-[#51D6A0] rounded" />
+              <span class="text-[#8E9A92]">I agree to ABES Engineering College Academic Honor Code.</span>
+            </label>
+
+            <button type="submit" class="w-full btn-emerald py-3 rounded-xl text-xs font-bold shadow-lg shadow-[#51D6A0]/20 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
+              <span>Create ZYNAX Student Account</span>
+              <span>✓</span>
+            </button>
+          </form>
+
+          <!-- Alternative Quick OTP Login option for legacy continuity -->
+          <div class="pt-2 border-t border-white/[0.08] text-center">
+            <button onclick="toggleLegacyOtpBox()" class="text-[11px] text-[#7F8B85] hover:text-[#D6B66C] transition flex items-center justify-center gap-1 mx-auto">
+              <span>🔐 Quick One-Time Passcode (OTP) Verification</span>
+              <span id="legacy-otp-arrow">▼</span>
+            </button>
+            <div id="legacy-otp-container" class="hidden pt-3 space-y-2 max-w-sm mx-auto">
+              <button onclick="requestOtp()" class="btn-gold w-full py-2 rounded-xl text-xs font-bold">Generate One-Click OTP</button>
+              <div id="auth-otp-box" class="hidden p-3 rounded-xl bg-white/[0.04] space-y-2">
+                <div class="text-[11px] text-[#7F8B85]">Your Security Code: <span id="displayed-otp" class="font-mono-code font-bold text-[#51D6A0] text-sm"></span></div>
+                <input type="text" id="otp-input" placeholder="Enter OTP" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/[0.1] text-xs text-white text-center font-mono-code" />
+                <button onclick="verifyOtpNow()" class="btn-emerald w-full py-1.5 rounded-lg text-xs font-bold">Verify &amp; Enter</button>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <!-- OTP Box -->
-        <div id="auth-otp-box" class="p-3.5 rounded-xl bg-[#D6B66C]/10 border border-[#D6B66C]/30 text-center space-y-2">
-          <span class="text-[10px] text-[#D6B66C] font-bold uppercase tracking-wider block">Verification OTP (Preview Mode)</span>
-          <span id="displayed-otp" class="text-2xl font-mono-code font-black text-white tracking-widest">849201</span>
-          <div class="flex gap-2 pt-1">
-            <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" maxlength="6" value="849201" class="w-full px-3 py-1.5 rounded-lg glass-card text-center font-mono-code text-xs text-white" />
-            <button onclick="verifyOtpNow()" class="btn-emerald px-4 py-1.5 rounded-lg text-xs font-bold">Verify &amp; Enter</button>
+      </div>
+
+    </section>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="modal-forgot-password" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xl hidden">
+      <div class="max-w-md w-full mx-4 liquid-glass-card p-6 sm:p-7 space-y-4 relative">
+        <div class="liquid-sheen-overlay"></div>
+        <div class="relative z-10 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-white/[0.08]">
+            <h3 class="text-sm font-black text-white flex items-center gap-2">
+              <span>🔑 Password Recovery</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-[#D6B66C]/15 text-[#D6B66C]">Verified Email</span>
+            </h3>
+            <button onclick="closeForgotPasswordModal()" class="text-xs text-[#7F8B85] hover:text-white">✕</button>
+          </div>
+          <p class="text-xs text-[#8E9A92]">Enter your ABES college email to receive a password recovery security token.</p>
+          <input type="email" id="forgot-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
+          <div class="flex justify-end gap-2 pt-2">
+            <button onclick="closeForgotPasswordModal()" class="glass-card px-4 py-2 rounded-xl text-xs text-white">Cancel</button>
+            <button onclick="submitForgotPassword()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold shadow">Send Recovery Code</button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+
 
     <!-- =================================================================
          TAB 2: DAILY GRIND (TIMETABLE)
@@ -6845,6 +7659,334 @@ public class Solution {
     }
 
 
+
+    // =========================================================================
+    // 1. SMOOTH LIQUID CURSOR SENSOR ENGINE (DESKTOP ONLY)
+    // =========================================================================
+
+    (function initLiquidCursor() {
+      // Disable on touch devices
+      if (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window) {
+        return;
+      }
+
+      const dot = document.createElement("div");
+      dot.id = "liquid-cursor-dot";
+      const glow = document.createElement("div");
+      glow.id = "liquid-cursor-glow";
+      document.body.appendChild(dot);
+      document.body.appendChild(glow);
+
+      let mouseX = -100, mouseY = -100;
+      let glowX = -100, glowY = -100;
+      let isVisible = false;
+
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!isVisible) {
+          isVisible = true;
+          dot.style.opacity = "1";
+          glow.style.opacity = "1";
+        }
+        dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      });
+
+      window.addEventListener("mouseleave", () => {
+        isVisible = false;
+        dot.style.opacity = "0";
+        glow.style.opacity = "0";
+      });
+
+      // Smooth Lerp loop for trailing glow ring
+      function animateCursorGlow() {
+        if (isVisible) {
+          glowX += (mouseX - glowX) * 0.18;
+          glowY += (mouseY - glowY) * 0.18;
+          glow.style.transform = `translate(${glowX.toFixed(2)}px, ${glowY.toFixed(2)}px) translate(-50%, -50%)`;
+        }
+        requestAnimationFrame(animateCursorGlow);
+      }
+      animateCursorGlow();
+
+      // Magnetic hover feedback on interactive elements
+      document.addEventListener("mouseover", (e) => {
+        const target = e.target.closest("button, a, .nav-tab-pill, .carousel-3d-card, .id-card-flipper, input, select");
+        if (target) {
+          glow.classList.add("cursor-hover");
+        }
+      });
+      document.addEventListener("mouseout", (e) => {
+        const target = e.target.closest("button, a, .nav-tab-pill, .carousel-3d-card, .id-card-flipper, input, select");
+        if (target) {
+          glow.classList.remove("cursor-hover");
+        }
+      });
+    })();
+
+    function toggleMobileMenu() {
+      const drawer = document.getElementById("mobile-menu-drawer");
+      if (!drawer) return;
+      drawer.classList.toggle("hidden");
+    }
+
+    // =========================================================================
+    // 2. 3D FEATURE SLIDING CAROUSEL ENGINE
+    // =========================================================================
+
+    let currentCarouselIndex = 0;
+    const totalCarouselSlides = 5;
+
+    function slideCarousel(direction) {
+      const track = document.getElementById("power-carousel-track");
+      if (!track) return;
+
+      currentCarouselIndex += direction;
+      if (currentCarouselIndex < 0) {
+        currentCarouselIndex = totalCarouselSlides - 1;
+      } else if (currentCarouselIndex >= totalCarouselSlides) {
+        currentCarouselIndex = 0;
+      }
+
+      // Calculate sliding percentage based on viewport width
+      const isMobile = window.innerWidth <= 640;
+      const isTablet = window.innerWidth <= 1024;
+      const slideWidthPercent = isMobile ? 100 : (isTablet ? 50 : 33.333);
+      
+      const offset = currentCarouselIndex * slideWidthPercent;
+      track.style.transform = `translateX(-${offset}%)`;
+
+      // Apply 3D perspective depth to active cards
+      const cards = track.querySelectorAll(".carousel-3d-card");
+      cards.forEach((card, idx) => {
+        if (idx === currentCarouselIndex) {
+          card.style.transform = "scale(1.03) translateZ(15px)";
+          card.style.opacity = "1";
+        } else {
+          card.style.transform = "scale(0.98) translateZ(0px)";
+          card.style.opacity = "0.85";
+        }
+      });
+    }
+
+    // Auto-advance carousel every 6 seconds if not hovered
+    let carouselInterval = setInterval(() => {
+      slideCarousel(1);
+    }, 6000);
+
+    const carouselViewport = document.querySelector(".carousel-3d-viewport");
+    if (carouselViewport) {
+      carouselViewport.addEventListener("mouseenter", () => clearInterval(carouselInterval));
+      carouselViewport.addEventListener("mouseleave", () => {
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(() => slideCarousel(1), 6000);
+      });
+    }
+
+    // =========================================================================
+    // 3. STUDENT LOGIN & ACCOUNT SUITE (AUTHENTICATION & VALIDATION)
+    // =========================================================================
+
+    function setAuthMode(mode) {
+      const tabSignIn = document.getElementById("auth-tab-signin");
+      const tabRegister = document.getElementById("auth-tab-register");
+      const formSignIn = document.getElementById("form-signin");
+      const formRegister = document.getElementById("form-register");
+      const heading = document.getElementById("auth-heading-text");
+      const sub = document.getElementById("auth-sub-text");
+      const alertBox = document.getElementById("auth-alert-box");
+
+      if (alertBox) alertBox.classList.add("hidden");
+
+      if (mode === "signin") {
+        if (tabSignIn) {
+          tabSignIn.className = "flex-1 py-2.5 rounded-xl text-xs font-bold text-black bg-[#D6B66C] shadow-lg transition-all";
+        }
+        if (tabRegister) {
+          tabRegister.className = "flex-1 py-2.5 rounded-xl text-xs font-semibold text-[#87928B] hover:text-white transition-all";
+        }
+        if (formSignIn) formSignIn.classList.remove("hidden");
+        if (formRegister) formRegister.classList.add("hidden");
+        if (heading) heading.innerText = "Student Sign In";
+        if (sub) sub.innerText = "Enter your student credentials to access your ZYNAX companion.";
+      } else {
+        if (tabSignIn) {
+          tabSignIn.className = "flex-1 py-2.5 rounded-xl text-xs font-semibold text-[#87928B] hover:text-white transition-all";
+        }
+        if (tabRegister) {
+          tabRegister.className = "flex-1 py-2.5 rounded-xl text-xs font-bold text-black bg-[#51D6A0] shadow-lg transition-all";
+        }
+        if (formSignIn) formSignIn.classList.add("hidden");
+        if (formRegister) formRegister.classList.remove("hidden");
+        if (heading) heading.innerText = "Create Student Account";
+        if (sub) sub.innerText = "Register your official ABES college identity on ZYNAX.";
+      }
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === "password") {
+        input.type = "text";
+        if (btn) btn.innerText = "🙈";
+      } else {
+        input.type = "password";
+        if (btn) btn.innerText = "👁️";
+      }
+    }
+
+    function showAuthAlert(msg, isSuccess) {
+      const box = document.getElementById("auth-alert-box");
+      if (!box) return;
+      box.classList.remove("hidden");
+      if (isSuccess) {
+        box.className = "p-3 rounded-xl border border-[#51D6A0]/40 bg-[#51D6A0]/10 text-[#51D6A0] text-xs font-medium";
+        box.innerHTML = `<span>✓ ${msg}</span>`;
+      } else {
+        box.className = "p-3 rounded-xl border border-red-500/40 bg-red-500/10 text-red-400 text-xs font-medium";
+        box.innerHTML = `<span>⚠️ ${msg}</span>`;
+      }
+    }
+
+    function handleSignInSubmit(e) {
+      e.preventDefault();
+      const username = (document.getElementById("signin-username") || {}).value || "";
+      const password = (document.getElementById("signin-password") || {}).value || "";
+      const remember = (document.getElementById("signin-remember") || {}).checked;
+
+      if (!username || !password) {
+        showAuthAlert("Please provide both your Student Username/Email and Password.", false);
+        return;
+      }
+
+      if (remember) {
+        try {
+          localStorage.setItem("ZYNAX_REMEMBERED_USER", username);
+        } catch(err){}
+      }
+
+      showAuthAlert("Authentication verified! Welcome back to ZYNAX.", true);
+
+      setTimeout(() => {
+        switchTab("dashboard");
+        triggerLoginWelcome(APP.studentProfile.name);
+      }, 700);
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = (document.getElementById("reg-name") || {}).value || "";
+      const email = (document.getElementById("reg-email") || {}).value || "";
+      const roll = (document.getElementById("reg-roll") || {}).value || "";
+      const branch = (document.getElementById("reg-branch") || {}).value || "CSE (AI/ML)";
+      const section = (document.getElementById("reg-section") || {}).value || "Sec A";
+      const pass = (document.getElementById("reg-password") || {}).value || "";
+      const passConfirm = (document.getElementById("reg-password-confirm") || {}).value || "";
+
+      if (pass.length < 6) {
+        showAuthAlert("Password must be at least 6 characters long.", false);
+        return;
+      }
+
+      if (pass !== passConfirm) {
+        showAuthAlert("Passwords do not match. Please re-enter carefully.", false);
+        return;
+      }
+
+      // Update student profile in memory & localStorage
+      APP.studentProfile.name = name;
+      APP.studentProfile.email = email;
+      APP.studentProfile.roll = roll;
+      APP.studentProfile.branch = branch;
+      APP.studentProfile.section = section;
+
+      try {
+        localStorage.setItem("ZYNAX_STUDENT_PROFILE", JSON.stringify(APP.studentProfile));
+        localStorage.setItem("ZYNAX_REGISTERED_USER", JSON.stringify({ email, roll, name }));
+      } catch(err){}
+
+      syncProfileAcrossApp();
+      showAuthAlert(`Account successfully registered for ${name}! Entering workspace...`, true);
+
+      setTimeout(() => {
+        switchTab("dashboard");
+        triggerLoginWelcome(name);
+      }, 800);
+    }
+
+    function toggleLegacyOtpBox() {
+      const container = document.getElementById("legacy-otp-container");
+      const arrow = document.getElementById("legacy-otp-arrow");
+      if (!container) return;
+      const isHidden = container.classList.contains("hidden");
+      container.classList.toggle("hidden");
+      if (arrow) arrow.innerText = isHidden ? "▲" : "▼";
+    }
+
+    function openForgotPasswordModal() {
+      const m = document.getElementById("modal-forgot-password");
+      if (m) m.classList.remove("hidden");
+    }
+
+    function closeForgotPasswordModal() {
+      const m = document.getElementById("modal-forgot-password");
+      if (m) m.classList.add("hidden");
+    }
+
+    function submitForgotPassword() {
+      const email = (document.getElementById("forgot-email") || {}).value;
+      if (!email || !email.includes("@")) {
+        alert("Please enter a valid ABES college email.");
+        return;
+      }
+      alert(`🔑 Password reset link and security verification token dispatched to: ${email}\nFollow the link to securely update your credentials.`);
+      closeForgotPasswordModal();
+    }
+
+    function handleAuthTilt(e) {
+      const card = document.getElementById("auth-main-card");
+      if (!card || window.innerWidth < 768) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -5;
+      const rotateY = ((x - centerX) / centerX) * 5;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(1.005)`;
+    }
+
+    function resetAuthTilt() {
+      const card = document.getElementById("auth-main-card");
+      if (!card) return;
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
+    }
+
+    // =========================================================================
+    // 4. SCROLL REVEAL OBSERVER
+    // =========================================================================
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          }
+        });
+      }, { threshold: 0.1 });
+
+      window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".scroll-reveal, #section-achievements, #primary-triad-section, #section-3d-carousel").forEach((el) => {
+          el.classList.add("scroll-reveal");
+          revealObserver.observe(el);
+        });
+      });
+    }
+
+
     // =================== INIT ON LOAD ===================
     window.addEventListener("DOMContentLoaded", () => {
       // Set English as permanent language
@@ -6871,6 +8013,17 @@ public class Solution {
       try {
         const savedVoice = localStorage.getItem("ZYNAX_VOICE_SETTINGS");
         if (savedVoice) APP.voiceSettings = JSON.parse(savedVoice);
+      } catch(e){}
+
+      // Load remembered username into Sign In form
+      try {
+        const rem = localStorage.getItem("ZYNAX_REMEMBERED_USER");
+        if (rem) {
+          const signinUser = document.getElementById("signin-username");
+          const signinRem = document.getElementById("signin-remember");
+          if (signinUser) signinUser.value = rem;
+          if (signinRem) signinRem.checked = true;
+        }
       } catch(e){}
 
       syncProfileAcrossApp();

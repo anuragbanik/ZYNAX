@@ -14,3 +14,6 @@ coverage
 *.db
 artifacts
 screenshots
+
+__pycache__/
+*.pyc

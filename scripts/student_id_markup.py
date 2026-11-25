@@ -212,32 +212,41 @@ STUDENT_ID_HTML = r'''
                 <div class="id-card-face id-card-back p-5 justify-between">
                   <!-- Header -->
                   <div class="flex items-center justify-between pb-1.5 border-b border-white/[0.08]">
-                    <span class="text-[10px] font-black uppercase text-[#D6B66C] tracking-wider">ACADEMIC &amp; AI VERIFICATION</span>
-                    <span class="text-[8px] text-[#51D6A0] font-mono-code">REGISTRAR AUTHENTICATED</span>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-xs">🪪</span>
+                      <span class="text-[10px] font-black uppercase text-[#D6B66C] tracking-wider">STUDENT PROFILE &amp; CONTACT PASS</span>
+                    </div>
+                    <span class="text-[8px] px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code font-bold">
+                      REGISTRAR AUTHENTICATED
+                    </span>
                   </div>
 
-                  <!-- Middle: Strengths & Academic Highlights -->
-                  <div class="grid grid-cols-2 gap-3 py-1 text-[9px]">
+                  <!-- Middle: Comprehensive Contact, Links, and Academic Info -->
+                  <div class="grid grid-cols-2 gap-3 py-1.5 text-[9px]">
+                    <!-- Left Column: Academic & Contact -->
                     <div class="space-y-1">
-                      <span class="text-[#7F8B85] block font-bold">CORE DOMAIN:</span>
-                      <p class="text-white font-medium" id="card-back-domain">Artificial Intelligence &amp; Autonomous Agents</p>
+                      <span class="text-[#7F8B85] block font-bold">STUDENT CONTACT:</span>
+                      <p class="text-white font-mono-code truncate" id="card-back-email">anurag.banik@abes.ac.in</p>
+                      <p class="text-[#D6B66C] font-mono-code">+91 98765 43210</p>
                       
-                      <span class="text-[#7F8B85] block font-bold pt-1">LIBRARY ID:</span>
-                      <p class="text-[#D6B66C] font-mono-code">LIB-2026-ABES-042</p>
+                      <span class="text-[#7F8B85] block font-bold pt-1">CAMPUS RESIDENCE:</span>
+                      <p class="text-white truncate">ABES Campus Residency, Ghaziabad</p>
 
-                      <span class="text-[#7F8B85] block font-bold pt-1">BLOOD GROUP:</span>
-                      <p class="text-white">B+ Positive (Verified)</p>
+                      <span class="text-[#7F8B85] block font-bold pt-1">BLOOD GROUP &amp; MEDICAL:</span>
+                      <p class="text-[#51D6A0] font-mono-code">B+ Positive (Verified Record)</p>
                     </div>
 
+                    <!-- Right Column: Student Links & Credentials -->
                     <div class="space-y-1">
-                      <span class="text-[#7F8B85] block font-bold">TOP STRENGTH:</span>
-                      <p class="text-[#51D6A0] font-medium" id="card-back-strength">Algorithmic Problem Solving &amp; Neural Nets</p>
+                      <span class="text-[#7F8B85] block font-bold">VERIFIED LINKS &amp; SOCIAL:</span>
+                      <a href="https://github.com/anuragbanik/ZYNAX" target="_blank" class="text-[#48B8FF] font-mono-code hover:underline block truncate">
+                        🔗 github.com/anuragbanik/ZYNAX
+                      </a>
+                      <p class="text-white/80 font-mono-code truncate">💼 linkedin.com/in/anuragbanik</p>
 
-                      <span class="text-[#7F8B85] block font-bold pt-1">CAMPUS PORTAL:</span>
-                      <p class="text-[#48B8FF] font-mono-code truncate">zynax.abes.ac.in</p>
-
-                      <span class="text-[#7F8B85] block font-bold pt-1">EMERGENCY LINE:</span>
-                      <p class="text-white font-mono-code">+91 98765 43210</p>
+                      <span class="text-[#7F8B85] block font-bold pt-1">ACADEMIC STANDING:</span>
+                      <p class="text-[#D6B66C] font-mono-code">Target SGPA: 8.80 (Sem 1)</p>
+                      <p class="text-white/80 font-mono-code">Library ID: LIB-2026-042</p>
                     </div>
                   </div>
 
@@ -245,19 +254,18 @@ STUDENT_ID_HTML = r'''
                   <div class="pt-2 border-t border-white/[0.08] flex items-center justify-between">
                     <div class="flex items-center gap-2">
                       <div class="w-9 h-9 rounded bg-white p-0.5 flex items-center justify-center">
-                        <!-- Mini SVG QR Code representation -->
                         <svg class="w-full h-full text-black" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm14 0h4v4h-4v-4zm-4 4h4v4h-4v-4zm4-4v-4h-4v4h4zm-4-4h4V6h-4v4z"/>
                         </svg>
                       </div>
                       <div class="text-[7.5px] text-[#7F8B85] leading-tight font-mono-code">
-                        <div>SCAN TO VERIFY</div>
-                        <div>HASH: 7F4A...B902</div>
+                        <div>AKTU SECURITY HASH</div>
+                        <div class="text-white/80">SHA-256 · VERIFIED</div>
                       </div>
                     </div>
                     <div class="text-right">
                       <div class="text-[9px] font-black text-[#D6B66C]">ABES EC DEAN</div>
-                      <div class="text-[7px] text-[#7F8B85]">DIGITALLY SIGNED</div>
+                      <div class="text-[7px] text-[#7F8B85]">DIGITALLY SIGNED PASS</div>
                     </div>
                   </div>
                 </div>

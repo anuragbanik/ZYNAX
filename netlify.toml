@@ -2,6 +2,10 @@
   command = "node scripts/build.mjs"
   publish = "dist"
 
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--no-audit --prefer-offline"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

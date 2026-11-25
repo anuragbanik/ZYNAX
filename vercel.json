@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "installCommand": "echo 'Skipping npm install for zero-dependency static build'",
   "buildCommand": "node scripts/build.mjs",
   "outputDirectory": "dist",
   "cleanUrls": true,

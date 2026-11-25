@@ -25,6 +25,7 @@ STUDENT_IDENTITY_JS = r'''
     }
 
     function handleCardTilt(e) {
+      if (window.innerWidth < 768 || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)) return;
       const card = document.getElementById("interactive-student-card");
       if (!card) return;
       if (card.classList.contains("flipped")) return;

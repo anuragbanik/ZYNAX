@@ -96,13 +96,19 @@ LIQUID_FEATURES_JS = r'''
         currentCarouselIndex = 0;
       }
 
-      // Calculate sliding percentage based on viewport width
-      const isMobile = window.innerWidth <= 640;
-      const isTablet = window.innerWidth <= 1024;
-      const slideWidthPercent = isMobile ? 100 : (isTablet ? 50 : 33.333);
-      
-      const offset = currentCarouselIndex * slideWidthPercent;
-      track.style.transform = `translateX(-${offset}%)`;
+      const firstCard = track.querySelector(".carousel-3d-card");
+      if (firstCard && firstCard.offsetWidth > 0) {
+        const cardWidth = firstCard.offsetWidth;
+        const gap = 20;
+        const shiftPx = currentCarouselIndex * (cardWidth + gap);
+        track.style.transform = `translateX(-${shiftPx}px)`;
+      } else {
+        const isMobile = window.innerWidth <= 640;
+        const isTablet = window.innerWidth <= 1024;
+        const slideWidthPercent = isMobile ? 100 : (isTablet ? 50 : 33.333);
+        const offset = currentCarouselIndex * slideWidthPercent;
+        track.style.transform = `translateX(-${offset}%)`;
+      }
 
       // Apply 3D perspective depth to active cards
       const cards = track.querySelectorAll(".carousel-3d-card");
@@ -213,12 +219,44 @@ LIQUID_FEATURES_JS = r'''
         } catch(err){}
       }
 
-      showAuthAlert("Authentication verified! Welcome back to ZYNAX.", true);
+      // Check registered profile if exists
+      let studentName = APP.studentProfile.name;
+      try {
+        const regUser = localStorage.getItem("ZYNAX_REGISTERED_USER");
+        if (regUser) {
+          const parsed = JSON.parse(regUser);
+          if (parsed && (parsed.email === username || parsed.roll === username || (parsed.name && parsed.name.toLowerCase() === username.toLowerCase()))) {
+            studentName = parsed.name;
+            APP.studentProfile.name = parsed.name;
+            if (parsed.email) APP.studentProfile.email = parsed.email;
+            if (parsed.roll) APP.studentProfile.roll = parsed.roll;
+            syncProfileAcrossApp();
+          }
+        }
+      } catch(err){}
+
+      showAuthAlert(`Authentication verified! Welcome back, ${studentName}.`, true);
 
       setTimeout(() => {
         switchTab("dashboard");
-        triggerLoginWelcome(APP.studentProfile.name);
+        triggerLoginWelcome(studentName);
       }, 700);
+    }
+
+    // Support direct navigation to Achievements section via switchTab
+    if (typeof window.switchTab === "function") {
+      const _baseSwitchTab = window.switchTab;
+      window.switchTab = function(tabId) {
+        if (tabId === "achievements") {
+          _baseSwitchTab("dashboard");
+          setTimeout(() => {
+            const el = document.getElementById("section-achievements");
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }, 120);
+          return;
+        }
+        _baseSwitchTab(tabId);
+      };
     }
 
     function handleRegisterSubmit(e) {

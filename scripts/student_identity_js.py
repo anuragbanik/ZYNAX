@@ -239,7 +239,7 @@ STUDENT_IDENTITY_JS = r'''
     }
 
     function replayWelcomeGreeting() {
-      const firstName = (APP.studentProfile && APP.studentProfile.name) ? APP.studentProfile.name.split(" ")[0] : "Anurag";
+      const firstName = (APP.studentProfile && APP.studentProfile.name) ? APP.studentProfile.name.split(" ")[0] : "Student";
       const exactGreeting = `Welcome, ${firstName}! Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion.`;
 
       // Trigger animated wave bars
@@ -311,23 +311,22 @@ STUDENT_IDENTITY_JS = r'''
           <div class="card">
             <div class="header">
               <div>
-                <div class="college">ABES ENGINEERING COLLEGE</div>
-                <div class="sub">AKTU CODE 032 · GHAZIABAD · CAMPUS ECOSYSTEM</div>
+                <div class="college">${(p.college || 'CAMPUS DIGITAL IDENTITY').toUpperCase()}</div>
+                <div class="sub">VERIFIED STUDENT ID · SMART PASS</div>
               </div>
               <div style="text-align: right;">
                 <span style="color: #51D6A0; font-weight: bold; font-family: monospace;">2026–2030</span>
               </div>
             </div>
             <div class="body">
-              ${photo ? `<img src="${photo}" class="photo" />` : `<div class="photo" style="display:flex;align-items:center;justify-content:center;font-size:24px;color:#D6B66C;font-weight:bold;">AB</div>`}
+              ${photo ? `<img src="${photo}" class="photo" />` : `<div class="photo" style="display:flex;align-items:center;justify-content:center;font-size:24px;color:#D6B66C;font-weight:bold;">${p.name ? p.name.split(" ").map(w=>w[0]).join("").slice(0,2) : "ST"}</div>`}
               <div class="details">
-                <div class="name">${p.name || 'Anurag Banik'}</div>
-                <div class="roll">${p.roll || '2026ABES042'}</div>
-                <div class="meta">${p.branch || 'CSE (AI/ML)'}</div>
+                <div class="name">${p.name || 'Student Name'}</div>
+                <div class="roll">${p.roll || 'Roll Pending'}</div>
+                <div class="meta">${p.branch || 'Department'}</div>
                 <div class="meta">Section ${p.section || 'Sec A'} · Year ${p.currentYear || '1'} (Sem ${p.currentSem || '1'})</div>
                 <div class="badges">
-                  <span class="badge">AKTU VERIFIED</span>
-                  <span class="badge" style="background:rgba(214,182,108,0.2);color:#D6B66C;border-color:rgba(214,182,108,0.3);">AI/ML SPECIALIST</span>
+                  <span class="badge">VERIFIED STUDENT</span>
                 </div>
               </div>
             </div>
@@ -347,7 +346,7 @@ STUDENT_IDENTITY_JS = r'''
 
     function shareStudentProfile() {
       const p = APP.studentProfile || {};
-      const shareText = `🪪 ZYNAX Digital Student ID: ${p.name || 'Anurag Banik'} (${p.roll || '2026ABES042'}) · ${p.branch || 'CSE AI/ML'} · ABES Engineering College · Verified SGPA: 8.80 · Strengths: Algorithmic Modeling & Neural Nets. View on ZYNAX: ${window.location.origin}${window.location.pathname}`;
+      const shareText = `🪪 ZYNAX Digital Student ID: ${p.name || 'Student'} (${p.roll || 'ID Pending'}) · ${p.branch || 'Degree'} · ${p.college || 'Campus'} · View credentials on ZYNAX: ${window.location.origin}${window.location.pathname}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("✓ Shareable Student Identity credentials copied to clipboard!");

@@ -47,7 +47,7 @@ WELCOME_OVERLAY_HTML = r'''
       <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
         <span>Welcome, </span>
         <span id="welcome-modal-username" class="text-transparent bg-clip-text bg-gradient-to-r from-[#D6B66C] via-[#F0D28B] to-[#51D6A0]">
-          Anurag
+          Student
         </span>!
       </h1>
 
@@ -122,7 +122,7 @@ WELCOME_BANNER_HTML = r'''
                 <span class="text-[9px] text-[#51D6A0] font-mono-code font-bold">ENGLISH FEMALE VOICE</span>
               </div>
               <h2 class="text-sm sm:text-base font-black text-white" id="welcome-banner-heading">
-                Welcome to ZYNAX, Anurag!
+                Welcome to ZYNAX, <span id="welcome-banner-user">Student</span>!
               </h2>
               <p class="text-xs text-[#C4D0C9] italic font-medium" id="welcome-banner-script">
                 "Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion."

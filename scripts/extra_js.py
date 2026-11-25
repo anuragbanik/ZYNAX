@@ -435,18 +435,18 @@ EXTRA_JS = r'''
       const p = APP.studentProfile;
       if (!p) return;
 
-      const initials = p.name ? p.name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) : "AB";
+      const initials = p.name ? p.name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) : "ST";
 
       // 1. Top Navigation Bar Profile Pill
       const hInitials = document.getElementById("header-avatar-initials");
       const hName = document.getElementById("header-student-name");
       const hSub = document.getElementById("header-student-sub");
       const hContainer = document.getElementById("header-avatar-container");
-      if (hName) hName.innerText = "Yo, " + (p.name.split(" ")[0] || "Anurag");
-      if (hSub) hSub.innerText = `${p.branch.includes("AI") ? "CSE AI/ML" : p.branch} · ${p.section}`;
+      if (hName) hName.innerText = p.name ? ("Yo, " + p.name.split(" ")[0]) : "Student Account";
+      if (hSub) hSub.innerText = p.roll ? `${p.branch || 'Student'} · ${p.section || ''}` : "Sign In / Switch";
       if (hContainer) {
         if (p.avatarDataUrl) {
-          hContainer.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover rounded-full" />`;
+          hContainer.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover rounded-full" />`;
         } else if (hInitials) {
           hContainer.innerHTML = `<span id="header-avatar-initials">${initials}</span>`;
         }
@@ -456,21 +456,29 @@ EXTRA_JS = r'''
       const dName = document.getElementById("dash-student-name");
       const dSub = document.getElementById("dash-student-sub");
       const dInner = document.getElementById("dash-avatar-inner");
-      if (dName) dName.innerText = (p.name.split(" ")[0] || "ANURAG").toUpperCase();
-      if (dSub) dSub.innerText = `${p.branch} · Section ${p.section.replace("Sec ","")} · ABES Engineering College · Roll: ${p.roll}`;
+      if (dName) dName.innerText = (p.name ? p.name.split(" ")[0] : "STUDENT").toUpperCase();
+      if (dSub) dSub.innerText = p.roll 
+        ? `${p.branch || 'Program'} · ${p.section ? 'Section ' + p.section.replace('Sec ','') : 'Sec A'} · ${p.college || 'Campus'} · Roll: ${p.roll}`
+        : "Welcome to ZYNAX! Sign in or register to sync your campus workspace.";
       if (dInner) {
         if (p.avatarDataUrl) {
-          dInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover" />`;
+          dInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover" />`;
         } else {
           dInner.innerHTML = `<span id="dash-avatar-initials">${initials}</span>`;
         }
       }
 
-      // 3. Settings Profile Preview
+      // 3. Welcome Voice Banner & Modal Names
+      const wModalName = document.getElementById("welcome-modal-username");
+      const wBannerUser = document.getElementById("welcome-banner-user");
+      if (wModalName) wModalName.innerText = p.name ? p.name.split(" ")[0] : "Student";
+      if (wBannerUser) wBannerUser.innerText = p.name ? p.name.split(" ")[0] : "Student";
+
+      // 4. Settings Profile Preview & Inputs
       const sInner = document.getElementById("settings-avatar-inner");
       if (sInner) {
         if (p.avatarDataUrl) {
-          sInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover" />`;
+          sInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover" />`;
         } else {
           sInner.innerHTML = `<span id="settings-avatar-initials">${initials}</span>`;
         }
@@ -478,55 +486,61 @@ EXTRA_JS = r'''
       const pNameInp = document.getElementById("prof-name");
       const pEmailInp = document.getElementById("prof-email");
       const pRollInp = document.getElementById("prof-roll");
+      const pCollegeInp = document.getElementById("prof-college");
       const pBranchInp = document.getElementById("prof-branch");
       const pSecInp = document.getElementById("prof-section");
       const pYearInp = document.getElementById("prof-year");
       const pSemInp = document.getElementById("prof-sem");
-      const pVisToggle = document.getElementById("profile-visibility-toggle");
-      if (pNameInp) pNameInp.value = p.name;
-      if (pEmailInp) pEmailInp.value = p.email;
-      if (pRollInp) pRollInp.value = p.roll;
-      if (pBranchInp) pBranchInp.value = p.branch;
-      if (pSecInp) pSecInp.value = p.section;
-      if (pYearInp) pYearInp.value = p.currentYear || "1";
-      if (pSemInp) pSemInp.value = p.currentSem || "1";
-      if (pVisToggle) pVisToggle.checked = p.publicProfile !== false;
+      const pPhoneInp = document.getElementById("prof-phone");
+      const pGithubInp = document.getElementById("prof-github");
+      const pLinkedinInp = document.getElementById("prof-linkedin");
+      const pSgpaInp = document.getElementById("prof-sgpa");
+      const pLibInp = document.getElementById("prof-lib");
+      const pKeyStrInp = document.getElementById("prof-key-strengths");
+      const pTechStrInp = document.getElementById("prof-tech-skills");
+      const pCreativeInp = document.getElementById("prof-creative-skills");
+      const pLeaderInp = document.getElementById("prof-leadership-skills");
 
-      // 4. Leaderboard User Row
+      if (pNameInp && p.name) pNameInp.value = p.name;
+      if (pEmailInp && p.email) pEmailInp.value = p.email;
+      if (pRollInp && p.roll) pRollInp.value = p.roll;
+      if (pCollegeInp && p.college) pCollegeInp.value = p.college;
+      if (pBranchInp && p.branch) pBranchInp.value = p.branch;
+      if (pSecInp && p.section) pSecInp.value = p.section;
+      if (pYearInp && p.currentYear) pYearInp.value = p.currentYear;
+      if (pSemInp && p.currentSem) pSemInp.value = p.currentSem;
+      if (pPhoneInp && p.phone) pPhoneInp.value = p.phone;
+      if (pGithubInp && p.github) pGithubInp.value = p.github;
+      if (pLinkedinInp && p.linkedin) pLinkedinInp.value = p.linkedin;
+      if (pSgpaInp && p.targetSgpa) pSgpaInp.value = p.targetSgpa;
+      if (pLibInp && p.libraryId) pLibInp.value = p.libraryId;
+      if (pKeyStrInp && p.keyStrengths) pKeyStrInp.value = p.keyStrengths;
+      if (pTechStrInp && p.technicalStrengths) pTechStrInp.value = p.technicalStrengths;
+      if (pCreativeInp && p.creativeAbilities) pCreativeInp.value = p.creativeAbilities;
+      if (pLeaderInp && p.leadership) pLeaderInp.value = p.leadership;
+
+      // Settings Account Card
+      const sAccName = document.getElementById("settings-acc-name");
+      const sAccSub = document.getElementById("settings-acc-sub");
+      if (sAccName) sAccName.innerText = p.name ? `${p.name} (Verified Session)` : "Guest Student Session";
+      if (sAccSub) sAccSub.innerText = p.roll ? `Roll: ${p.roll} · ${p.branch || 'Student'} · Status: Active` : "No student account signed in. Click below to sign in.";
+
+      // 5. Leaderboard User Row
       const lbUserAvatar = document.getElementById("lb-user-avatar");
       const lbUserName = document.getElementById("lb-user-name");
       const lbUserSec = document.getElementById("lb-user-section");
-      if (lbUserName) lbUserName.innerText = p.name;
-      if (lbUserSec) lbUserSec.innerText = `${p.branch.includes("AI") ? "CSE AI/ML" : p.branch} ${p.section} · ABES EC`;
+      if (lbUserName) lbUserName.innerText = p.name || "Student";
+      if (lbUserSec) lbUserSec.innerText = `${p.branch || 'CSE'} ${p.section || ''} · ${p.college || 'Campus'}`;
       if (lbUserAvatar) {
         if (p.avatarDataUrl && p.publicProfile !== false) {
-          lbUserAvatar.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover rounded-full" />`;
+          lbUserAvatar.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover rounded-full" />`;
         } else {
           lbUserAvatar.innerHTML = `<span id="lb-user-initials">${initials}</span>`;
         }
       }
 
-      // 5. 4-Year Academic Companion Profile Card Sync
-      const journeyName = document.getElementById("journey-student-name");
-      if (journeyName) journeyName.innerText = p.name;
-
-      // 6. Memory Preview in Settings
-      const memPreview = document.getElementById("settings-memory-preview");
-      if (memPreview) {
-        memPreview.innerText = JSON.stringify({
-          student: p.name,
-          roll: p.roll,
-          degree: "B.Tech CSE (AI/ML) 2026-2030",
-          academicYear: `Year ${p.currentYear} Sem ${p.currentSem}`,
-          completedTopics: p.completedTopics || [],
-          examAttemptsCount: (APP.examAttempts || []).length,
-          lastExamScore: (APP.examAttempts && APP.examAttempts.length > 0) ? APP.examAttempts[APP.examAttempts.length - 1].score : "36/42 (85%)",
-          savedHackathons: p.savedHackathons || [],
-          dataIsolated: true
-        }, null, 2);
-      }
-
-      // 7. 3D AI Student Identity Card Sync
+      // 6. 3D AI Student Identity Card Sync (Front & Back)
+      const cardCollege = document.getElementById("card-college-name");
       const cardName = document.getElementById("card-display-name");
       const cardRoll = document.getElementById("card-display-roll");
       const cardBranch = document.getElementById("card-display-branch");
@@ -535,9 +549,10 @@ EXTRA_JS = r'''
       const cardPhotoFallback = document.getElementById("card-photo-fallback");
       const cardPhotoBadge = document.getElementById("card-photo-badge");
 
-      if (cardName) cardName.innerText = p.name || "Anurag Banik";
-      if (cardRoll) cardRoll.innerText = p.roll || "2026ABES042";
-      if (cardBranch) cardBranch.innerText = p.branch || "CSE (AI & Machine Learning)";
+      if (cardCollege) cardCollege.innerText = (p.college || "CAMPUS DIGITAL IDENTITY").toUpperCase();
+      if (cardName) cardName.innerText = p.name || "Student Name";
+      if (cardRoll) cardRoll.innerText = p.roll || "Roll ID Pending";
+      if (cardBranch) cardBranch.innerText = p.branch || "Program / Department";
       if (cardSec) cardSec.innerText = `Sec ${(p.section || 'Sec A').replace('Sec ','')} · Year ${p.currentYear || '1'}`;
 
       const photoSrc = (p.activePhotoFilter === "original") ? (p.originalPhotoUrl || p.avatarDataUrl) : (p.enhancedPhotoUrl || p.avatarDataUrl);
@@ -554,10 +569,51 @@ EXTRA_JS = r'''
       }
       if (cardPhotoBadge) {
         cardPhotoBadge.innerText = (p.activePhotoFilter === "original") ? "ORIGINAL" : "ENHANCED";
-        cardPhotoBadge.className = (p.activePhotoFilter === "original")
-          ? "absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#48B8FF] text-[8px] font-bold text-black shadow"
-          : "absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#9875FF] text-[8px] font-bold text-white shadow";
       }
+
+      // Card Back Face
+      const cardBackEmail = document.getElementById("card-back-email");
+      const cardBackPhone = document.getElementById("card-back-phone");
+      const cardBackResidence = document.getElementById("card-back-residence");
+      const cardBackBlood = document.getElementById("card-back-blood");
+      const cardBackGithub = document.getElementById("card-back-github");
+      const cardBackLinkedin = document.getElementById("card-back-linkedin");
+      const cardBackSgpa = document.getElementById("card-back-sgpa");
+      const cardBackLib = document.getElementById("card-back-lib");
+
+      if (cardBackEmail) cardBackEmail.innerText = p.email || "Not provided";
+      if (cardBackPhone) cardBackPhone.innerText = p.phone || "Not provided";
+      if (cardBackResidence) cardBackResidence.innerText = p.residence || "Campus Residency";
+      if (cardBackBlood) cardBackBlood.innerText = p.bloodGroup ? `${p.bloodGroup} (Verified Record)` : "Not recorded";
+      if (cardBackSgpa) cardBackSgpa.innerText = p.targetSgpa ? `Target SGPA: ${p.targetSgpa}` : "Target SGPA: Not set";
+      if (cardBackLib) cardBackLib.innerText = p.libraryId ? `Library ID: ${p.libraryId}` : "Library ID: Not set";
+      if (cardBackGithub) {
+        if (p.github) {
+          cardBackGithub.innerText = `🔗 ${p.github}`;
+          cardBackGithub.href = p.github.startsWith("http") ? p.github : `https://${p.github}`;
+        } else {
+          cardBackGithub.innerText = "🔗 Add GitHub in Profile";
+          cardBackGithub.href = "#";
+        }
+      }
+      if (cardBackLinkedin) cardBackLinkedin.innerText = p.linkedin ? `💼 ${p.linkedin}` : "💼 Add LinkedIn in Profile";
+
+      // 7. Student Strengths Analysis Sync (Strictly User Input)
+      const strKey = document.getElementById("str-key");
+      const strTech = document.getElementById("str-tech");
+      const strCreative = document.getElementById("str-creative");
+      const strProblem = document.getElementById("str-problem");
+      const strLeadership = document.getElementById("str-leadership");
+      const strComm = document.getElementById("str-comm");
+      const strGrowth = document.getElementById("str-growth");
+
+      if (strKey) strKey.innerText = p.keyStrengths || "Not added yet. Click 'Edit Skills' to customize.";
+      if (strTech) strTech.innerText = p.technicalStrengths || "Not added yet. Add languages and frameworks in Settings.";
+      if (strCreative) strCreative.innerText = p.creativeAbilities || "Not added yet. Add design and creative tools.";
+      if (strProblem) strProblem.innerText = p.problemSolving || "Not added yet. Add algorithms practiced.";
+      if (strLeadership) strLeadership.innerText = p.leadership || "Not added yet. Add clubs, hackathons, and roles.";
+      if (strComm) strComm.innerText = p.communication || "Not added yet. Add technical writing and speaking skills.";
+      if (strGrowth) strGrowth.innerText = p.growthGoals || "Set your target semester roadmap and goals in Settings.";
     }
 
     // Settings Category Switcher
@@ -576,25 +632,67 @@ EXTRA_JS = r'''
     }
 
     function saveProfileDetails(showAlert = true) {
-      APP.studentProfile.name = document.getElementById("prof-name").value.trim() || APP.studentProfile.name;
-      APP.studentProfile.email = document.getElementById("prof-email").value.trim() || APP.studentProfile.email;
-      APP.studentProfile.roll = document.getElementById("prof-roll").value.trim() || APP.studentProfile.roll;
-      APP.studentProfile.branch = document.getElementById("prof-branch").value.trim() || APP.studentProfile.branch;
-      APP.studentProfile.section = document.getElementById("prof-section").value.trim() || APP.studentProfile.section;
-      APP.studentProfile.currentYear = parseInt(document.getElementById("prof-year").value) || 1;
-      APP.studentProfile.currentSem = parseInt(document.getElementById("prof-sem").value) || 1;
-      
-      const vis = document.getElementById("profile-visibility-toggle");
-      APP.studentProfile.publicProfile = vis ? vis.checked : true;
+      const p = APP.studentProfile;
+      p.name = (document.getElementById("prof-name") || {}).value.trim() || p.name;
+      p.college = (document.getElementById("prof-college") || {}).value.trim() || p.college;
+      p.email = (document.getElementById("prof-email") || {}).value.trim() || p.email;
+      p.roll = (document.getElementById("prof-roll") || {}).value.trim() || p.roll;
+      p.branch = (document.getElementById("prof-branch") || {}).value.trim() || p.branch;
+      p.section = (document.getElementById("prof-section") || {}).value.trim() || p.section;
+      p.currentYear = parseInt((document.getElementById("prof-year") || {}).value) || p.currentYear || 1;
+      p.currentSem = parseInt((document.getElementById("prof-sem") || {}).value) || p.currentSem || 1;
+      p.phone = (document.getElementById("prof-phone") || {}).value.trim() || p.phone;
+      p.github = (document.getElementById("prof-github") || {}).value.trim() || p.github;
+      p.linkedin = (document.getElementById("prof-linkedin") || {}).value.trim() || p.linkedin;
+      p.targetSgpa = (document.getElementById("prof-sgpa") || {}).value.trim() || p.targetSgpa;
+      p.libraryId = (document.getElementById("prof-lib") || {}).value.trim() || p.libraryId;
+      p.keyStrengths = (document.getElementById("prof-key-strengths") || {}).value.trim() || p.keyStrengths;
+      p.technicalStrengths = (document.getElementById("prof-tech-skills") || {}).value.trim() || p.technicalStrengths;
+      p.creativeAbilities = (document.getElementById("prof-creative-skills") || {}).value.trim() || p.creativeAbilities;
+      p.leadership = (document.getElementById("prof-leadership-skills") || {}).value.trim() || p.leadership;
+
+      // Update multi-user DB for active user
+      const userKey = (p.roll || p.email || "").toLowerCase().trim();
+      if (userKey && typeof saveAccountToDb === "function") {
+        saveAccountToDb({
+          name: p.name,
+          email: p.email,
+          roll: p.roll,
+          college: p.college,
+          profile: Object.assign({}, p)
+        });
+      }
 
       try {
-        localStorage.setItem("ZYNAX_STUDENT_PROFILE", JSON.stringify(APP.studentProfile));
-      } catch (e) {
-        console.warn("Storage quota:", e);
-      }
+        localStorage.setItem("ZYNAX_STUDENT_PROFILE", JSON.stringify(p));
+      } catch (e) {}
 
       syncProfileAcrossApp();
       if (showAlert) alert("✓ Personal Profile & Settings updated and synchronized across all ZYNAX modules!");
+    }
+
+    function logoutCurrentStudent() {
+      if (confirm("Are you sure you want to sign out of your student account?")) {
+        try {
+          localStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+          sessionStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+        } catch(e){}
+        APP.studentProfile = {
+          name: "",
+          email: "",
+          roll: "",
+          college: "",
+          branch: "",
+          section: "",
+          currentYear: "1",
+          currentSem: "1"
+        };
+        APP.isAuthenticated = false;
+        syncProfileAcrossApp();
+        switchTab("auth");
+        if (typeof setAuthMode === "function") setAuthMode("signin");
+        if (typeof renderSavedAccountsList === "function") renderSavedAccountsList();
+      }
     }
 
     function handleProfileUpload(e) {

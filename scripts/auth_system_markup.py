@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Premium Liquid Glass Student Authentication & Account Suite
+Professional Multi-User Authentication & Account Management Suite
 Features:
-- Dual-mode switch: "Sign In" vs. "Create Account"
-- Liquid glass container with 3D tilt interaction & glowing metallic gold border
-- Student Username/Email, Password, Confirm Password
-- Show/Hide Password toggle with eye icon
-- "Remember Me" session persistence
-- "Forgot Password" security reset modal with simulated OTP verification
-- Client-side cryptographic hash / secure localStorage credential store
-- Seamless sync with APP.studentProfile without altering backend APIs
+- Dual-mode: "Sign In" vs. "Create Account"
+- Supports distinct independent student profiles with isolated data
+- Saved accounts switcher for multi-user access on the same device
+- Clean input fields with zero hardcoded/auto-filled demo data
+- Comprehensive registration fields: Name, College, Roll, Branch, Section, Year/Sem, Email, Phone
+- Client-side credential verification and secure localStorage multi-account store
+- "Sign Out / Switch User" support
+- Responsive Liquid Glass design with 3D tilt interaction
 """
 
 AUTH_SYSTEM_HTML = r'''
     <!-- =================================================================
-         PREMIUM LIQUID GLASS STUDENT AUTHENTICATION & ACCOUNT SUITE
+         PROFESSIONAL MULTI-USER AUTHENTICATION & ACCOUNT SUITE
          ================================================================= -->
     <section id="tab-auth" class="tab-content hidden space-y-8 py-4">
       
@@ -24,7 +24,7 @@ AUTH_SYSTEM_HTML = r'''
         <div class="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
           <div class="space-y-3 text-center lg:text-left max-w-xl">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D6B66C]/15 border border-[#D6B66C]/30 text-xs font-mono-code font-bold text-[#D6B66C]">
-              <span>🛡️</span><span>AKTU SECURE IDENTITY PASS · ZYNAX 3.5</span>
+              <span>🛡️</span><span>SECURE STUDENT IDENTITY GATEWAY · ZYNAX 3.5</span>
             </div>
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
               STUDENT ACCOUNT &amp;<br/>
@@ -33,14 +33,14 @@ AUTH_SYSTEM_HTML = r'''
               </span>
             </h1>
             <p class="text-xs sm:text-sm text-[#87928B] leading-relaxed">
-              Sign in to sync your verified attendance armor, daily timetable alerts, LeetCode arena streaks, and 4-Year career milestones. All credentials are encrypted locally in compliance with campus data privacy.
+              Sign in or create your individual student account. Each student manages their own verified attendance, timetable, coding arena streaks, and academic profile. No shared or pre-filled data.
             </p>
-            <div class="pt-2 flex flex-wrap gap-2.5 justify-center lg:justify-start">
-              <button onclick="switchTab('dashboard')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
-                <span>⚡</span><span>Open Main Dashboard</span>
+            <div class="pt-2 flex flex-wrap gap-2.5 justify-center lg:justify-start" id="auth-hero-actions">
+              <button onclick="setAuthMode('signin')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
+                <span>🔐</span><span>Student Sign In</span>
               </button>
-              <button onclick="switchTab('settings')" class="glass-card px-4 py-2.5 rounded-xl text-xs font-bold text-[#D6B66C] flex items-center gap-1.5">
-                <span>⚙️</span><span>Profile Settings</span>
+              <button onclick="setAuthMode('register')" class="glass-card px-4 py-2.5 rounded-xl text-xs font-bold text-[#51D6A0] hover:bg-[#51D6A0]/15 flex items-center gap-1.5">
+                <span>✨</span><span>Create New Account</span>
               </button>
             </div>
           </div>
@@ -53,9 +53,22 @@ AUTH_SYSTEM_HTML = r'''
               </div>
             </div>
             <span class="text-[10px] text-[#D6B66C] font-mono-code tracking-widest uppercase font-bold">
-              AKTU VERIFIED SYSTEM
+              MULTI-USER SYSTEM
             </span>
           </div>
+        </div>
+      </div>
+
+      <!-- Saved Accounts Switcher (Visible if multiple accounts exist on this device) -->
+      <div id="saved-accounts-section" class="max-w-xl mx-auto hidden space-y-3">
+        <div class="flex items-center justify-between px-1">
+          <span class="text-xs font-bold text-[#D6B66C] uppercase tracking-wider flex items-center gap-1.5 font-mono-code">
+            <span>👥</span> SAVED ACCOUNTS ON THIS DEVICE
+          </span>
+          <span class="text-[10px] text-[#7F8B85]">Click an account to switch</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="saved-accounts-list">
+          <!-- Dynamically populated via renderSavedAccountsList() -->
         </div>
       </div>
 
@@ -77,26 +90,26 @@ AUTH_SYSTEM_HTML = r'''
           <!-- Form Header -->
           <div class="text-center space-y-1">
             <h2 class="text-2xl font-black text-white" id="auth-heading-text">Student Sign In</h2>
-            <p class="text-xs text-[#7F8B85]" id="auth-sub-text">Enter your student credentials to access your ZYNAX companion.</p>
+            <p class="text-xs text-[#7F8B85]" id="auth-sub-text">Enter your credentials to access your personal student workspace.</p>
           </div>
 
           <!-- Alert / Validation Banner -->
           <div id="auth-alert-box" class="hidden p-3 rounded-xl border text-xs font-medium transition-all"></div>
 
-          <!-- SIGN IN FORM VIEW -->
+          <!-- ================= 1. SIGN IN FORM VIEW ================= -->
           <form id="form-signin" onsubmit="handleSignInSubmit(event)" class="space-y-4">
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Username or College Email</label>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Roll Number or Email</label>
               <div class="relative">
-                <input type="text" id="signin-username" value="anurag.banik@abes.ac.in" required placeholder="e.g. 2026ABES042 or student@abes.ac.in" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition" />
+                <input type="text" id="signin-username" required placeholder="e.g. 2026ABES042 or student@college.edu" autocomplete="username" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition" />
                 <span class="absolute right-3.5 top-3 text-xs text-[#7F8B85]">👤</span>
               </div>
             </div>
 
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Password</label>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Password</label>
               <div class="relative">
-                <input type="password" id="signin-password" value="Zynax2026!#" required placeholder="Enter your password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition pr-10" />
+                <input type="password" id="signin-password" required placeholder="Enter your account password" autocomplete="current-password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition pr-10" />
                 <button type="button" onclick="togglePasswordVisibility('signin-password', this)" class="absolute right-3 top-3 text-xs text-[#7F8B85] hover:text-white transition" title="Show/Hide Password">
                   👁️
                 </button>
@@ -107,7 +120,7 @@ AUTH_SYSTEM_HTML = r'''
             <div class="flex items-center justify-between text-xs pt-1">
               <label class="flex items-center gap-2 cursor-pointer select-none">
                 <input type="checkbox" id="signin-remember" checked class="w-4 h-4 accent-[#D6B66C] rounded" />
-                <span class="text-[#8E9A92]">Remember Me</span>
+                <span class="text-[#8E9A92]">Keep me logged in</span>
               </label>
               <button type="button" onclick="openForgotPasswordModal()" class="text-[#D6B66C] hover:underline font-bold">
                 Forgot Password?
@@ -115,87 +128,89 @@ AUTH_SYSTEM_HTML = r'''
             </div>
 
             <button type="submit" class="w-full btn-gold py-3 rounded-xl text-xs font-bold shadow-lg shadow-[#D6B66C]/20 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
-              <span>Sign In to ZYNAX</span>
+              <span>Sign In to Your Workspace</span>
               <span>→</span>
             </button>
+
+            <!-- Quick Guest Access for fast demo without registration -->
+            <div class="pt-2 text-center">
+              <button type="button" onclick="handleGuestSignIn()" class="text-[11px] text-[#7F8B85] hover:text-[#51D6A0] transition underline">
+                Continue as Guest Student (Try without account) →
+              </button>
+            </div>
           </form>
 
-          <!-- CREATE ACCOUNT (REGISTER) FORM VIEW -->
+          <!-- ================= 2. CREATE ACCOUNT FORM VIEW ================= -->
           <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-4">
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Student Full Name</label>
-              <input type="text" id="reg-name" required placeholder="e.g. Anurag Banik" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Full Name</label>
+              <input type="text" id="reg-name" required placeholder="e.g. Rahul Sharma" autocomplete="name" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
+            </div>
+
+            <div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">College / University Name</label>
+              <input type="text" id="reg-college" required placeholder="e.g. ABES Engineering College" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">College Email</label>
-                <input type="email" id="reg-email" required placeholder="name@abes.ac.in" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Student Roll / Admission No</label>
+                <input type="text" id="reg-roll" required placeholder="e.g. 2026CS104" autocomplete="off" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white font-mono-code placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Admission / Roll No</label>
-                <input type="text" id="reg-roll" required placeholder="e.g. 2026ABES042" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white font-mono-code focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">College Email Address</label>
+                <input type="email" id="reg-email" required placeholder="student@college.edu" autocomplete="email" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Branch / Degree</label>
-                <input type="text" id="reg-branch" value="CSE (AI/ML)" required class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Branch / Department</label>
+                <input type="text" id="reg-branch" required placeholder="e.g. Computer Science (AI/ML)" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Section &amp; Year</label>
-                <input type="text" id="reg-section" value="Sec A · Year 1" required class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Section &amp; Year / Semester</label>
+                <input type="text" id="reg-section" required placeholder="e.g. Sec B · Year 1 (Sem 1)" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
             </div>
 
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Create Password (Min 6 Characters)</label>
-              <div class="relative">
-                <input type="password" id="reg-password" minlength="6" required placeholder="Create secure password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition pr-10" />
-                <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
-                  👁️
-                </button>
-              </div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Contact Phone (Optional)</label>
+              <input type="tel" id="reg-phone" placeholder="e.g. +91 98765 00000" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
             </div>
 
-            <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Confirm Password</label>
-              <div class="relative">
-                <input type="password" id="reg-password-confirm" minlength="6" required placeholder="Re-enter password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition pr-10" />
-                <button type="button" onclick="togglePasswordVisibility('reg-password-confirm', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
-                  👁️
-                </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Create Password (Min 6 chars)</label>
+                <div class="relative">
+                  <input type="password" id="reg-password" minlength="6" required placeholder="Choose a password" autocomplete="new-password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition pr-10" />
+                  <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
+                    👁️
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Confirm Password</label>
+                <div class="relative">
+                  <input type="password" id="reg-password-confirm" minlength="6" required placeholder="Re-enter password" autocomplete="new-password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition pr-10" />
+                  <button type="button" onclick="togglePasswordVisibility('reg-password-confirm', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
+                    👁️
+                  </button>
+                </div>
               </div>
             </div>
 
             <!-- Honor Code Checkbox -->
             <label class="flex items-center gap-2 cursor-pointer text-xs select-none pt-1">
               <input type="checkbox" id="reg-terms" required checked class="w-4 h-4 accent-[#51D6A0] rounded" />
-              <span class="text-[#8E9A92]">I agree to ABES Engineering College Academic Honor Code.</span>
+              <span class="text-[#8E9A92]">I confirm this is my individual student identity and agree to the Academic Honor Code.</span>
             </label>
 
             <button type="submit" class="w-full btn-emerald py-3 rounded-xl text-xs font-bold shadow-lg shadow-[#51D6A0]/20 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
-              <span>Create ZYNAX Student Account</span>
+              <span>Create Account &amp; Enter Workspace</span>
               <span>✓</span>
             </button>
           </form>
-
-          <!-- Alternative Quick OTP Login option for legacy continuity -->
-          <div class="pt-2 border-t border-white/[0.08] text-center">
-            <button onclick="toggleLegacyOtpBox()" class="text-[11px] text-[#7F8B85] hover:text-[#D6B66C] transition flex items-center justify-center gap-1 mx-auto">
-              <span>🔐 Quick One-Time Passcode (OTP) Verification</span>
-              <span id="legacy-otp-arrow">▼</span>
-            </button>
-            <div id="legacy-otp-container" class="hidden pt-3 space-y-2 max-w-sm mx-auto">
-              <button onclick="requestOtp()" class="btn-gold w-full py-2 rounded-xl text-xs font-bold">Generate One-Click OTP</button>
-              <div id="auth-otp-box" class="hidden p-3 rounded-xl bg-white/[0.04] space-y-2">
-                <div class="text-[11px] text-[#7F8B85]">Your Security Code: <span id="displayed-otp" class="font-mono-code font-bold text-[#51D6A0] text-sm"></span></div>
-                <input type="text" id="otp-input" placeholder="Enter OTP" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/[0.1] text-xs text-white text-center font-mono-code" />
-                <button onclick="verifyOtpNow()" class="btn-emerald w-full py-1.5 rounded-lg text-xs font-bold">Verify &amp; Enter</button>
-              </div>
-            </div>
-          </div>
 
         </div>
       </div>
@@ -210,12 +225,12 @@ AUTH_SYSTEM_HTML = r'''
           <div class="flex items-center justify-between pb-2 border-b border-white/[0.08]">
             <h3 class="text-sm font-black text-white flex items-center gap-2">
               <span>🔑 Password Recovery</span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-[#D6B66C]/15 text-[#D6B66C]">Verified Email</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-[#D6B66C]/15 text-[#D6B66C]">Account Reset</span>
             </h3>
             <button onclick="closeForgotPasswordModal()" class="text-xs text-[#7F8B85] hover:text-white">✕</button>
           </div>
-          <p class="text-xs text-[#8E9A92]">Enter your ABES college email to receive a password recovery security token.</p>
-          <input type="email" id="forgot-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
+          <p class="text-xs text-[#8E9A92]">Enter your registered student email or roll number to reset your password.</p>
+          <input type="text" id="forgot-email" placeholder="e.g. student@college.edu or 2026ABES042" class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C]" />
           <div class="flex justify-end gap-2 pt-2">
             <button onclick="closeForgotPasswordModal()" class="glass-card px-4 py-2 rounded-xl text-xs text-white">Cancel</button>
             <button onclick="submitForgotPassword()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold shadow">Send Recovery Code</button>

@@ -125,35 +125,39 @@ SETTINGS_HTML = r'''
             <!-- Student Academic Details Form -->
             <div class="ref-card p-5 space-y-4">
               <h3 class="text-sm font-black text-white flex items-center gap-2">
-                <span>🎓 Academic Credentials &amp; Identity</span>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0]">AKTU Verified</span>
+                <span>🎓 Academic Credentials &amp; Personal Info</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0]">Verified Student Input</span>
               </h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label class="text-[#7F8B85] block mb-1">Student Full Name</label>
-                  <input type="text" id="prof-name" value="Anurag Banik" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <input type="text" id="prof-name" placeholder="e.g. Rahul Sharma" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">College / University Name</label>
+                  <input type="text" id="prof-college" placeholder="e.g. ABES Engineering College" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
                   <label class="text-[#7F8B85] block mb-1">College Email Address</label>
-                  <input type="email" id="prof-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <input type="email" id="prof-email" placeholder="student@college.edu" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
-                  <label class="text-[#7F8B85] block mb-1">Admission / University Roll Number</label>
-                  <input type="text" id="prof-roll" value="2026ABES042" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                  <label class="text-[#7F8B85] block mb-1">Student Roll / Admission Number</label>
+                  <input type="text" id="prof-roll" placeholder="e.g. 2026CS101" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
-                  <label class="text-[#7F8B85] block mb-1">Branch &amp; Specialization</label>
-                  <input type="text" id="prof-branch" value="Computer Science & Engineering (AI/ML)" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <label class="text-[#7F8B85] block mb-1">Branch / Degree Specialization</label>
+                  <input type="text" id="prof-branch" placeholder="e.g. Computer Science (AI/ML)" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
                   <label class="text-[#7F8B85] block mb-1">Section</label>
-                  <input type="text" id="prof-section" value="Sec A" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <input type="text" id="prof-section" placeholder="e.g. Sec A" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                   <div>
                     <label class="text-[#7F8B85] block mb-1">Academic Year</label>
                     <select id="prof-year" class="w-full px-3 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]">
-                      <option value="1" selected>Year 1 (Foundation)</option>
+                      <option value="1">Year 1 (Foundation)</option>
                       <option value="2">Year 2 (Skill Dev)</option>
                       <option value="3">Year 3 (Industry)</option>
                       <option value="4">Year 4 (Career)</option>
@@ -162,7 +166,7 @@ SETTINGS_HTML = r'''
                   <div>
                     <label class="text-[#7F8B85] block mb-1">Current Semester</label>
                     <select id="prof-sem" class="w-full px-3 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]">
-                      <option value="1" selected>Semester 1</option>
+                      <option value="1">Semester 1</option>
                       <option value="2">Semester 2</option>
                       <option value="3">Semester 3</option>
                       <option value="4">Semester 4</option>
@@ -173,9 +177,58 @@ SETTINGS_HTML = r'''
                     </select>
                   </div>
                 </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">Contact Phone</label>
+                  <input type="tel" id="prof-phone" placeholder="e.g. +91 98765 00000" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">GitHub / Code Profile Link</label>
+                  <input type="text" id="prof-github" placeholder="e.g. github.com/username" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">LinkedIn Profile</label>
+                  <input type="text" id="prof-linkedin" placeholder="e.g. linkedin.com/in/username" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">Target SGPA Goal</label>
+                  <input type="text" id="prof-sgpa" placeholder="e.g. 8.80" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">Library / Student Card ID</label>
+                  <input type="text" id="prof-lib" placeholder="e.g. LIB-2026-042" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
               </div>
 
-              <div class="pt-2 flex justify-end">
+              <!-- Voluntary Skills & Strengths Section -->
+              <div class="pt-3 border-t border-white/[0.08] space-y-3">
+                <div class="flex items-center justify-between">
+                  <h4 class="text-xs font-bold text-[#D6B66C] uppercase tracking-wider flex items-center gap-1.5 font-mono-code">
+                    <span>⚡</span> YOUR VOLUNTARY SKILLS &amp; STRENGTHS (NO PRE-FILLED DATA)
+                  </h4>
+                  <span class="text-[10px] text-[#7F8B85]">You define your own skillset</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Key Strengths &amp; Abilities</label>
+                    <input type="text" id="prof-key-strengths" placeholder="e.g. Algorithmic Modeling, Structured Logic, Problem Solving" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Technical Skills &amp; Languages</label>
+                    <input type="text" id="prof-tech-skills" placeholder="e.g. Python, C++, React, SQL, DSA" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Creative &amp; Design Skills</label>
+                    <input type="text" id="prof-creative-skills" placeholder="e.g. UI/UX Prototyping, Design Systems, Figma" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Leadership &amp; Campus Activities</label>
+                    <input type="text" id="prof-leadership-skills" placeholder="e.g. Coding Club Member, Hackathon Coordinator" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-2 flex justify-between items-center">
+                <span class="text-[10px] text-[#7F8B85]">All information is stored privately to your student profile.</span>
                 <button onclick="saveProfileDetails(true)" class="btn-emerald px-5 py-2 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
                   <span>✓</span><span>Save Profile Changes</span>
                 </button>
@@ -335,17 +388,22 @@ SETTINGS_HTML = r'''
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-xl bg-[#51D6A0]/20 text-[#51D6A0] flex items-center justify-center font-black text-lg">✓</div>
                   <div>
-                    <strong class="text-white text-xs block">ABES Engineering College Verified Student</strong>
-                    <span class="text-[10px] text-[#8F9B94]">AKTU Roll: 2026ABES042 · CSE (AI/ML) · Status: Active</span>
+                    <strong class="text-white text-xs block" id="settings-acc-name">Verified Student Session</strong>
+                    <span class="text-[10px] text-[#8F9B94]" id="settings-acc-sub">Authenticated Student Account · Data Isolated</span>
                   </div>
                 </div>
-                <span class="text-xs px-2.5 py-1 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold">Authenticated</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold">Active</span>
               </div>
-              <div class="pt-2 flex justify-between items-center text-xs">
-                <span class="text-[#7F8B85]">Session Active · Client Protected</span>
-                <button onclick="switchTab('auth')" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/20">
-                  Switch Student Profile / Lock In
-                </button>
+              <div class="pt-2 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
+                <span class="text-[#7F8B85]">Each student profile stores independent academic vitals.</span>
+                <div class="flex gap-2">
+                  <button onclick="switchTab('auth')" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-[#D6B66C] hover:bg-[#D6B66C]/15">
+                    Switch Student Account
+                  </button>
+                  <button onclick="logoutCurrentStudent()" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/20">
+                    Sign Out
+                  </button>
+                </div>
               </div>
             </div>
           </div>

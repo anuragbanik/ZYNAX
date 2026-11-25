@@ -145,12 +145,12 @@ STUDENT_ID_HTML = r'''
                         Z
                       </div>
                       <div>
-                        <div class="text-[11px] font-black tracking-wider text-white uppercase">ABES ENGINEERING COLLEGE</div>
-                        <div class="text-[8px] text-[#7F8B85] font-mono-code">AKTU CODE 032 · GHAZIABAD · CAMPUS ECOSYSTEM</div>
+                        <div class="text-[11px] font-black tracking-wider text-white uppercase" id="card-college-name">CAMPUS DIGITAL IDENTITY</div>
+                        <div class="text-[8px] text-[#7F8B85] font-mono-code" id="card-college-sub">VERIFIED STUDENT ID · SMART PASS</div>
                       </div>
                     </div>
                     <div class="text-right">
-                      <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code font-bold">2026–2030</span>
+                      <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code font-bold" id="card-year-badge">ACTIVE</span>
                       <div class="text-[8px] text-[#7F8B85]">SMART PASS</div>
                     </div>
                   </div>
@@ -162,7 +162,7 @@ STUDENT_ID_HTML = r'''
                       <div class="w-20 h-24 rounded-xl p-[2px] bg-gradient-to-b from-[#D6B66C] via-[#9875FF] to-[#48B8FF] shadow-lg overflow-hidden">
                         <div class="w-full h-full rounded-[10px] bg-[#101412] flex items-center justify-center overflow-hidden relative">
                           <img id="card-photo-img" src="" alt="Student Photo" class="w-full h-full object-cover hidden" />
-                          <span id="card-photo-fallback" class="font-black text-2xl text-[#D6B66C]">AB</span>
+                          <span id="card-photo-fallback" class="font-black text-2xl text-[#D6B66C]">ST</span>
                         </div>
                       </div>
                       <div id="card-photo-badge" class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#9875FF] text-[8px] font-bold text-white shadow">
@@ -173,23 +173,21 @@ STUDENT_ID_HTML = r'''
                     <!-- Details -->
                     <div class="space-y-1 flex-1 min-w-0">
                       <div class="flex items-center justify-between">
-                        <h3 class="text-base font-black text-white truncate" id="card-display-name">Anurag Banik</h3>
+                        <h3 class="text-base font-black text-white truncate" id="card-display-name">Student Name</h3>
                         <div class="id-chip-gold flex-shrink-0" title="Smart NFC Microchip"></div>
                       </div>
                       <div class="text-[11px] font-mono-code text-[#D6B66C] font-bold tracking-wide" id="card-display-roll">
-                        2026ABES042
+                        Roll No Pending
                       </div>
                       <div class="text-[10px] text-[#C4D0C9] truncate font-medium" id="card-display-branch">
-                        CSE (AI &amp; Machine Learning)
+                        Program / Department
                       </div>
                       <div class="text-[9px] text-[#7F8B85] flex items-center gap-2">
-                        <span id="card-display-sec">Sec A · 1st Year</span>
-                        <span>·</span>
-                        <span class="text-[#51D6A0]">Sem 1</span>
+                        <span id="card-display-sec">Section &amp; Year</span>
                       </div>
                       <div class="flex items-center gap-1.5 pt-1">
-                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F5F5F5] font-mono-code">AI SPECIALIST</span>
-                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code">SGPA 8.80</span>
+                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F5F5F5] font-mono-code" id="card-tag-badge">STUDENT</span>
+                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code" id="card-sgpa-badge">ACADEMIC PASS</span>
                       </div>
                     </div>
                   </div>
@@ -198,7 +196,7 @@ STUDENT_ID_HTML = r'''
                   <div class="pt-2 border-t border-white/[0.08] flex items-center justify-between">
                     <div class="space-y-0.5">
                       <div class="w-36 h-4 barcode-lines rounded-sm"></div>
-                      <div class="text-[7px] text-[#7F8B85] font-mono-code tracking-widest">AKTU-ABES-2026-984210</div>
+                      <div class="text-[7px] text-[#7F8B85] font-mono-code tracking-widest" id="card-barcode-str">ZYNAX-PASS-VERIFIED</div>
                     </div>
                     <div class="flex items-center gap-2 text-right">
                       <div class="text-[8px] text-[#8C9690] font-mono-code">
@@ -217,7 +215,7 @@ STUDENT_ID_HTML = r'''
                       <span class="text-[10px] font-black uppercase text-[#D6B66C] tracking-wider">STUDENT PROFILE &amp; CONTACT PASS</span>
                     </div>
                     <span class="text-[8px] px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code font-bold">
-                      REGISTRAR AUTHENTICATED
+                      VERIFIED RECORD
                     </span>
                   </div>
 
@@ -226,27 +224,27 @@ STUDENT_ID_HTML = r'''
                     <!-- Left Column: Academic & Contact -->
                     <div class="space-y-1">
                       <span class="text-[#7F8B85] block font-bold">STUDENT CONTACT:</span>
-                      <p class="text-white font-mono-code truncate" id="card-back-email">anurag.banik@abes.ac.in</p>
-                      <p class="text-[#D6B66C] font-mono-code">+91 98765 43210</p>
+                      <p class="text-white font-mono-code truncate" id="card-back-email">Not provided</p>
+                      <p class="text-[#D6B66C] font-mono-code" id="card-back-phone">Not provided</p>
                       
                       <span class="text-[#7F8B85] block font-bold pt-1">CAMPUS RESIDENCE:</span>
-                      <p class="text-white truncate">ABES Campus Residency, Ghaziabad</p>
+                      <p class="text-white truncate" id="card-back-residence">Campus / Local Residency</p>
 
                       <span class="text-[#7F8B85] block font-bold pt-1">BLOOD GROUP &amp; MEDICAL:</span>
-                      <p class="text-[#51D6A0] font-mono-code">B+ Positive (Verified Record)</p>
+                      <p class="text-[#51D6A0] font-mono-code" id="card-back-blood">Not recorded</p>
                     </div>
 
                     <!-- Right Column: Student Links & Credentials -->
                     <div class="space-y-1">
                       <span class="text-[#7F8B85] block font-bold">VERIFIED LINKS &amp; SOCIAL:</span>
-                      <a href="https://github.com/anuragbanik/ZYNAX" target="_blank" class="text-[#48B8FF] font-mono-code hover:underline block truncate">
-                        🔗 github.com/anuragbanik/ZYNAX
+                      <a id="card-back-github" href="#" target="_blank" class="text-[#48B8FF] font-mono-code hover:underline block truncate">
+                        🔗 Add GitHub in Profile
                       </a>
-                      <p class="text-white/80 font-mono-code truncate">💼 linkedin.com/in/anuragbanik</p>
+                      <p class="text-white/80 font-mono-code truncate" id="card-back-linkedin">💼 Add LinkedIn in Profile</p>
 
                       <span class="text-[#7F8B85] block font-bold pt-1">ACADEMIC STANDING:</span>
-                      <p class="text-[#D6B66C] font-mono-code">Target SGPA: 8.80 (Sem 1)</p>
-                      <p class="text-white/80 font-mono-code">Library ID: LIB-2026-042</p>
+                      <p class="text-[#D6B66C] font-mono-code" id="card-back-sgpa">Target SGPA: Not set</p>
+                      <p class="text-white/80 font-mono-code" id="card-back-lib">Library ID: Not set</p>
                     </div>
                   </div>
 
@@ -259,12 +257,12 @@ STUDENT_ID_HTML = r'''
                         </svg>
                       </div>
                       <div class="text-[7.5px] text-[#7F8B85] leading-tight font-mono-code">
-                        <div>AKTU SECURITY HASH</div>
-                        <div class="text-white/80">SHA-256 · VERIFIED</div>
+                        <div>DIGITAL HASH</div>
+                        <div class="text-white/80" id="card-back-hash">SHA-256 · VERIFIED</div>
                       </div>
                     </div>
                     <div class="text-right">
-                      <div class="text-[9px] font-black text-[#D6B66C]">ABES EC DEAN</div>
+                      <div class="text-[9px] font-black text-[#D6B66C]">CAMPUS REGISTRAR</div>
                       <div class="text-[7px] text-[#7F8B85]">DIGITALLY SIGNED PASS</div>
                     </div>
                   </div>
@@ -316,54 +314,54 @@ STUDENT_ID_HTML = r'''
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#D6B66C] font-bold text-[11px] flex items-center gap-1"><span>⚡</span> Key Strengths</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">AI RATED 9.4</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-key">Fast Algorithmic Modeling, Structured Logic, Prompt Engineering</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-key">Not added yet. Click &quot;Edit Skills&quot; to add your strengths.</p>
                 </div>
 
                 <!-- 2. Technical Strengths -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#48B8FF] font-bold text-[11px] flex items-center gap-1"><span>💻</span> Technical Strengths</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">VERIFIED</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">INDIVIDUAL</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-tech">Python, C++, PyTorch, React, SQLite, DSA</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-tech">Not added yet. Add languages and frameworks.</p>
                 </div>
 
                 <!-- 3. Creative Abilities -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#9875FF] font-bold text-[11px] flex items-center gap-1"><span>🎨</span> Creative Abilities</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#9875FF]/20 text-[#9875FF] font-mono-code">AI GENERATED</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#9875FF]/20 text-[#9875FF] font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-creative">Futuristic UI/UX Prototyping, Clean Design Systems</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-creative">Not added yet. Add design and creative tools.</p>
                 </div>
 
                 <!-- 4. Problem-Solving -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#51D6A0] font-bold text-[11px] flex items-center gap-1"><span>🧩</span> Problem Solving</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">HIGH ACCURACY</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">INDIVIDUAL</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-problem">Dynamic Programming, Binary Trees, Sliding Window</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-problem">Not added yet. Add topics and algorithms practiced.</p>
                 </div>
 
                 <!-- 5. Leadership Potential -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-orange-400 font-bold text-[11px] flex items-center gap-1"><span>👑</span> Leadership &amp; Team</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">CAMPUS LEAD</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-leadership">Hackathon Project Coordination, Code Review Guidance</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-leadership">Not added yet. Add clubs, initiatives, or roles.</p>
                 </div>
 
                 <!-- 6. Communication -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-cyan-300 font-bold text-[11px] flex items-center gap-1"><span>🗣️</span> Communication</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">PROFESSIONAL</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-comm">Fluent Professional English Communication &amp; Technical Writing</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-comm">Not added yet. Add presentation or writing skills.</p>
                 </div>
               </div>
 
@@ -373,10 +371,10 @@ STUDENT_ID_HTML = r'''
                   <strong class="text-[#F0D28B] flex items-center gap-1.5 font-bold">
                     <span>🚀</span><span>Growth &amp; Career Opportunities</span>
                   </strong>
-                  <span class="text-[9px] text-[#7F8B85] font-mono-code">4-YEAR ROADMAP</span>
+                  <span class="text-[9px] text-[#7F8B85] font-mono-code">PERSONAL ROADMAP</span>
                 </div>
                 <p class="text-[11px] text-[#E8DEC0]" id="str-growth">
-                  Target 150+ LeetCode DSA milestone before Sem 3, publish 1 open-source AI agent, and target 8.80+ SGPA for Tier-1 placements.
+                  Add your target semester goals, projects, and career milestones in Settings to personalize your AI companion.
                 </p>
               </div>
 

@@ -173,7 +173,7 @@ LIQUID_FEATURES_JS = r'''
         if (formSignIn) formSignIn.classList.add("hidden");
         if (formRegister) formRegister.classList.remove("hidden");
         if (heading) heading.innerText = "Create Student Account";
-        if (sub) sub.innerText = "Register your official ABES college identity on ZYNAX.";
+        if (sub) sub.innerText = "Register your individual student identity on ZYNAX.";
       }
     }
 
@@ -202,45 +202,331 @@ LIQUID_FEATURES_JS = r'''
       }
     }
 
-    function handleSignInSubmit(e) {
-      e.preventDefault();
-      const username = (document.getElementById("signin-username") || {}).value || "";
-      const password = (document.getElementById("signin-password") || {}).value || "";
-      const remember = (document.getElementById("signin-remember") || {}).checked;
+    // ==========================================
+    // MULTI-USER ACCOUNT DATABASE & SESSION ENGINE
+    // ==========================================
+    function getRegisteredAccounts() {
+      try {
+        const raw = localStorage.getItem("ZYNAX_ACCOUNTS_DB");
+        if (!raw) return {};
+        const parsed = JSON.parse(raw);
+        return (typeof parsed === "object" && parsed !== null) ? parsed : {};
+      } catch(err) {
+        return {};
+      }
+    }
 
-      if (!username || !password) {
-        showAuthAlert("Please provide both your Student Username/Email and Password.", false);
+    function saveAccountToDb(account) {
+      if (!account || !account.roll) return;
+      try {
+        const db = getRegisteredAccounts();
+        const primaryKey = String(account.roll).trim().toLowerCase();
+        db[primaryKey] = account;
+        if (account.email) {
+          db[String(account.email).trim().toLowerCase()] = primaryKey; // alias pointer
+        }
+        localStorage.setItem("ZYNAX_ACCOUNTS_DB", JSON.stringify(db));
+      } catch(err){}
+    }
+
+    function renderSavedAccountsList() {
+      const container = document.getElementById("saved-accounts-list");
+      const section = document.getElementById("saved-accounts-section");
+      if (!container || !section) return;
+
+      const db = getRegisteredAccounts();
+      const uniqueAccounts = [];
+      const seen = new Set();
+
+      for (const key of Object.keys(db)) {
+        const item = db[key];
+        if (typeof item === "object" && item !== null && item.roll) {
+          const rollKey = String(item.roll).toLowerCase();
+          if (!seen.has(rollKey)) {
+            seen.add(rollKey);
+            uniqueAccounts.push(item);
+          }
+        }
+      }
+
+      if (uniqueAccounts.length === 0) {
+        section.classList.add("hidden");
+        container.innerHTML = "";
         return;
       }
 
-      if (remember) {
-        try {
-          localStorage.setItem("ZYNAX_REMEMBERED_USER", username);
-        } catch(err){}
+      section.classList.remove("hidden");
+      container.innerHTML = uniqueAccounts.map(acc => {
+        const initials = ((acc.name || "ST").trim().split(" ").map(w => w[0]).slice(0, 2).join("")).toUpperCase();
+        const safeName = (acc.name || "Student").replace(/"/g, "&quot;");
+        const safeRoll = (acc.roll || "").replace(/"/g, "&quot;");
+        const safeCol = (acc.college || acc.branch || "Student Workspace").replace(/"/g, "&quot;");
+        return `
+          <div class="p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-[#D6B66C]/40 transition flex items-center justify-between gap-3 group cursor-pointer" onclick="quickSelectAccount('${safeRoll}')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#D6B66C]/20 to-[#51D6A0]/20 border border-white/10 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                ${initials}
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs font-bold text-white truncate">${safeName}</div>
+                <div class="text-[10px] text-[#7F8B85] font-mono-code truncate">${safeRoll} · ${safeCol}</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span class="text-[10px] text-[#D6B66C] font-semibold opacity-0 group-hover:opacity-100 transition">Select →</span>
+              <button type="button" onclick="removeSavedAccount('${safeRoll}', event)" class="p-1 rounded text-[#7F8B85] hover:text-red-400 hover:bg-red-500/10 text-xs transition" title="Remove account from device">✕</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function quickSelectAccount(roll) {
+      const uField = document.getElementById("signin-username");
+      const pField = document.getElementById("signin-password");
+      if (uField) {
+        uField.value = roll;
+      }
+      setAuthMode("signin");
+      if (pField) pField.focus();
+    }
+
+    function removeSavedAccount(roll, e) {
+      if (e) e.stopPropagation();
+      try {
+        const db = getRegisteredAccounts();
+        const primaryKey = String(roll).trim().toLowerCase();
+        let emailKey = null;
+        if (db[primaryKey] && db[primaryKey].email) {
+          emailKey = String(db[primaryKey].email).trim().toLowerCase();
+        }
+        delete db[primaryKey];
+        if (emailKey && db[emailKey] === primaryKey) {
+          delete db[emailKey];
+        }
+        localStorage.setItem("ZYNAX_ACCOUNTS_DB", JSON.stringify(db));
+
+        // If active user was removed, reset active session
+        const active = localStorage.getItem("ZYNAX_ACTIVE_USER_ID");
+        if (active && (active.toLowerCase() === primaryKey || active.toLowerCase() === emailKey)) {
+          localStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+          sessionStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+        }
+        renderSavedAccountsList();
+        showAuthAlert("Account removed from this device.", true);
+      } catch(err){}
+    }
+
+    function handleSignInSubmit(e) {
+      e.preventDefault();
+      const usernameInput = (document.getElementById("signin-username") || {}).value || "";
+      const passwordInput = (document.getElementById("signin-password") || {}).value || "";
+      const remember = (document.getElementById("signin-remember") || {}).checked;
+
+      const lookup = usernameInput.trim().toLowerCase();
+      if (!lookup || !passwordInput) {
+        showAuthAlert("Please enter both your Student Roll/Email and Password.", false);
+        return;
       }
 
-      // Check registered profile if exists
-      let studentName = APP.studentProfile.name;
-      try {
-        const regUser = localStorage.getItem("ZYNAX_REGISTERED_USER");
-        if (regUser) {
-          const parsed = JSON.parse(regUser);
-          if (parsed && (parsed.email === username || parsed.roll === username || (parsed.name && parsed.name.toLowerCase() === username.toLowerCase()))) {
-            studentName = parsed.name;
-            APP.studentProfile.name = parsed.name;
-            if (parsed.email) APP.studentProfile.email = parsed.email;
-            if (parsed.roll) APP.studentProfile.roll = parsed.roll;
-            syncProfileAcrossApp();
+      const db = getRegisteredAccounts();
+      let account = null;
+
+      if (db[lookup]) {
+        if (typeof db[lookup] === "string") {
+          account = db[db[lookup]]; // resolved alias
+        } else {
+          account = db[lookup];
+        }
+      } else {
+        // Also search across all accounts by roll, email, or name
+        for (const k of Object.keys(db)) {
+          const item = db[k];
+          if (typeof item === "object" && item !== null) {
+            if (
+              (item.roll && item.roll.toLowerCase() === lookup) ||
+              (item.email && item.email.toLowerCase() === lookup) ||
+              (item.name && item.name.toLowerCase() === lookup)
+            ) {
+              account = item;
+              break;
+            }
           }
+        }
+      }
+
+      if (!account) {
+        showAuthAlert(`No account found matching "${usernameInput}". Please click "Create Account" below to register your individual details.`, false);
+        return;
+      }
+
+      // Check password if set during registration
+      if (account.password && account.password !== passwordInput) {
+        showAuthAlert("Incorrect password for this student account. Please re-enter or click 'Forgot Password'.", false);
+        return;
+      }
+
+      // Activate session
+      const studentName = account.name || "Student";
+      APP.isAuthenticated = true;
+      Object.assign(APP.studentProfile, account.profile || account);
+
+      try {
+        if (remember) {
+          localStorage.setItem("ZYNAX_ACTIVE_USER_ID", account.roll || account.email || lookup);
+          localStorage.setItem("ZYNAX_REMEMBERED_USER", lookup);
+        } else {
+          sessionStorage.setItem("ZYNAX_ACTIVE_USER_ID", account.roll || account.email || lookup);
+          localStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
         }
       } catch(err){}
 
-      showAuthAlert(`Authentication verified! Welcome back, ${studentName}.`, true);
+      syncProfileAcrossApp();
+      showAuthAlert(`Authentication successful! Welcome back, ${studentName}.`, true);
 
       setTimeout(() => {
         switchTab("dashboard");
         triggerLoginWelcome(studentName);
-      }, 700);
+      }, 650);
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = ((document.getElementById("reg-name") || {}).value || "").trim();
+      const college = ((document.getElementById("reg-college") || {}).value || "").trim();
+      const roll = ((document.getElementById("reg-roll") || {}).value || "").trim();
+      const email = ((document.getElementById("reg-email") || {}).value || "").trim();
+      const branch = ((document.getElementById("reg-branch") || {}).value || "").trim();
+      const section = ((document.getElementById("reg-section") || {}).value || "").trim();
+      const phone = ((document.getElementById("reg-phone") || {}).value || "").trim();
+      const pass = (document.getElementById("reg-password") || {}).value || "";
+      const passConfirm = (document.getElementById("reg-password-confirm") || {}).value || "";
+
+      if (!name || !roll || !email) {
+        showAuthAlert("Please fill in your Full Name, Roll Number, and Email.", false);
+        return;
+      }
+
+      if (pass.length < 6) {
+        showAuthAlert("Password must be at least 6 characters long.", false);
+        return;
+      }
+
+      if (pass !== passConfirm) {
+        showAuthAlert("Passwords do not match. Please re-enter carefully.", false);
+        return;
+      }
+
+      const db = getRegisteredAccounts();
+      const rollLookup = roll.toLowerCase();
+      const emailLookup = email.toLowerCase();
+
+      if (db[rollLookup] || db[emailLookup]) {
+        showAuthAlert(`An account with Roll "${roll}" or Email "${email}" already exists. Please Sign In.`, false);
+        setAuthMode("signin");
+        const uField = document.getElementById("signin-username");
+        if (uField) uField.value = roll;
+        return;
+      }
+
+      // Construct clean profile purely from student's inputs
+      const newProfile = {
+        name: name,
+        college: college,
+        roll: roll,
+        email: email,
+        branch: branch,
+        section: section,
+        phone: phone,
+        currentYear: 1,
+        currentSem: 1,
+        github: "",
+        linkedin: "",
+        targetSgpa: "",
+        libraryId: "",
+        photoUrl: "",
+        enhancedPhotoUrl: "",
+        keyStrengths: "",
+        technicalStrengths: "",
+        creativeAbilities: "",
+        problemSolving: "",
+        leadership: "",
+        communication: "",
+        growthGoals: ""
+      };
+
+      const newAccount = {
+        name: name,
+        college: college,
+        roll: roll,
+        email: email,
+        branch: branch,
+        section: section,
+        phone: phone,
+        password: pass,
+        createdAt: new Date().toISOString(),
+        profile: newProfile
+      };
+
+      saveAccountToDb(newAccount);
+
+      // Activate session
+      APP.isAuthenticated = true;
+      Object.assign(APP.studentProfile, newProfile);
+      try {
+        localStorage.setItem("ZYNAX_ACTIVE_USER_ID", roll);
+        localStorage.setItem("ZYNAX_REMEMBERED_USER", roll);
+      } catch(err){}
+
+      syncProfileAcrossApp();
+      renderSavedAccountsList();
+
+      showAuthAlert(`Account successfully created for ${name}! Entering your individual workspace...`, true);
+
+      setTimeout(() => {
+        switchTab("dashboard");
+        triggerLoginWelcome(name);
+      }, 750);
+    }
+
+    function handleGuestSignIn() {
+      const guestProfile = {
+        name: "Guest Student",
+        college: "ZYNAX Interactive Preview",
+        roll: "GUEST-001",
+        email: "guest@zynax.ai",
+        branch: "General Engineering",
+        section: "Demo Section",
+        phone: "",
+        currentYear: 1,
+        currentSem: 1,
+        github: "",
+        linkedin: "",
+        targetSgpa: "9.0",
+        libraryId: "LIB-GUEST",
+        photoUrl: "",
+        enhancedPhotoUrl: "",
+        keyStrengths: "",
+        technicalStrengths: "",
+        creativeAbilities: "",
+        problemSolving: "",
+        leadership: "",
+        communication: "",
+        growthGoals: ""
+      };
+
+      APP.isAuthenticated = true;
+      Object.assign(APP.studentProfile, guestProfile);
+      try {
+        sessionStorage.setItem("ZYNAX_ACTIVE_USER_ID", "GUEST-001");
+      } catch(err){}
+
+      syncProfileAcrossApp();
+      showAuthAlert("Entering as Guest Student...", true);
+      setTimeout(() => {
+        switchTab("dashboard");
+        triggerLoginWelcome("Guest Student");
+      }, 400);
     }
 
     // Support direct navigation to Achievements section via switchTab
@@ -257,47 +543,6 @@ LIQUID_FEATURES_JS = r'''
         }
         _baseSwitchTab(tabId);
       };
-    }
-
-    function handleRegisterSubmit(e) {
-      e.preventDefault();
-      const name = (document.getElementById("reg-name") || {}).value || "";
-      const email = (document.getElementById("reg-email") || {}).value || "";
-      const roll = (document.getElementById("reg-roll") || {}).value || "";
-      const branch = (document.getElementById("reg-branch") || {}).value || "CSE (AI/ML)";
-      const section = (document.getElementById("reg-section") || {}).value || "Sec A";
-      const pass = (document.getElementById("reg-password") || {}).value || "";
-      const passConfirm = (document.getElementById("reg-password-confirm") || {}).value || "";
-
-      if (pass.length < 6) {
-        showAuthAlert("Password must be at least 6 characters long.", false);
-        return;
-      }
-
-      if (pass !== passConfirm) {
-        showAuthAlert("Passwords do not match. Please re-enter carefully.", false);
-        return;
-      }
-
-      // Update student profile in memory & localStorage
-      APP.studentProfile.name = name;
-      APP.studentProfile.email = email;
-      APP.studentProfile.roll = roll;
-      APP.studentProfile.branch = branch;
-      APP.studentProfile.section = section;
-
-      try {
-        localStorage.setItem("ZYNAX_STUDENT_PROFILE", JSON.stringify(APP.studentProfile));
-        localStorage.setItem("ZYNAX_REGISTERED_USER", JSON.stringify({ email, roll, name }));
-      } catch(err){}
-
-      syncProfileAcrossApp();
-      showAuthAlert(`Account successfully registered for ${name}! Entering workspace...`, true);
-
-      setTimeout(() => {
-        switchTab("dashboard");
-        triggerLoginWelcome(name);
-      }, 800);
     }
 
     function toggleLegacyOtpBox() {

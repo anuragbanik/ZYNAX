@@ -73,7 +73,7 @@ if header_match:
 else:
     print("WARNING: <header> not found")
 
-# 4. UPDATE DASHBOARD GREETING ROW with profile avatar
+# 4. UPDATE DASHBOARD GREETING ROW with dynamic profile avatar
 old_greeting = r'''        <div>
           <div class="text-xs font-semibold text-[#51D6A0]/90 tracking-wide mb-1 font-mono-code">
             Monday, November 23, 2026
@@ -90,7 +90,7 @@ old_greeting = r'''        <div>
 new_greeting = r'''        <div class="flex items-center gap-3.5">
           <div id="dash-avatar-container" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#51D6A0] via-[#48B8FF] to-[#9875FF] p-[2px] flex-shrink-0 cursor-pointer shadow-lg hover:scale-105 transition" onclick="switchTab('settings')" title="Manage Personal Profile">
             <div class="w-full h-full rounded-[14px] bg-[#101412] flex items-center justify-center text-lg font-black text-[#51D6A0] overflow-hidden" id="dash-avatar-inner">
-              <span id="dash-avatar-initials">AB</span>
+              <span id="dash-avatar-initials">ST</span>
             </div>
           </div>
           <div>
@@ -99,10 +99,10 @@ new_greeting = r'''        <div class="flex items-center gap-3.5">
             </div>
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white flex items-baseline gap-2">
               <span>Yo,</span>
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#51D6A0] via-[#48B8FF] to-[#9875FF]" id="dash-student-name">ANURAG</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#51D6A0] via-[#48B8FF] to-[#9875FF]" id="dash-student-name">Student</span>
             </h1>
             <p class="text-xs text-[#7A8680] mt-1 font-medium" id="dash-student-sub">
-              CSE (AI/ML) · Section A · ABES Engineering College · Roll: 2026ABES042
+              Sign in to personalize your academic workspace
             </p>
           </div>
         </div>'''
@@ -259,9 +259,65 @@ if '</body>' in html:
     html = html.replace('</body>', WELCOME_OVERLAY_HTML + '\n</body>')
     print("✓ Injected Full-Screen Animated Welcome Screen Overlay into document body")
 
+# 12b. REPLACE BASE HARDCODED STUDENT PROFILE WITH CLEAN DYNAMIC PROFILE
+clean_base_profile = r'''studentProfile: {
+        name: "",
+        email: "",
+        roll: "",
+        college: "",
+        branch: "",
+        section: "",
+        phone: "",
+        currentYear: 1,
+        currentSem: 1,
+        targetSGPA: "",
+        currentSGPA: "",
+        github: "",
+        linkedin: "",
+        targetSgpa: "",
+        libraryId: "",
+        photoUrl: "",
+        enhancedPhotoUrl: "",
+        leetCodeSolved: 0,
+        contestRating: 0,
+        streakDays: 0,
+        aggregateAttendance: 0,
+        languages: [],
+        completedTopics: [],
+        currentTopics: [],
+        completedProjects: [],
+        keyStrengths: "",
+        technicalStrengths: "",
+        creativeAbilities: "",
+        problemSolving: "",
+        leadership: "",
+        communication: "",
+        growthGoals: "",
+        savedContests: []
+      },'''
+
+base_profile_pattern = r'studentProfile:\s*\{[\s\S]*?savedContests:\s*\[[\s\S]*?\]\s*\},'
+if re.search(base_profile_pattern, html):
+    html = re.sub(base_profile_pattern, clean_base_profile, html, count=1)
+    print("✓ Replaced base hardcoded studentProfile with clean dynamic template")
+else:
+    print("WARNING: base studentProfile pattern not matched")
+
 # 13. INJECT COMPLETE JAVASCRIPT BUNDLE
 old_init = r'''    // =================== INIT ON LOAD ===================
-    window.addEventListener("DOMContentLoaded", () => {'''
+    window.addEventListener("DOMContentLoaded", () => {
+      renderTimetable();
+      renderAttendance();
+      renderGlobalContests();
+      renderHackathons();
+      startLeetCodeContestCountdown();
+      changeCodeTemplate("python");
+      startClassCountdown();
+      updateUnitOptions();
+      renderDocs();
+      updateResumePreview();
+      switchTab("dashboard");
+    });'''
 
 new_js_bundle = (
     STUDENT_IDENTITY_JS + "\n\n" +
@@ -273,16 +329,37 @@ new_js_bundle = (
       // Set English as permanent language
       APP.activeLang = "en";
 
-      // Load saved student profile if exists
-      try {
-        const savedProf = localStorage.getItem("ZYNAX_STUDENT_PROFILE");
-        if (savedProf) {
-          const parsed = JSON.parse(savedProf);
-          if (parsed && typeof parsed === "object") {
-            Object.assign(APP.studentProfile, parsed);
+      // 1. Resolve Multi-User Session
+      const activeId = localStorage.getItem("ZYNAX_ACTIVE_USER_ID") || sessionStorage.getItem("ZYNAX_ACTIVE_USER_ID");
+      const db = (typeof getRegisteredAccounts === "function") ? getRegisteredAccounts() : {};
+      let activeAccount = null;
+
+      if (activeId) {
+        const key = String(activeId).trim().toLowerCase();
+        if (db[key]) {
+          activeAccount = (typeof db[key] === "string") ? db[db[key]] : db[key];
+        } else {
+          for (const k of Object.keys(db)) {
+            const it = db[k];
+            if (typeof it === "object" && it !== null) {
+              if (
+                (it.roll && it.roll.toLowerCase() === key) ||
+                (it.email && it.email.toLowerCase() === key)
+              ) {
+                activeAccount = it;
+                break;
+              }
+            }
           }
         }
-      } catch(e){}
+      }
+
+      if (activeAccount) {
+        APP.isAuthenticated = true;
+        Object.assign(APP.studentProfile, activeAccount.profile || activeAccount);
+      } else {
+        APP.isAuthenticated = false;
+      }
 
       // Load saved notifications
       try {
@@ -296,18 +373,24 @@ new_js_bundle = (
         if (savedVoice) APP.voiceSettings = JSON.parse(savedVoice);
       } catch(e){}
 
-      // Load remembered username into Sign In form
-      try {
-        const rem = localStorage.getItem("ZYNAX_REMEMBERED_USER");
-        if (rem) {
-          const signinUser = document.getElementById("signin-username");
-          const signinRem = document.getElementById("signin-remember");
-          if (signinUser) signinUser.value = rem;
-          if (signinRem) signinRem.checked = true;
-        }
-      } catch(e){}
-
+      // Sync and render accounts
       syncProfileAcrossApp();
+      if (typeof renderSavedAccountsList === "function") {
+        renderSavedAccountsList();
+      }
+
+      // Render base dashboard & academic widgets
+      renderTimetable();
+      renderAttendance();
+      renderGlobalContests();
+      renderHackathons();
+      startLeetCodeContestCountdown();
+      changeCodeTemplate("python");
+      startClassCountdown();
+      updateUnitOptions();
+      renderDocs();
+      updateResumePreview();
+
       renderTopicProblems();
       renderVaultDocuments();
       renderQuestionBank();
@@ -324,13 +407,22 @@ new_js_bundle = (
         }
       });
 
-      // Trigger Login Welcome Greeting once per login session
-      if (!sessionStorage.getItem("zynax_welcomed")) {
-        sessionStorage.setItem("zynax_welcomed", "1");
-        setTimeout(() => {
-          triggerLoginWelcome(APP.studentProfile.name);
-        }, 500);
-      }'''
+      // Route to proper tab:
+      // If user is authenticated, open dashboard.
+      // If not authenticated, open auth page so student can log in or create an account.
+      if (!APP.isAuthenticated) {
+        switchTab("auth");
+      } else {
+        switchTab("dashboard");
+        // Trigger Login Welcome Greeting once per active session
+        if (!sessionStorage.getItem("zynax_welcomed")) {
+          sessionStorage.setItem("zynax_welcomed", "1");
+          setTimeout(() => {
+            triggerLoginWelcome(APP.studentProfile.name || "Student");
+          }, 600);
+        }
+      }
+    });'''
 )
 
 if old_init in html:

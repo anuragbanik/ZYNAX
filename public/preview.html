@@ -515,15 +515,18 @@
       <!-- User Profile Pill -->
       <div onclick="switchTab('settings')" class="cursor-pointer flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#141A17] border border-white/[0.08] hover:border-[#D6B66C]/40 transition" title="Personal Profile & Settings">
         <div id="header-avatar-container" class="w-7 h-7 rounded-full bg-[#202938] border border-[#48B8FF]/40 flex items-center justify-center text-[10px] text-[#48B8FF] font-black overflow-hidden">
-          <span id="header-avatar-initials">AB</span>
+          <span id="header-avatar-initials">ST</span>
         </div>
         <div class="text-left hidden sm:block">
           <div class="text-xs font-bold text-white leading-tight flex items-center gap-1">
-            <span id="header-student-name">Yo, Anurag</span>
+            <span id="header-student-name">Student Account</span>
             <span class="text-[9px] text-[#51D6A0]">✓</span>
           </div>
-          <div class="text-[9px] text-[#717D77] leading-tight" id="header-student-sub">CSE (AI/ML) · Sec A</div>
+          <div class="text-[9px] text-[#717D77] leading-tight" id="header-student-sub">Sign In / Switch</div>
         </div>
+        <button type="button" onclick="event.stopPropagation(); logoutCurrentStudent();" class="hidden md:inline-flex px-1.5 py-0.5 rounded-md bg-white/[0.05] hover:bg-red-500/20 text-[9px] text-[#8E9A92] hover:text-red-400 transition ml-1" title="Log Out / Switch Account">
+          Sign Out
+        </button>
       </div>
     </div>
   </header>
@@ -577,7 +580,7 @@
         <div class="flex items-center gap-3.5">
           <div id="dash-avatar-container" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#51D6A0] via-[#48B8FF] to-[#9875FF] p-[2px] flex-shrink-0 cursor-pointer shadow-lg hover:scale-105 transition" onclick="switchTab('settings')" title="Manage Personal Profile">
             <div class="w-full h-full rounded-[14px] bg-[#101412] flex items-center justify-center text-lg font-black text-[#51D6A0] overflow-hidden" id="dash-avatar-inner">
-              <span id="dash-avatar-initials">AB</span>
+              <span id="dash-avatar-initials">ST</span>
             </div>
           </div>
           <div>
@@ -586,10 +589,10 @@
             </div>
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white flex items-baseline gap-2">
               <span>Yo,</span>
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#51D6A0] via-[#48B8FF] to-[#9875FF]" id="dash-student-name">ANURAG</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#51D6A0] via-[#48B8FF] to-[#9875FF]" id="dash-student-name">Student</span>
             </h1>
             <p class="text-xs text-[#7A8680] mt-1 font-medium" id="dash-student-sub">
-              CSE (AI/ML) · Section A · ABES Engineering College · Roll: 2026ABES042
+              Sign in to personalize your academic workspace
             </p>
           </div>
         </div>
@@ -630,7 +633,7 @@
                 <span class="text-[9px] text-[#51D6A0] font-mono-code font-bold">ENGLISH FEMALE VOICE</span>
               </div>
               <h2 class="text-sm sm:text-base font-black text-white" id="welcome-banner-heading">
-                Welcome to ZYNAX, Anurag!
+                Welcome to ZYNAX, <span id="welcome-banner-user">Student</span>!
               </h2>
               <p class="text-xs text-[#C4D0C9] italic font-medium" id="welcome-banner-script">
                 "Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion."
@@ -1021,12 +1024,12 @@
                         Z
                       </div>
                       <div>
-                        <div class="text-[11px] font-black tracking-wider text-white uppercase">ABES ENGINEERING COLLEGE</div>
-                        <div class="text-[8px] text-[#7F8B85] font-mono-code">AKTU CODE 032 · GHAZIABAD · CAMPUS ECOSYSTEM</div>
+                        <div class="text-[11px] font-black tracking-wider text-white uppercase" id="card-college-name">CAMPUS DIGITAL IDENTITY</div>
+                        <div class="text-[8px] text-[#7F8B85] font-mono-code" id="card-college-sub">VERIFIED STUDENT ID · SMART PASS</div>
                       </div>
                     </div>
                     <div class="text-right">
-                      <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code font-bold">2026–2030</span>
+                      <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code font-bold" id="card-year-badge">ACTIVE</span>
                       <div class="text-[8px] text-[#7F8B85]">SMART PASS</div>
                     </div>
                   </div>
@@ -1038,7 +1041,7 @@
                       <div class="w-20 h-24 rounded-xl p-[2px] bg-gradient-to-b from-[#D6B66C] via-[#9875FF] to-[#48B8FF] shadow-lg overflow-hidden">
                         <div class="w-full h-full rounded-[10px] bg-[#101412] flex items-center justify-center overflow-hidden relative">
                           <img id="card-photo-img" src="" alt="Student Photo" class="w-full h-full object-cover hidden" />
-                          <span id="card-photo-fallback" class="font-black text-2xl text-[#D6B66C]">AB</span>
+                          <span id="card-photo-fallback" class="font-black text-2xl text-[#D6B66C]">ST</span>
                         </div>
                       </div>
                       <div id="card-photo-badge" class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#9875FF] text-[8px] font-bold text-white shadow">
@@ -1049,23 +1052,21 @@
                     <!-- Details -->
                     <div class="space-y-1 flex-1 min-w-0">
                       <div class="flex items-center justify-between">
-                        <h3 class="text-base font-black text-white truncate" id="card-display-name">Anurag Banik</h3>
+                        <h3 class="text-base font-black text-white truncate" id="card-display-name">Student Name</h3>
                         <div class="id-chip-gold flex-shrink-0" title="Smart NFC Microchip"></div>
                       </div>
                       <div class="text-[11px] font-mono-code text-[#D6B66C] font-bold tracking-wide" id="card-display-roll">
-                        2026ABES042
+                        Roll No Pending
                       </div>
                       <div class="text-[10px] text-[#C4D0C9] truncate font-medium" id="card-display-branch">
-                        CSE (AI &amp; Machine Learning)
+                        Program / Department
                       </div>
                       <div class="text-[9px] text-[#7F8B85] flex items-center gap-2">
-                        <span id="card-display-sec">Sec A · 1st Year</span>
-                        <span>·</span>
-                        <span class="text-[#51D6A0]">Sem 1</span>
+                        <span id="card-display-sec">Section &amp; Year</span>
                       </div>
                       <div class="flex items-center gap-1.5 pt-1">
-                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F5F5F5] font-mono-code">AI SPECIALIST</span>
-                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code">SGPA 8.80</span>
+                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F5F5F5] font-mono-code" id="card-tag-badge">STUDENT</span>
+                        <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/15 text-[#51D6A0] font-mono-code" id="card-sgpa-badge">ACADEMIC PASS</span>
                       </div>
                     </div>
                   </div>
@@ -1074,7 +1075,7 @@
                   <div class="pt-2 border-t border-white/[0.08] flex items-center justify-between">
                     <div class="space-y-0.5">
                       <div class="w-36 h-4 barcode-lines rounded-sm"></div>
-                      <div class="text-[7px] text-[#7F8B85] font-mono-code tracking-widest">AKTU-ABES-2026-984210</div>
+                      <div class="text-[7px] text-[#7F8B85] font-mono-code tracking-widest" id="card-barcode-str">ZYNAX-PASS-VERIFIED</div>
                     </div>
                     <div class="flex items-center gap-2 text-right">
                       <div class="text-[8px] text-[#8C9690] font-mono-code">
@@ -1093,7 +1094,7 @@
                       <span class="text-[10px] font-black uppercase text-[#D6B66C] tracking-wider">STUDENT PROFILE &amp; CONTACT PASS</span>
                     </div>
                     <span class="text-[8px] px-2 py-0.5 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code font-bold">
-                      REGISTRAR AUTHENTICATED
+                      VERIFIED RECORD
                     </span>
                   </div>
 
@@ -1102,27 +1103,27 @@
                     <!-- Left Column: Academic & Contact -->
                     <div class="space-y-1">
                       <span class="text-[#7F8B85] block font-bold">STUDENT CONTACT:</span>
-                      <p class="text-white font-mono-code truncate" id="card-back-email">anurag.banik@abes.ac.in</p>
-                      <p class="text-[#D6B66C] font-mono-code">+91 98765 43210</p>
+                      <p class="text-white font-mono-code truncate" id="card-back-email">Not provided</p>
+                      <p class="text-[#D6B66C] font-mono-code" id="card-back-phone">Not provided</p>
                       
                       <span class="text-[#7F8B85] block font-bold pt-1">CAMPUS RESIDENCE:</span>
-                      <p class="text-white truncate">ABES Campus Residency, Ghaziabad</p>
+                      <p class="text-white truncate" id="card-back-residence">Campus / Local Residency</p>
 
                       <span class="text-[#7F8B85] block font-bold pt-1">BLOOD GROUP &amp; MEDICAL:</span>
-                      <p class="text-[#51D6A0] font-mono-code">B+ Positive (Verified Record)</p>
+                      <p class="text-[#51D6A0] font-mono-code" id="card-back-blood">Not recorded</p>
                     </div>
 
                     <!-- Right Column: Student Links & Credentials -->
                     <div class="space-y-1">
                       <span class="text-[#7F8B85] block font-bold">VERIFIED LINKS &amp; SOCIAL:</span>
-                      <a href="https://github.com/anuragbanik/ZYNAX" target="_blank" class="text-[#48B8FF] font-mono-code hover:underline block truncate">
-                        🔗 github.com/anuragbanik/ZYNAX
+                      <a id="card-back-github" href="#" target="_blank" class="text-[#48B8FF] font-mono-code hover:underline block truncate">
+                        🔗 Add GitHub in Profile
                       </a>
-                      <p class="text-white/80 font-mono-code truncate">💼 linkedin.com/in/anuragbanik</p>
+                      <p class="text-white/80 font-mono-code truncate" id="card-back-linkedin">💼 Add LinkedIn in Profile</p>
 
                       <span class="text-[#7F8B85] block font-bold pt-1">ACADEMIC STANDING:</span>
-                      <p class="text-[#D6B66C] font-mono-code">Target SGPA: 8.80 (Sem 1)</p>
-                      <p class="text-white/80 font-mono-code">Library ID: LIB-2026-042</p>
+                      <p class="text-[#D6B66C] font-mono-code" id="card-back-sgpa">Target SGPA: Not set</p>
+                      <p class="text-white/80 font-mono-code" id="card-back-lib">Library ID: Not set</p>
                     </div>
                   </div>
 
@@ -1135,12 +1136,12 @@
                         </svg>
                       </div>
                       <div class="text-[7.5px] text-[#7F8B85] leading-tight font-mono-code">
-                        <div>AKTU SECURITY HASH</div>
-                        <div class="text-white/80">SHA-256 · VERIFIED</div>
+                        <div>DIGITAL HASH</div>
+                        <div class="text-white/80" id="card-back-hash">SHA-256 · VERIFIED</div>
                       </div>
                     </div>
                     <div class="text-right">
-                      <div class="text-[9px] font-black text-[#D6B66C]">ABES EC DEAN</div>
+                      <div class="text-[9px] font-black text-[#D6B66C]">CAMPUS REGISTRAR</div>
                       <div class="text-[7px] text-[#7F8B85]">DIGITALLY SIGNED PASS</div>
                     </div>
                   </div>
@@ -1192,54 +1193,54 @@
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#D6B66C] font-bold text-[11px] flex items-center gap-1"><span>⚡</span> Key Strengths</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">AI RATED 9.4</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-key">Fast Algorithmic Modeling, Structured Logic, Prompt Engineering</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-key">Not added yet. Click &quot;Edit Skills&quot; to add your strengths.</p>
                 </div>
 
                 <!-- 2. Technical Strengths -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#48B8FF] font-bold text-[11px] flex items-center gap-1"><span>💻</span> Technical Strengths</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">VERIFIED</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">INDIVIDUAL</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-tech">Python, C++, PyTorch, React, SQLite, DSA</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-tech">Not added yet. Add languages and frameworks.</p>
                 </div>
 
                 <!-- 3. Creative Abilities -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#9875FF] font-bold text-[11px] flex items-center gap-1"><span>🎨</span> Creative Abilities</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#9875FF]/20 text-[#9875FF] font-mono-code">AI GENERATED</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#9875FF]/20 text-[#9875FF] font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-creative">Futuristic UI/UX Prototyping, Clean Design Systems</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-creative">Not added yet. Add design and creative tools.</p>
                 </div>
 
                 <!-- 4. Problem-Solving -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-[#51D6A0] font-bold text-[11px] flex items-center gap-1"><span>🧩</span> Problem Solving</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">HIGH ACCURACY</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-[#51D6A0]/20 text-[#51D6A0] font-mono-code">INDIVIDUAL</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-problem">Dynamic Programming, Binary Trees, Sliding Window</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-problem">Not added yet. Add topics and algorithms practiced.</p>
                 </div>
 
                 <!-- 5. Leadership Potential -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-orange-400 font-bold text-[11px] flex items-center gap-1"><span>👑</span> Leadership &amp; Team</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">CAMPUS LEAD</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-white/[0.06] text-[#F0D28B] font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-leadership">Hackathon Project Coordination, Code Review Guidance</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-leadership">Not added yet. Add clubs, initiatives, or roles.</p>
                 </div>
 
                 <!-- 6. Communication -->
                 <div class="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
                   <div class="flex items-center justify-between">
                     <span class="text-cyan-300 font-bold text-[11px] flex items-center gap-1"><span>🗣️</span> Communication</span>
-                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">PROFESSIONAL</span>
+                    <span class="text-[8px] px-1.5 py-0.2 rounded bg-cyan-400/20 text-cyan-300 font-mono-code">STUDENT INPUT</span>
                   </div>
-                  <p class="text-[11px] text-white font-medium" id="str-comm">Fluent Professional English Communication &amp; Technical Writing</p>
+                  <p class="text-[11px] text-[#A6B2AC]" id="str-comm">Not added yet. Add presentation or writing skills.</p>
                 </div>
               </div>
 
@@ -1249,10 +1250,10 @@
                   <strong class="text-[#F0D28B] flex items-center gap-1.5 font-bold">
                     <span>🚀</span><span>Growth &amp; Career Opportunities</span>
                   </strong>
-                  <span class="text-[9px] text-[#7F8B85] font-mono-code">4-YEAR ROADMAP</span>
+                  <span class="text-[9px] text-[#7F8B85] font-mono-code">PERSONAL ROADMAP</span>
                 </div>
                 <p class="text-[11px] text-[#E8DEC0]" id="str-growth">
-                  Target 150+ LeetCode DSA milestone before Sem 3, publish 1 open-source AI agent, and target 8.80+ SGPA for Tier-1 placements.
+                  Add your target semester goals, projects, and career milestones in Settings to personalize your AI companion.
                 </p>
               </div>
 
@@ -2252,7 +2253,7 @@
          ================================================================= -->
     
     <!-- =================================================================
-         PREMIUM LIQUID GLASS STUDENT AUTHENTICATION & ACCOUNT SUITE
+         PROFESSIONAL MULTI-USER AUTHENTICATION & ACCOUNT SUITE
          ================================================================= -->
     <section id="tab-auth" class="tab-content hidden space-y-8 py-4">
       
@@ -2262,7 +2263,7 @@
         <div class="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
           <div class="space-y-3 text-center lg:text-left max-w-xl">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D6B66C]/15 border border-[#D6B66C]/30 text-xs font-mono-code font-bold text-[#D6B66C]">
-              <span>🛡️</span><span>AKTU SECURE IDENTITY PASS · ZYNAX 3.5</span>
+              <span>🛡️</span><span>SECURE STUDENT IDENTITY GATEWAY · ZYNAX 3.5</span>
             </div>
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
               STUDENT ACCOUNT &amp;<br/>
@@ -2271,14 +2272,14 @@
               </span>
             </h1>
             <p class="text-xs sm:text-sm text-[#87928B] leading-relaxed">
-              Sign in to sync your verified attendance armor, daily timetable alerts, LeetCode arena streaks, and 4-Year career milestones. All credentials are encrypted locally in compliance with campus data privacy.
+              Sign in or create your individual student account. Each student manages their own verified attendance, timetable, coding arena streaks, and academic profile. No shared or pre-filled data.
             </p>
-            <div class="pt-2 flex flex-wrap gap-2.5 justify-center lg:justify-start">
-              <button onclick="switchTab('dashboard')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
-                <span>⚡</span><span>Open Main Dashboard</span>
+            <div class="pt-2 flex flex-wrap gap-2.5 justify-center lg:justify-start" id="auth-hero-actions">
+              <button onclick="setAuthMode('signin')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
+                <span>🔐</span><span>Student Sign In</span>
               </button>
-              <button onclick="switchTab('settings')" class="glass-card px-4 py-2.5 rounded-xl text-xs font-bold text-[#D6B66C] flex items-center gap-1.5">
-                <span>⚙️</span><span>Profile Settings</span>
+              <button onclick="setAuthMode('register')" class="glass-card px-4 py-2.5 rounded-xl text-xs font-bold text-[#51D6A0] hover:bg-[#51D6A0]/15 flex items-center gap-1.5">
+                <span>✨</span><span>Create New Account</span>
               </button>
             </div>
           </div>
@@ -2291,9 +2292,22 @@
               </div>
             </div>
             <span class="text-[10px] text-[#D6B66C] font-mono-code tracking-widest uppercase font-bold">
-              AKTU VERIFIED SYSTEM
+              MULTI-USER SYSTEM
             </span>
           </div>
+        </div>
+      </div>
+
+      <!-- Saved Accounts Switcher (Visible if multiple accounts exist on this device) -->
+      <div id="saved-accounts-section" class="max-w-xl mx-auto hidden space-y-3">
+        <div class="flex items-center justify-between px-1">
+          <span class="text-xs font-bold text-[#D6B66C] uppercase tracking-wider flex items-center gap-1.5 font-mono-code">
+            <span>👥</span> SAVED ACCOUNTS ON THIS DEVICE
+          </span>
+          <span class="text-[10px] text-[#7F8B85]">Click an account to switch</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="saved-accounts-list">
+          <!-- Dynamically populated via renderSavedAccountsList() -->
         </div>
       </div>
 
@@ -2315,26 +2329,26 @@
           <!-- Form Header -->
           <div class="text-center space-y-1">
             <h2 class="text-2xl font-black text-white" id="auth-heading-text">Student Sign In</h2>
-            <p class="text-xs text-[#7F8B85]" id="auth-sub-text">Enter your student credentials to access your ZYNAX companion.</p>
+            <p class="text-xs text-[#7F8B85]" id="auth-sub-text">Enter your credentials to access your personal student workspace.</p>
           </div>
 
           <!-- Alert / Validation Banner -->
           <div id="auth-alert-box" class="hidden p-3 rounded-xl border text-xs font-medium transition-all"></div>
 
-          <!-- SIGN IN FORM VIEW -->
+          <!-- ================= 1. SIGN IN FORM VIEW ================= -->
           <form id="form-signin" onsubmit="handleSignInSubmit(event)" class="space-y-4">
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Username or College Email</label>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Roll Number or Email</label>
               <div class="relative">
-                <input type="text" id="signin-username" value="anurag.banik@abes.ac.in" required placeholder="e.g. 2026ABES042 or student@abes.ac.in" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition" />
+                <input type="text" id="signin-username" required placeholder="e.g. 2026ABES042 or student@college.edu" autocomplete="username" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition" />
                 <span class="absolute right-3.5 top-3 text-xs text-[#7F8B85]">👤</span>
               </div>
             </div>
 
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Student Password</label>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1.5">Password</label>
               <div class="relative">
-                <input type="password" id="signin-password" value="Zynax2026!#" required placeholder="Enter your password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition pr-10" />
+                <input type="password" id="signin-password" required placeholder="Enter your account password" autocomplete="current-password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C] transition pr-10" />
                 <button type="button" onclick="togglePasswordVisibility('signin-password', this)" class="absolute right-3 top-3 text-xs text-[#7F8B85] hover:text-white transition" title="Show/Hide Password">
                   👁️
                 </button>
@@ -2345,7 +2359,7 @@
             <div class="flex items-center justify-between text-xs pt-1">
               <label class="flex items-center gap-2 cursor-pointer select-none">
                 <input type="checkbox" id="signin-remember" checked class="w-4 h-4 accent-[#D6B66C] rounded" />
-                <span class="text-[#8E9A92]">Remember Me</span>
+                <span class="text-[#8E9A92]">Keep me logged in</span>
               </label>
               <button type="button" onclick="openForgotPasswordModal()" class="text-[#D6B66C] hover:underline font-bold">
                 Forgot Password?
@@ -2353,87 +2367,89 @@
             </div>
 
             <button type="submit" class="w-full btn-gold py-3 rounded-xl text-xs font-bold shadow-lg shadow-[#D6B66C]/20 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
-              <span>Sign In to ZYNAX</span>
+              <span>Sign In to Your Workspace</span>
               <span>→</span>
             </button>
+
+            <!-- Quick Guest Access for fast demo without registration -->
+            <div class="pt-2 text-center">
+              <button type="button" onclick="handleGuestSignIn()" class="text-[11px] text-[#7F8B85] hover:text-[#51D6A0] transition underline">
+                Continue as Guest Student (Try without account) →
+              </button>
+            </div>
           </form>
 
-          <!-- CREATE ACCOUNT (REGISTER) FORM VIEW -->
+          <!-- ================= 2. CREATE ACCOUNT FORM VIEW ================= -->
           <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-4">
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Student Full Name</label>
-              <input type="text" id="reg-name" required placeholder="e.g. Anurag Banik" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Full Name</label>
+              <input type="text" id="reg-name" required placeholder="e.g. Rahul Sharma" autocomplete="name" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
+            </div>
+
+            <div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">College / University Name</label>
+              <input type="text" id="reg-college" required placeholder="e.g. ABES Engineering College" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">College Email</label>
-                <input type="email" id="reg-email" required placeholder="name@abes.ac.in" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Student Roll / Admission No</label>
+                <input type="text" id="reg-roll" required placeholder="e.g. 2026CS104" autocomplete="off" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white font-mono-code placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Admission / Roll No</label>
-                <input type="text" id="reg-roll" required placeholder="e.g. 2026ABES042" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white font-mono-code focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">College Email Address</label>
+                <input type="email" id="reg-email" required placeholder="student@college.edu" autocomplete="email" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Branch / Degree</label>
-                <input type="text" id="reg-branch" value="CSE (AI/ML)" required class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Branch / Department</label>
+                <input type="text" id="reg-branch" required placeholder="e.g. Computer Science (AI/ML)" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
               <div>
-                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Section &amp; Year</label>
-                <input type="text" id="reg-section" value="Sec A · Year 1" required class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition" />
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Section &amp; Year / Semester</label>
+                <input type="text" id="reg-section" required placeholder="e.g. Sec B · Year 1 (Sem 1)" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
               </div>
             </div>
 
             <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Create Password (Min 6 Characters)</label>
-              <div class="relative">
-                <input type="password" id="reg-password" minlength="6" required placeholder="Create secure password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition pr-10" />
-                <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
-                  👁️
-                </button>
-              </div>
+              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Contact Phone (Optional)</label>
+              <input type="tel" id="reg-phone" placeholder="e.g. +91 98765 00000" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition" />
             </div>
 
-            <div>
-              <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Confirm Password</label>
-              <div class="relative">
-                <input type="password" id="reg-password-confirm" minlength="6" required placeholder="Re-enter password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C] transition pr-10" />
-                <button type="button" onclick="togglePasswordVisibility('reg-password-confirm', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
-                  👁️
-                </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Create Password (Min 6 chars)</label>
+                <div class="relative">
+                  <input type="password" id="reg-password" minlength="6" required placeholder="Choose a password" autocomplete="new-password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition pr-10" />
+                  <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
+                    👁️
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="text-xs text-[#8E9A92] font-semibold block mb-1">Confirm Password</label>
+                <div class="relative">
+                  <input type="password" id="reg-password-confirm" minlength="6" required placeholder="Re-enter password" autocomplete="new-password" class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#51D6A0] transition pr-10" />
+                  <button type="button" onclick="togglePasswordVisibility('reg-password-confirm', this)" class="absolute right-3 top-2.5 text-xs text-[#7F8B85] hover:text-white transition">
+                    👁️
+                  </button>
+                </div>
               </div>
             </div>
 
             <!-- Honor Code Checkbox -->
             <label class="flex items-center gap-2 cursor-pointer text-xs select-none pt-1">
               <input type="checkbox" id="reg-terms" required checked class="w-4 h-4 accent-[#51D6A0] rounded" />
-              <span class="text-[#8E9A92]">I agree to ABES Engineering College Academic Honor Code.</span>
+              <span class="text-[#8E9A92]">I confirm this is my individual student identity and agree to the Academic Honor Code.</span>
             </label>
 
             <button type="submit" class="w-full btn-emerald py-3 rounded-xl text-xs font-bold shadow-lg shadow-[#51D6A0]/20 hover:scale-[1.01] active:scale-95 transition flex items-center justify-center gap-2">
-              <span>Create ZYNAX Student Account</span>
+              <span>Create Account &amp; Enter Workspace</span>
               <span>✓</span>
             </button>
           </form>
-
-          <!-- Alternative Quick OTP Login option for legacy continuity -->
-          <div class="pt-2 border-t border-white/[0.08] text-center">
-            <button onclick="toggleLegacyOtpBox()" class="text-[11px] text-[#7F8B85] hover:text-[#D6B66C] transition flex items-center justify-center gap-1 mx-auto">
-              <span>🔐 Quick One-Time Passcode (OTP) Verification</span>
-              <span id="legacy-otp-arrow">▼</span>
-            </button>
-            <div id="legacy-otp-container" class="hidden pt-3 space-y-2 max-w-sm mx-auto">
-              <button onclick="requestOtp()" class="btn-gold w-full py-2 rounded-xl text-xs font-bold">Generate One-Click OTP</button>
-              <div id="auth-otp-box" class="hidden p-3 rounded-xl bg-white/[0.04] space-y-2">
-                <div class="text-[11px] text-[#7F8B85]">Your Security Code: <span id="displayed-otp" class="font-mono-code font-bold text-[#51D6A0] text-sm"></span></div>
-                <input type="text" id="otp-input" placeholder="Enter OTP" class="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/[0.1] text-xs text-white text-center font-mono-code" />
-                <button onclick="verifyOtpNow()" class="btn-emerald w-full py-1.5 rounded-lg text-xs font-bold">Verify &amp; Enter</button>
-              </div>
-            </div>
-          </div>
 
         </div>
       </div>
@@ -2448,12 +2464,12 @@
           <div class="flex items-center justify-between pb-2 border-b border-white/[0.08]">
             <h3 class="text-sm font-black text-white flex items-center gap-2">
               <span>🔑 Password Recovery</span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-[#D6B66C]/15 text-[#D6B66C]">Verified Email</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-[#D6B66C]/15 text-[#D6B66C]">Account Reset</span>
             </h3>
             <button onclick="closeForgotPasswordModal()" class="text-xs text-[#7F8B85] hover:text-white">✕</button>
           </div>
-          <p class="text-xs text-[#8E9A92]">Enter your ABES college email to receive a password recovery security token.</p>
-          <input type="email" id="forgot-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#D6B66C]" />
+          <p class="text-xs text-[#8E9A92]">Enter your registered student email or roll number to reset your password.</p>
+          <input type="text" id="forgot-email" placeholder="e.g. student@college.edu or 2026ABES042" class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/[0.1] text-xs text-white placeholder-[#5C6660] focus:outline-none focus:border-[#D6B66C]" />
           <div class="flex justify-end gap-2 pt-2">
             <button onclick="closeForgotPasswordModal()" class="glass-card px-4 py-2 rounded-xl text-xs text-white">Cancel</button>
             <button onclick="submitForgotPassword()" class="btn-gold px-4 py-2 rounded-xl text-xs font-bold shadow">Send Recovery Code</button>
@@ -3391,35 +3407,39 @@
             <!-- Student Academic Details Form -->
             <div class="ref-card p-5 space-y-4">
               <h3 class="text-sm font-black text-white flex items-center gap-2">
-                <span>🎓 Academic Credentials &amp; Identity</span>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0]">AKTU Verified</span>
+                <span>🎓 Academic Credentials &amp; Personal Info</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-[#51D6A0]/15 text-[#51D6A0]">Verified Student Input</span>
               </h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label class="text-[#7F8B85] block mb-1">Student Full Name</label>
-                  <input type="text" id="prof-name" value="Anurag Banik" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <input type="text" id="prof-name" placeholder="e.g. Rahul Sharma" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">College / University Name</label>
+                  <input type="text" id="prof-college" placeholder="e.g. ABES Engineering College" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
                   <label class="text-[#7F8B85] block mb-1">College Email Address</label>
-                  <input type="email" id="prof-email" value="anurag.banik@abes.ac.in" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <input type="email" id="prof-email" placeholder="student@college.edu" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
-                  <label class="text-[#7F8B85] block mb-1">Admission / University Roll Number</label>
-                  <input type="text" id="prof-roll" value="2026ABES042" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                  <label class="text-[#7F8B85] block mb-1">Student Roll / Admission Number</label>
+                  <input type="text" id="prof-roll" placeholder="e.g. 2026CS101" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
-                  <label class="text-[#7F8B85] block mb-1">Branch &amp; Specialization</label>
-                  <input type="text" id="prof-branch" value="Computer Science & Engineering (AI/ML)" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <label class="text-[#7F8B85] block mb-1">Branch / Degree Specialization</label>
+                  <input type="text" id="prof-branch" placeholder="e.g. Computer Science (AI/ML)" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div>
                   <label class="text-[#7F8B85] block mb-1">Section</label>
-                  <input type="text" id="prof-section" value="Sec A" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  <input type="text" id="prof-section" placeholder="e.g. Sec A" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                   <div>
                     <label class="text-[#7F8B85] block mb-1">Academic Year</label>
                     <select id="prof-year" class="w-full px-3 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]">
-                      <option value="1" selected>Year 1 (Foundation)</option>
+                      <option value="1">Year 1 (Foundation)</option>
                       <option value="2">Year 2 (Skill Dev)</option>
                       <option value="3">Year 3 (Industry)</option>
                       <option value="4">Year 4 (Career)</option>
@@ -3428,7 +3448,7 @@
                   <div>
                     <label class="text-[#7F8B85] block mb-1">Current Semester</label>
                     <select id="prof-sem" class="w-full px-3 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]">
-                      <option value="1" selected>Semester 1</option>
+                      <option value="1">Semester 1</option>
                       <option value="2">Semester 2</option>
                       <option value="3">Semester 3</option>
                       <option value="4">Semester 4</option>
@@ -3439,9 +3459,58 @@
                     </select>
                   </div>
                 </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">Contact Phone</label>
+                  <input type="tel" id="prof-phone" placeholder="e.g. +91 98765 00000" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">GitHub / Code Profile Link</label>
+                  <input type="text" id="prof-github" placeholder="e.g. github.com/username" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">LinkedIn Profile</label>
+                  <input type="text" id="prof-linkedin" placeholder="e.g. linkedin.com/in/username" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">Target SGPA Goal</label>
+                  <input type="text" id="prof-sgpa" placeholder="e.g. 8.80" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
+                <div>
+                  <label class="text-[#7F8B85] block mb-1">Library / Student Card ID</label>
+                  <input type="text" id="prof-lib" placeholder="e.g. LIB-2026-042" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs font-mono-code focus:outline-none focus:border-[#D6B66C]" />
+                </div>
               </div>
 
-              <div class="pt-2 flex justify-end">
+              <!-- Voluntary Skills & Strengths Section -->
+              <div class="pt-3 border-t border-white/[0.08] space-y-3">
+                <div class="flex items-center justify-between">
+                  <h4 class="text-xs font-bold text-[#D6B66C] uppercase tracking-wider flex items-center gap-1.5 font-mono-code">
+                    <span>⚡</span> YOUR VOLUNTARY SKILLS &amp; STRENGTHS (NO PRE-FILLED DATA)
+                  </h4>
+                  <span class="text-[10px] text-[#7F8B85]">You define your own skillset</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Key Strengths &amp; Abilities</label>
+                    <input type="text" id="prof-key-strengths" placeholder="e.g. Algorithmic Modeling, Structured Logic, Problem Solving" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Technical Skills &amp; Languages</label>
+                    <input type="text" id="prof-tech-skills" placeholder="e.g. Python, C++, React, SQL, DSA" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Creative &amp; Design Skills</label>
+                    <input type="text" id="prof-creative-skills" placeholder="e.g. UI/UX Prototyping, Design Systems, Figma" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                  <div>
+                    <label class="text-[#7F8B85] block mb-1">Leadership &amp; Campus Activities</label>
+                    <input type="text" id="prof-leadership-skills" placeholder="e.g. Coding Club Member, Hackathon Coordinator" class="w-full px-3.5 py-2 rounded-xl glass-card text-white text-xs focus:outline-none focus:border-[#D6B66C]" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-2 flex justify-between items-center">
+                <span class="text-[10px] text-[#7F8B85]">All information is stored privately to your student profile.</span>
                 <button onclick="saveProfileDetails(true)" class="btn-emerald px-5 py-2 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5">
                   <span>✓</span><span>Save Profile Changes</span>
                 </button>
@@ -3601,17 +3670,22 @@
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-xl bg-[#51D6A0]/20 text-[#51D6A0] flex items-center justify-center font-black text-lg">✓</div>
                   <div>
-                    <strong class="text-white text-xs block">ABES Engineering College Verified Student</strong>
-                    <span class="text-[10px] text-[#8F9B94]">AKTU Roll: 2026ABES042 · CSE (AI/ML) · Status: Active</span>
+                    <strong class="text-white text-xs block" id="settings-acc-name">Verified Student Session</strong>
+                    <span class="text-[10px] text-[#8F9B94]" id="settings-acc-sub">Authenticated Student Account · Data Isolated</span>
                   </div>
                 </div>
-                <span class="text-xs px-2.5 py-1 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold">Authenticated</span>
+                <span class="text-xs px-2.5 py-1 rounded-full bg-[#51D6A0]/20 text-[#51D6A0] font-bold">Active</span>
               </div>
-              <div class="pt-2 flex justify-between items-center text-xs">
-                <span class="text-[#7F8B85]">Session Active · Client Protected</span>
-                <button onclick="switchTab('auth')" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/20">
-                  Switch Student Profile / Lock In
-                </button>
+              <div class="pt-2 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
+                <span class="text-[#7F8B85]">Each student profile stores independent academic vitals.</span>
+                <div class="flex gap-2">
+                  <button onclick="switchTab('auth')" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-[#D6B66C] hover:bg-[#D6B66C]/15">
+                    Switch Student Account
+                  </button>
+                  <button onclick="logoutCurrentStudent()" class="glass-card px-4 py-2 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/20">
+                    Sign Out
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -3977,26 +4051,39 @@
 
       // Student Profile & 4-Year Academic Journey Memory
       studentProfile: {
-        name: "Anurag Banik",
-        email: "anurag.banik@abes.ac.in",
-        roll: "2026ABES042",
-        college: "ABES Engineering College, Ghaziabad",
-        branch: "Computer Science & Engineering (AI/ML)",
-        section: "Sec A",
+        name: "",
+        email: "",
+        roll: "",
+        college: "",
+        branch: "",
+        section: "",
+        phone: "",
         currentYear: 1,
         currentSem: 1,
-        targetSGPA: 8.80,
-        currentSGPA: 8.80,
-        leetCodeSolved: 97,
-        contestRating: 1642,
-        streakDays: 5,
-        aggregateAttendance: 75.5,
-        languages: ["Python", "C++", "JavaScript", "SQL"],
-        completedTopics: ["Prefix Sums", "Two Pointers", "Binary Search Basics", "Recursion", "Unit 1 Optics", "Unit 2 Nanomaterials"],
-        currentTopics: ["Unit 3 Semiconductors", "Hash Map Optimizations"],
-        completedProjects: ["ZYNAX 3.0 Campus AI", "Subarray Sum Optimizer"],
-        savedHackathons: ["Smart India Hackathon (SIH 2026)", "ABES InnoHacks 4.0"],
-        savedContests: ["LeetCode Weekly Contest 438", "Codeforces Round 1002 (Div. 2)"]
+        targetSGPA: "",
+        currentSGPA: "",
+        github: "",
+        linkedin: "",
+        targetSgpa: "",
+        libraryId: "",
+        photoUrl: "",
+        enhancedPhotoUrl: "",
+        leetCodeSolved: 0,
+        contestRating: 0,
+        streakDays: 0,
+        aggregateAttendance: 0,
+        languages: [],
+        completedTopics: [],
+        currentTopics: [],
+        completedProjects: [],
+        keyStrengths: "",
+        technicalStrengths: "",
+        creativeAbilities: "",
+        problemSolving: "",
+        leadership: "",
+        communication: "",
+        growthGoals: "",
+        savedContests: []
       },
 
       subjects: [
@@ -5843,7 +5930,7 @@ public class Solution {
     }
 
     function replayWelcomeGreeting() {
-      const firstName = (APP.studentProfile && APP.studentProfile.name) ? APP.studentProfile.name.split(" ")[0] : "Anurag";
+      const firstName = (APP.studentProfile && APP.studentProfile.name) ? APP.studentProfile.name.split(" ")[0] : "Student";
       const exactGreeting = `Welcome, ${firstName}! Welcome to ZYNAX — Your Campus, Your Intelligence, Your Companion.`;
 
       // Trigger animated wave bars
@@ -5915,23 +6002,22 @@ public class Solution {
           <div class="card">
             <div class="header">
               <div>
-                <div class="college">ABES ENGINEERING COLLEGE</div>
-                <div class="sub">AKTU CODE 032 · GHAZIABAD · CAMPUS ECOSYSTEM</div>
+                <div class="college">${(p.college || 'CAMPUS DIGITAL IDENTITY').toUpperCase()}</div>
+                <div class="sub">VERIFIED STUDENT ID · SMART PASS</div>
               </div>
               <div style="text-align: right;">
                 <span style="color: #51D6A0; font-weight: bold; font-family: monospace;">2026–2030</span>
               </div>
             </div>
             <div class="body">
-              ${photo ? `<img src="${photo}" class="photo" />` : `<div class="photo" style="display:flex;align-items:center;justify-content:center;font-size:24px;color:#D6B66C;font-weight:bold;">AB</div>`}
+              ${photo ? `<img src="${photo}" class="photo" />` : `<div class="photo" style="display:flex;align-items:center;justify-content:center;font-size:24px;color:#D6B66C;font-weight:bold;">${p.name ? p.name.split(" ").map(w=>w[0]).join("").slice(0,2) : "ST"}</div>`}
               <div class="details">
-                <div class="name">${p.name || 'Anurag Banik'}</div>
-                <div class="roll">${p.roll || '2026ABES042'}</div>
-                <div class="meta">${p.branch || 'CSE (AI/ML)'}</div>
+                <div class="name">${p.name || 'Student Name'}</div>
+                <div class="roll">${p.roll || 'Roll Pending'}</div>
+                <div class="meta">${p.branch || 'Department'}</div>
                 <div class="meta">Section ${p.section || 'Sec A'} · Year ${p.currentYear || '1'} (Sem ${p.currentSem || '1'})</div>
                 <div class="badges">
-                  <span class="badge">AKTU VERIFIED</span>
-                  <span class="badge" style="background:rgba(214,182,108,0.2);color:#D6B66C;border-color:rgba(214,182,108,0.3);">AI/ML SPECIALIST</span>
+                  <span class="badge">VERIFIED STUDENT</span>
                 </div>
               </div>
             </div>
@@ -5951,7 +6037,7 @@ public class Solution {
 
     function shareStudentProfile() {
       const p = APP.studentProfile || {};
-      const shareText = `🪪 ZYNAX Digital Student ID: ${p.name || 'Anurag Banik'} (${p.roll || '2026ABES042'}) · ${p.branch || 'CSE AI/ML'} · ABES Engineering College · Verified SGPA: 8.80 · Strengths: Algorithmic Modeling & Neural Nets. View on ZYNAX: ${window.location.origin}${window.location.pathname}`;
+      const shareText = `🪪 ZYNAX Digital Student ID: ${p.name || 'Student'} (${p.roll || 'ID Pending'}) · ${p.branch || 'Degree'} · ${p.college || 'Campus'} · View credentials on ZYNAX: ${window.location.origin}${window.location.pathname}`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(shareText).then(() => {
           alert("✓ Shareable Student Identity credentials copied to clipboard!");
@@ -6391,18 +6477,18 @@ public class Solution {
       const p = APP.studentProfile;
       if (!p) return;
 
-      const initials = p.name ? p.name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) : "AB";
+      const initials = p.name ? p.name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) : "ST";
 
       // 1. Top Navigation Bar Profile Pill
       const hInitials = document.getElementById("header-avatar-initials");
       const hName = document.getElementById("header-student-name");
       const hSub = document.getElementById("header-student-sub");
       const hContainer = document.getElementById("header-avatar-container");
-      if (hName) hName.innerText = "Yo, " + (p.name.split(" ")[0] || "Anurag");
-      if (hSub) hSub.innerText = `${p.branch.includes("AI") ? "CSE AI/ML" : p.branch} · ${p.section}`;
+      if (hName) hName.innerText = p.name ? ("Yo, " + p.name.split(" ")[0]) : "Student Account";
+      if (hSub) hSub.innerText = p.roll ? `${p.branch || 'Student'} · ${p.section || ''}` : "Sign In / Switch";
       if (hContainer) {
         if (p.avatarDataUrl) {
-          hContainer.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover rounded-full" />`;
+          hContainer.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover rounded-full" />`;
         } else if (hInitials) {
           hContainer.innerHTML = `<span id="header-avatar-initials">${initials}</span>`;
         }
@@ -6412,21 +6498,29 @@ public class Solution {
       const dName = document.getElementById("dash-student-name");
       const dSub = document.getElementById("dash-student-sub");
       const dInner = document.getElementById("dash-avatar-inner");
-      if (dName) dName.innerText = (p.name.split(" ")[0] || "ANURAG").toUpperCase();
-      if (dSub) dSub.innerText = `${p.branch} · Section ${p.section.replace("Sec ","")} · ABES Engineering College · Roll: ${p.roll}`;
+      if (dName) dName.innerText = (p.name ? p.name.split(" ")[0] : "STUDENT").toUpperCase();
+      if (dSub) dSub.innerText = p.roll 
+        ? `${p.branch || 'Program'} · ${p.section ? 'Section ' + p.section.replace('Sec ','') : 'Sec A'} · ${p.college || 'Campus'} · Roll: ${p.roll}`
+        : "Welcome to ZYNAX! Sign in or register to sync your campus workspace.";
       if (dInner) {
         if (p.avatarDataUrl) {
-          dInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover" />`;
+          dInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover" />`;
         } else {
           dInner.innerHTML = `<span id="dash-avatar-initials">${initials}</span>`;
         }
       }
 
-      // 3. Settings Profile Preview
+      // 3. Welcome Voice Banner & Modal Names
+      const wModalName = document.getElementById("welcome-modal-username");
+      const wBannerUser = document.getElementById("welcome-banner-user");
+      if (wModalName) wModalName.innerText = p.name ? p.name.split(" ")[0] : "Student";
+      if (wBannerUser) wBannerUser.innerText = p.name ? p.name.split(" ")[0] : "Student";
+
+      // 4. Settings Profile Preview & Inputs
       const sInner = document.getElementById("settings-avatar-inner");
       if (sInner) {
         if (p.avatarDataUrl) {
-          sInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover" />`;
+          sInner.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover" />`;
         } else {
           sInner.innerHTML = `<span id="settings-avatar-initials">${initials}</span>`;
         }
@@ -6434,55 +6528,61 @@ public class Solution {
       const pNameInp = document.getElementById("prof-name");
       const pEmailInp = document.getElementById("prof-email");
       const pRollInp = document.getElementById("prof-roll");
+      const pCollegeInp = document.getElementById("prof-college");
       const pBranchInp = document.getElementById("prof-branch");
       const pSecInp = document.getElementById("prof-section");
       const pYearInp = document.getElementById("prof-year");
       const pSemInp = document.getElementById("prof-sem");
-      const pVisToggle = document.getElementById("profile-visibility-toggle");
-      if (pNameInp) pNameInp.value = p.name;
-      if (pEmailInp) pEmailInp.value = p.email;
-      if (pRollInp) pRollInp.value = p.roll;
-      if (pBranchInp) pBranchInp.value = p.branch;
-      if (pSecInp) pSecInp.value = p.section;
-      if (pYearInp) pYearInp.value = p.currentYear || "1";
-      if (pSemInp) pSemInp.value = p.currentSem || "1";
-      if (pVisToggle) pVisToggle.checked = p.publicProfile !== false;
+      const pPhoneInp = document.getElementById("prof-phone");
+      const pGithubInp = document.getElementById("prof-github");
+      const pLinkedinInp = document.getElementById("prof-linkedin");
+      const pSgpaInp = document.getElementById("prof-sgpa");
+      const pLibInp = document.getElementById("prof-lib");
+      const pKeyStrInp = document.getElementById("prof-key-strengths");
+      const pTechStrInp = document.getElementById("prof-tech-skills");
+      const pCreativeInp = document.getElementById("prof-creative-skills");
+      const pLeaderInp = document.getElementById("prof-leadership-skills");
 
-      // 4. Leaderboard User Row
+      if (pNameInp && p.name) pNameInp.value = p.name;
+      if (pEmailInp && p.email) pEmailInp.value = p.email;
+      if (pRollInp && p.roll) pRollInp.value = p.roll;
+      if (pCollegeInp && p.college) pCollegeInp.value = p.college;
+      if (pBranchInp && p.branch) pBranchInp.value = p.branch;
+      if (pSecInp && p.section) pSecInp.value = p.section;
+      if (pYearInp && p.currentYear) pYearInp.value = p.currentYear;
+      if (pSemInp && p.currentSem) pSemInp.value = p.currentSem;
+      if (pPhoneInp && p.phone) pPhoneInp.value = p.phone;
+      if (pGithubInp && p.github) pGithubInp.value = p.github;
+      if (pLinkedinInp && p.linkedin) pLinkedinInp.value = p.linkedin;
+      if (pSgpaInp && p.targetSgpa) pSgpaInp.value = p.targetSgpa;
+      if (pLibInp && p.libraryId) pLibInp.value = p.libraryId;
+      if (pKeyStrInp && p.keyStrengths) pKeyStrInp.value = p.keyStrengths;
+      if (pTechStrInp && p.technicalStrengths) pTechStrInp.value = p.technicalStrengths;
+      if (pCreativeInp && p.creativeAbilities) pCreativeInp.value = p.creativeAbilities;
+      if (pLeaderInp && p.leadership) pLeaderInp.value = p.leadership;
+
+      // Settings Account Card
+      const sAccName = document.getElementById("settings-acc-name");
+      const sAccSub = document.getElementById("settings-acc-sub");
+      if (sAccName) sAccName.innerText = p.name ? `${p.name} (Verified Session)` : "Guest Student Session";
+      if (sAccSub) sAccSub.innerText = p.roll ? `Roll: ${p.roll} · ${p.branch || 'Student'} · Status: Active` : "No student account signed in. Click below to sign in.";
+
+      // 5. Leaderboard User Row
       const lbUserAvatar = document.getElementById("lb-user-avatar");
       const lbUserName = document.getElementById("lb-user-name");
       const lbUserSec = document.getElementById("lb-user-section");
-      if (lbUserName) lbUserName.innerText = p.name;
-      if (lbUserSec) lbUserSec.innerText = `${p.branch.includes("AI") ? "CSE AI/ML" : p.branch} ${p.section} · ABES EC`;
+      if (lbUserName) lbUserName.innerText = p.name || "Student";
+      if (lbUserSec) lbUserSec.innerText = `${p.branch || 'CSE'} ${p.section || ''} · ${p.college || 'Campus'}`;
       if (lbUserAvatar) {
         if (p.avatarDataUrl && p.publicProfile !== false) {
-          lbUserAvatar.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name}" class="w-full h-full object-cover rounded-full" />`;
+          lbUserAvatar.innerHTML = `<img src="${p.avatarDataUrl}" alt="${p.name || 'User'}" class="w-full h-full object-cover rounded-full" />`;
         } else {
           lbUserAvatar.innerHTML = `<span id="lb-user-initials">${initials}</span>`;
         }
       }
 
-      // 5. 4-Year Academic Companion Profile Card Sync
-      const journeyName = document.getElementById("journey-student-name");
-      if (journeyName) journeyName.innerText = p.name;
-
-      // 6. Memory Preview in Settings
-      const memPreview = document.getElementById("settings-memory-preview");
-      if (memPreview) {
-        memPreview.innerText = JSON.stringify({
-          student: p.name,
-          roll: p.roll,
-          degree: "B.Tech CSE (AI/ML) 2026-2030",
-          academicYear: `Year ${p.currentYear} Sem ${p.currentSem}`,
-          completedTopics: p.completedTopics || [],
-          examAttemptsCount: (APP.examAttempts || []).length,
-          lastExamScore: (APP.examAttempts && APP.examAttempts.length > 0) ? APP.examAttempts[APP.examAttempts.length - 1].score : "36/42 (85%)",
-          savedHackathons: p.savedHackathons || [],
-          dataIsolated: true
-        }, null, 2);
-      }
-
-      // 7. 3D AI Student Identity Card Sync
+      // 6. 3D AI Student Identity Card Sync (Front & Back)
+      const cardCollege = document.getElementById("card-college-name");
       const cardName = document.getElementById("card-display-name");
       const cardRoll = document.getElementById("card-display-roll");
       const cardBranch = document.getElementById("card-display-branch");
@@ -6491,9 +6591,10 @@ public class Solution {
       const cardPhotoFallback = document.getElementById("card-photo-fallback");
       const cardPhotoBadge = document.getElementById("card-photo-badge");
 
-      if (cardName) cardName.innerText = p.name || "Anurag Banik";
-      if (cardRoll) cardRoll.innerText = p.roll || "2026ABES042";
-      if (cardBranch) cardBranch.innerText = p.branch || "CSE (AI & Machine Learning)";
+      if (cardCollege) cardCollege.innerText = (p.college || "CAMPUS DIGITAL IDENTITY").toUpperCase();
+      if (cardName) cardName.innerText = p.name || "Student Name";
+      if (cardRoll) cardRoll.innerText = p.roll || "Roll ID Pending";
+      if (cardBranch) cardBranch.innerText = p.branch || "Program / Department";
       if (cardSec) cardSec.innerText = `Sec ${(p.section || 'Sec A').replace('Sec ','')} · Year ${p.currentYear || '1'}`;
 
       const photoSrc = (p.activePhotoFilter === "original") ? (p.originalPhotoUrl || p.avatarDataUrl) : (p.enhancedPhotoUrl || p.avatarDataUrl);
@@ -6510,10 +6611,51 @@ public class Solution {
       }
       if (cardPhotoBadge) {
         cardPhotoBadge.innerText = (p.activePhotoFilter === "original") ? "ORIGINAL" : "ENHANCED";
-        cardPhotoBadge.className = (p.activePhotoFilter === "original")
-          ? "absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#48B8FF] text-[8px] font-bold text-black shadow"
-          : "absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#9875FF] text-[8px] font-bold text-white shadow";
       }
+
+      // Card Back Face
+      const cardBackEmail = document.getElementById("card-back-email");
+      const cardBackPhone = document.getElementById("card-back-phone");
+      const cardBackResidence = document.getElementById("card-back-residence");
+      const cardBackBlood = document.getElementById("card-back-blood");
+      const cardBackGithub = document.getElementById("card-back-github");
+      const cardBackLinkedin = document.getElementById("card-back-linkedin");
+      const cardBackSgpa = document.getElementById("card-back-sgpa");
+      const cardBackLib = document.getElementById("card-back-lib");
+
+      if (cardBackEmail) cardBackEmail.innerText = p.email || "Not provided";
+      if (cardBackPhone) cardBackPhone.innerText = p.phone || "Not provided";
+      if (cardBackResidence) cardBackResidence.innerText = p.residence || "Campus Residency";
+      if (cardBackBlood) cardBackBlood.innerText = p.bloodGroup ? `${p.bloodGroup} (Verified Record)` : "Not recorded";
+      if (cardBackSgpa) cardBackSgpa.innerText = p.targetSgpa ? `Target SGPA: ${p.targetSgpa}` : "Target SGPA: Not set";
+      if (cardBackLib) cardBackLib.innerText = p.libraryId ? `Library ID: ${p.libraryId}` : "Library ID: Not set";
+      if (cardBackGithub) {
+        if (p.github) {
+          cardBackGithub.innerText = `🔗 ${p.github}`;
+          cardBackGithub.href = p.github.startsWith("http") ? p.github : `https://${p.github}`;
+        } else {
+          cardBackGithub.innerText = "🔗 Add GitHub in Profile";
+          cardBackGithub.href = "#";
+        }
+      }
+      if (cardBackLinkedin) cardBackLinkedin.innerText = p.linkedin ? `💼 ${p.linkedin}` : "💼 Add LinkedIn in Profile";
+
+      // 7. Student Strengths Analysis Sync (Strictly User Input)
+      const strKey = document.getElementById("str-key");
+      const strTech = document.getElementById("str-tech");
+      const strCreative = document.getElementById("str-creative");
+      const strProblem = document.getElementById("str-problem");
+      const strLeadership = document.getElementById("str-leadership");
+      const strComm = document.getElementById("str-comm");
+      const strGrowth = document.getElementById("str-growth");
+
+      if (strKey) strKey.innerText = p.keyStrengths || "Not added yet. Click 'Edit Skills' to customize.";
+      if (strTech) strTech.innerText = p.technicalStrengths || "Not added yet. Add languages and frameworks in Settings.";
+      if (strCreative) strCreative.innerText = p.creativeAbilities || "Not added yet. Add design and creative tools.";
+      if (strProblem) strProblem.innerText = p.problemSolving || "Not added yet. Add algorithms practiced.";
+      if (strLeadership) strLeadership.innerText = p.leadership || "Not added yet. Add clubs, hackathons, and roles.";
+      if (strComm) strComm.innerText = p.communication || "Not added yet. Add technical writing and speaking skills.";
+      if (strGrowth) strGrowth.innerText = p.growthGoals || "Set your target semester roadmap and goals in Settings.";
     }
 
     // Settings Category Switcher
@@ -6532,25 +6674,67 @@ public class Solution {
     }
 
     function saveProfileDetails(showAlert = true) {
-      APP.studentProfile.name = document.getElementById("prof-name").value.trim() || APP.studentProfile.name;
-      APP.studentProfile.email = document.getElementById("prof-email").value.trim() || APP.studentProfile.email;
-      APP.studentProfile.roll = document.getElementById("prof-roll").value.trim() || APP.studentProfile.roll;
-      APP.studentProfile.branch = document.getElementById("prof-branch").value.trim() || APP.studentProfile.branch;
-      APP.studentProfile.section = document.getElementById("prof-section").value.trim() || APP.studentProfile.section;
-      APP.studentProfile.currentYear = parseInt(document.getElementById("prof-year").value) || 1;
-      APP.studentProfile.currentSem = parseInt(document.getElementById("prof-sem").value) || 1;
-      
-      const vis = document.getElementById("profile-visibility-toggle");
-      APP.studentProfile.publicProfile = vis ? vis.checked : true;
+      const p = APP.studentProfile;
+      p.name = (document.getElementById("prof-name") || {}).value.trim() || p.name;
+      p.college = (document.getElementById("prof-college") || {}).value.trim() || p.college;
+      p.email = (document.getElementById("prof-email") || {}).value.trim() || p.email;
+      p.roll = (document.getElementById("prof-roll") || {}).value.trim() || p.roll;
+      p.branch = (document.getElementById("prof-branch") || {}).value.trim() || p.branch;
+      p.section = (document.getElementById("prof-section") || {}).value.trim() || p.section;
+      p.currentYear = parseInt((document.getElementById("prof-year") || {}).value) || p.currentYear || 1;
+      p.currentSem = parseInt((document.getElementById("prof-sem") || {}).value) || p.currentSem || 1;
+      p.phone = (document.getElementById("prof-phone") || {}).value.trim() || p.phone;
+      p.github = (document.getElementById("prof-github") || {}).value.trim() || p.github;
+      p.linkedin = (document.getElementById("prof-linkedin") || {}).value.trim() || p.linkedin;
+      p.targetSgpa = (document.getElementById("prof-sgpa") || {}).value.trim() || p.targetSgpa;
+      p.libraryId = (document.getElementById("prof-lib") || {}).value.trim() || p.libraryId;
+      p.keyStrengths = (document.getElementById("prof-key-strengths") || {}).value.trim() || p.keyStrengths;
+      p.technicalStrengths = (document.getElementById("prof-tech-skills") || {}).value.trim() || p.technicalStrengths;
+      p.creativeAbilities = (document.getElementById("prof-creative-skills") || {}).value.trim() || p.creativeAbilities;
+      p.leadership = (document.getElementById("prof-leadership-skills") || {}).value.trim() || p.leadership;
+
+      // Update multi-user DB for active user
+      const userKey = (p.roll || p.email || "").toLowerCase().trim();
+      if (userKey && typeof saveAccountToDb === "function") {
+        saveAccountToDb({
+          name: p.name,
+          email: p.email,
+          roll: p.roll,
+          college: p.college,
+          profile: Object.assign({}, p)
+        });
+      }
 
       try {
-        localStorage.setItem("ZYNAX_STUDENT_PROFILE", JSON.stringify(APP.studentProfile));
-      } catch (e) {
-        console.warn("Storage quota:", e);
-      }
+        localStorage.setItem("ZYNAX_STUDENT_PROFILE", JSON.stringify(p));
+      } catch (e) {}
 
       syncProfileAcrossApp();
       if (showAlert) alert("✓ Personal Profile & Settings updated and synchronized across all ZYNAX modules!");
+    }
+
+    function logoutCurrentStudent() {
+      if (confirm("Are you sure you want to sign out of your student account?")) {
+        try {
+          localStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+          sessionStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+        } catch(e){}
+        APP.studentProfile = {
+          name: "",
+          email: "",
+          roll: "",
+          college: "",
+          branch: "",
+          section: "",
+          currentYear: "1",
+          currentSem: "1"
+        };
+        APP.isAuthenticated = false;
+        syncProfileAcrossApp();
+        switchTab("auth");
+        if (typeof setAuthMode === "function") setAuthMode("signin");
+        if (typeof renderSavedAccountsList === "function") renderSavedAccountsList();
+      }
     }
 
     function handleProfileUpload(e) {
@@ -7826,7 +8010,7 @@ public class Solution {
         if (formSignIn) formSignIn.classList.add("hidden");
         if (formRegister) formRegister.classList.remove("hidden");
         if (heading) heading.innerText = "Create Student Account";
-        if (sub) sub.innerText = "Register your official ABES college identity on ZYNAX.";
+        if (sub) sub.innerText = "Register your individual student identity on ZYNAX.";
       }
     }
 
@@ -7855,45 +8039,331 @@ public class Solution {
       }
     }
 
-    function handleSignInSubmit(e) {
-      e.preventDefault();
-      const username = (document.getElementById("signin-username") || {}).value || "";
-      const password = (document.getElementById("signin-password") || {}).value || "";
-      const remember = (document.getElementById("signin-remember") || {}).checked;
+    // ==========================================
+    // MULTI-USER ACCOUNT DATABASE & SESSION ENGINE
+    // ==========================================
+    function getRegisteredAccounts() {
+      try {
+        const raw = localStorage.getItem("ZYNAX_ACCOUNTS_DB");
+        if (!raw) return {};
+        const parsed = JSON.parse(raw);
+        return (typeof parsed === "object" && parsed !== null) ? parsed : {};
+      } catch(err) {
+        return {};
+      }
+    }
 
-      if (!username || !password) {
-        showAuthAlert("Please provide both your Student Username/Email and Password.", false);
+    function saveAccountToDb(account) {
+      if (!account || !account.roll) return;
+      try {
+        const db = getRegisteredAccounts();
+        const primaryKey = String(account.roll).trim().toLowerCase();
+        db[primaryKey] = account;
+        if (account.email) {
+          db[String(account.email).trim().toLowerCase()] = primaryKey; // alias pointer
+        }
+        localStorage.setItem("ZYNAX_ACCOUNTS_DB", JSON.stringify(db));
+      } catch(err){}
+    }
+
+    function renderSavedAccountsList() {
+      const container = document.getElementById("saved-accounts-list");
+      const section = document.getElementById("saved-accounts-section");
+      if (!container || !section) return;
+
+      const db = getRegisteredAccounts();
+      const uniqueAccounts = [];
+      const seen = new Set();
+
+      for (const key of Object.keys(db)) {
+        const item = db[key];
+        if (typeof item === "object" && item !== null && item.roll) {
+          const rollKey = String(item.roll).toLowerCase();
+          if (!seen.has(rollKey)) {
+            seen.add(rollKey);
+            uniqueAccounts.push(item);
+          }
+        }
+      }
+
+      if (uniqueAccounts.length === 0) {
+        section.classList.add("hidden");
+        container.innerHTML = "";
         return;
       }
 
-      if (remember) {
-        try {
-          localStorage.setItem("ZYNAX_REMEMBERED_USER", username);
-        } catch(err){}
+      section.classList.remove("hidden");
+      container.innerHTML = uniqueAccounts.map(acc => {
+        const initials = ((acc.name || "ST").trim().split(" ").map(w => w[0]).slice(0, 2).join("")).toUpperCase();
+        const safeName = (acc.name || "Student").replace(/"/g, "&quot;");
+        const safeRoll = (acc.roll || "").replace(/"/g, "&quot;");
+        const safeCol = (acc.college || acc.branch || "Student Workspace").replace(/"/g, "&quot;");
+        return `
+          <div class="p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-[#D6B66C]/40 transition flex items-center justify-between gap-3 group cursor-pointer" onclick="quickSelectAccount('${safeRoll}')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#D6B66C]/20 to-[#51D6A0]/20 border border-white/10 flex items-center justify-center text-xs font-bold text-white shrink-0">
+                ${initials}
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs font-bold text-white truncate">${safeName}</div>
+                <div class="text-[10px] text-[#7F8B85] font-mono-code truncate">${safeRoll} · ${safeCol}</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span class="text-[10px] text-[#D6B66C] font-semibold opacity-0 group-hover:opacity-100 transition">Select →</span>
+              <button type="button" onclick="removeSavedAccount('${safeRoll}', event)" class="p-1 rounded text-[#7F8B85] hover:text-red-400 hover:bg-red-500/10 text-xs transition" title="Remove account from device">✕</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function quickSelectAccount(roll) {
+      const uField = document.getElementById("signin-username");
+      const pField = document.getElementById("signin-password");
+      if (uField) {
+        uField.value = roll;
+      }
+      setAuthMode("signin");
+      if (pField) pField.focus();
+    }
+
+    function removeSavedAccount(roll, e) {
+      if (e) e.stopPropagation();
+      try {
+        const db = getRegisteredAccounts();
+        const primaryKey = String(roll).trim().toLowerCase();
+        let emailKey = null;
+        if (db[primaryKey] && db[primaryKey].email) {
+          emailKey = String(db[primaryKey].email).trim().toLowerCase();
+        }
+        delete db[primaryKey];
+        if (emailKey && db[emailKey] === primaryKey) {
+          delete db[emailKey];
+        }
+        localStorage.setItem("ZYNAX_ACCOUNTS_DB", JSON.stringify(db));
+
+        // If active user was removed, reset active session
+        const active = localStorage.getItem("ZYNAX_ACTIVE_USER_ID");
+        if (active && (active.toLowerCase() === primaryKey || active.toLowerCase() === emailKey)) {
+          localStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+          sessionStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
+        }
+        renderSavedAccountsList();
+        showAuthAlert("Account removed from this device.", true);
+      } catch(err){}
+    }
+
+    function handleSignInSubmit(e) {
+      e.preventDefault();
+      const usernameInput = (document.getElementById("signin-username") || {}).value || "";
+      const passwordInput = (document.getElementById("signin-password") || {}).value || "";
+      const remember = (document.getElementById("signin-remember") || {}).checked;
+
+      const lookup = usernameInput.trim().toLowerCase();
+      if (!lookup || !passwordInput) {
+        showAuthAlert("Please enter both your Student Roll/Email and Password.", false);
+        return;
       }
 
-      // Check registered profile if exists
-      let studentName = APP.studentProfile.name;
-      try {
-        const regUser = localStorage.getItem("ZYNAX_REGISTERED_USER");
-        if (regUser) {
-          const parsed = JSON.parse(regUser);
-          if (parsed && (parsed.email === username || parsed.roll === username || (parsed.name && parsed.name.toLowerCase() === username.toLowerCase()))) {
-            studentName = parsed.name;
-            APP.studentProfile.name = parsed.name;
-            if (parsed.email) APP.studentProfile.email = parsed.email;
-            if (parsed.roll) APP.studentProfile.roll = parsed.roll;
-            syncProfileAcrossApp();
+      const db = getRegisteredAccounts();
+      let account = null;
+
+      if (db[lookup]) {
+        if (typeof db[lookup] === "string") {
+          account = db[db[lookup]]; // resolved alias
+        } else {
+          account = db[lookup];
+        }
+      } else {
+        // Also search across all accounts by roll, email, or name
+        for (const k of Object.keys(db)) {
+          const item = db[k];
+          if (typeof item === "object" && item !== null) {
+            if (
+              (item.roll && item.roll.toLowerCase() === lookup) ||
+              (item.email && item.email.toLowerCase() === lookup) ||
+              (item.name && item.name.toLowerCase() === lookup)
+            ) {
+              account = item;
+              break;
+            }
           }
+        }
+      }
+
+      if (!account) {
+        showAuthAlert(`No account found matching "${usernameInput}". Please click "Create Account" below to register your individual details.`, false);
+        return;
+      }
+
+      // Check password if set during registration
+      if (account.password && account.password !== passwordInput) {
+        showAuthAlert("Incorrect password for this student account. Please re-enter or click 'Forgot Password'.", false);
+        return;
+      }
+
+      // Activate session
+      const studentName = account.name || "Student";
+      APP.isAuthenticated = true;
+      Object.assign(APP.studentProfile, account.profile || account);
+
+      try {
+        if (remember) {
+          localStorage.setItem("ZYNAX_ACTIVE_USER_ID", account.roll || account.email || lookup);
+          localStorage.setItem("ZYNAX_REMEMBERED_USER", lookup);
+        } else {
+          sessionStorage.setItem("ZYNAX_ACTIVE_USER_ID", account.roll || account.email || lookup);
+          localStorage.removeItem("ZYNAX_ACTIVE_USER_ID");
         }
       } catch(err){}
 
-      showAuthAlert(`Authentication verified! Welcome back, ${studentName}.`, true);
+      syncProfileAcrossApp();
+      showAuthAlert(`Authentication successful! Welcome back, ${studentName}.`, true);
 
       setTimeout(() => {
         switchTab("dashboard");
         triggerLoginWelcome(studentName);
-      }, 700);
+      }, 650);
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = ((document.getElementById("reg-name") || {}).value || "").trim();
+      const college = ((document.getElementById("reg-college") || {}).value || "").trim();
+      const roll = ((document.getElementById("reg-roll") || {}).value || "").trim();
+      const email = ((document.getElementById("reg-email") || {}).value || "").trim();
+      const branch = ((document.getElementById("reg-branch") || {}).value || "").trim();
+      const section = ((document.getElementById("reg-section") || {}).value || "").trim();
+      const phone = ((document.getElementById("reg-phone") || {}).value || "").trim();
+      const pass = (document.getElementById("reg-password") || {}).value || "";
+      const passConfirm = (document.getElementById("reg-password-confirm") || {}).value || "";
+
+      if (!name || !roll || !email) {
+        showAuthAlert("Please fill in your Full Name, Roll Number, and Email.", false);
+        return;
+      }
+
+      if (pass.length < 6) {
+        showAuthAlert("Password must be at least 6 characters long.", false);
+        return;
+      }
+
+      if (pass !== passConfirm) {
+        showAuthAlert("Passwords do not match. Please re-enter carefully.", false);
+        return;
+      }
+
+      const db = getRegisteredAccounts();
+      const rollLookup = roll.toLowerCase();
+      const emailLookup = email.toLowerCase();
+
+      if (db[rollLookup] || db[emailLookup]) {
+        showAuthAlert(`An account with Roll "${roll}" or Email "${email}" already exists. Please Sign In.`, false);
+        setAuthMode("signin");
+        const uField = document.getElementById("signin-username");
+        if (uField) uField.value = roll;
+        return;
+      }
+
+      // Construct clean profile purely from student's inputs
+      const newProfile = {
+        name: name,
+        college: college,
+        roll: roll,
+        email: email,
+        branch: branch,
+        section: section,
+        phone: phone,
+        currentYear: 1,
+        currentSem: 1,
+        github: "",
+        linkedin: "",
+        targetSgpa: "",
+        libraryId: "",
+        photoUrl: "",
+        enhancedPhotoUrl: "",
+        keyStrengths: "",
+        technicalStrengths: "",
+        creativeAbilities: "",
+        problemSolving: "",
+        leadership: "",
+        communication: "",
+        growthGoals: ""
+      };
+
+      const newAccount = {
+        name: name,
+        college: college,
+        roll: roll,
+        email: email,
+        branch: branch,
+        section: section,
+        phone: phone,
+        password: pass,
+        createdAt: new Date().toISOString(),
+        profile: newProfile
+      };
+
+      saveAccountToDb(newAccount);
+
+      // Activate session
+      APP.isAuthenticated = true;
+      Object.assign(APP.studentProfile, newProfile);
+      try {
+        localStorage.setItem("ZYNAX_ACTIVE_USER_ID", roll);
+        localStorage.setItem("ZYNAX_REMEMBERED_USER", roll);
+      } catch(err){}
+
+      syncProfileAcrossApp();
+      renderSavedAccountsList();
+
+      showAuthAlert(`Account successfully created for ${name}! Entering your individual workspace...`, true);
+
+      setTimeout(() => {
+        switchTab("dashboard");
+        triggerLoginWelcome(name);
+      }, 750);
+    }
+
+    function handleGuestSignIn() {
+      const guestProfile = {
+        name: "Guest Student",
+        college: "ZYNAX Interactive Preview",
+        roll: "GUEST-001",
+        email: "guest@zynax.ai",
+        branch: "General Engineering",
+        section: "Demo Section",
+        phone: "",
+        currentYear: 1,
+        currentSem: 1,
+        github: "",
+        linkedin: "",
+        targetSgpa: "9.0",
+        libraryId: "LIB-GUEST",
+        photoUrl: "",
+        enhancedPhotoUrl: "",
+        keyStrengths: "",
+        technicalStrengths: "",
+        creativeAbilities: "",
+        problemSolving: "",
+        leadership: "",
+        communication: "",
+        growthGoals: ""
+      };
+
+      APP.isAuthenticated = true;
+      Object.assign(APP.studentProfile, guestProfile);
+      try {
+        sessionStorage.setItem("ZYNAX_ACTIVE_USER_ID", "GUEST-001");
+      } catch(err){}
+
+      syncProfileAcrossApp();
+      showAuthAlert("Entering as Guest Student...", true);
+      setTimeout(() => {
+        switchTab("dashboard");
+        triggerLoginWelcome("Guest Student");
+      }, 400);
     }
 
     // Support direct navigation to Achievements section via switchTab
@@ -7910,47 +8380,6 @@ public class Solution {
         }
         _baseSwitchTab(tabId);
       };
-    }
-
-    function handleRegisterSubmit(e) {
-      e.preventDefault();
-      const name = (document.getElementById("reg-name") || {}).value || "";
-      const email = (document.getElementById("reg-email") || {}).value || "";
-      const roll = (document.getElementById("reg-roll") || {}).value || "";
-      const branch = (document.getElementById("reg-branch") || {}).value || "CSE (AI/ML)";
-      const section = (document.getElementById("reg-section") || {}).value || "Sec A";
-      const pass = (document.getElementById("reg-password") || {}).value || "";
-      const passConfirm = (document.getElementById("reg-password-confirm") || {}).value || "";
-
-      if (pass.length < 6) {
-        showAuthAlert("Password must be at least 6 characters long.", false);
-        return;
-      }
-
-      if (pass !== passConfirm) {
-        showAuthAlert("Passwords do not match. Please re-enter carefully.", false);
-        return;
-      }
-
-      // Update student profile in memory & localStorage
-      APP.studentProfile.name = name;
-      APP.studentProfile.email = email;
-      APP.studentProfile.roll = roll;
-      APP.studentProfile.branch = branch;
-      APP.studentProfile.section = section;
-
-      try {
-        localStorage.setItem("ZYNAX_STUDENT_PROFILE", JSON.stringify(APP.studentProfile));
-        localStorage.setItem("ZYNAX_REGISTERED_USER", JSON.stringify({ email, roll, name }));
-      } catch(err){}
-
-      syncProfileAcrossApp();
-      showAuthAlert(`Account successfully registered for ${name}! Entering workspace...`, true);
-
-      setTimeout(() => {
-        switchTab("dashboard");
-        triggerLoginWelcome(name);
-      }, 800);
     }
 
     function toggleLegacyOtpBox() {
@@ -8031,16 +8460,37 @@ public class Solution {
       // Set English as permanent language
       APP.activeLang = "en";
 
-      // Load saved student profile if exists
-      try {
-        const savedProf = localStorage.getItem("ZYNAX_STUDENT_PROFILE");
-        if (savedProf) {
-          const parsed = JSON.parse(savedProf);
-          if (parsed && typeof parsed === "object") {
-            Object.assign(APP.studentProfile, parsed);
+      // 1. Resolve Multi-User Session
+      const activeId = localStorage.getItem("ZYNAX_ACTIVE_USER_ID") || sessionStorage.getItem("ZYNAX_ACTIVE_USER_ID");
+      const db = (typeof getRegisteredAccounts === "function") ? getRegisteredAccounts() : {};
+      let activeAccount = null;
+
+      if (activeId) {
+        const key = String(activeId).trim().toLowerCase();
+        if (db[key]) {
+          activeAccount = (typeof db[key] === "string") ? db[db[key]] : db[key];
+        } else {
+          for (const k of Object.keys(db)) {
+            const it = db[k];
+            if (typeof it === "object" && it !== null) {
+              if (
+                (it.roll && it.roll.toLowerCase() === key) ||
+                (it.email && it.email.toLowerCase() === key)
+              ) {
+                activeAccount = it;
+                break;
+              }
+            }
           }
         }
-      } catch(e){}
+      }
+
+      if (activeAccount) {
+        APP.isAuthenticated = true;
+        Object.assign(APP.studentProfile, activeAccount.profile || activeAccount);
+      } else {
+        APP.isAuthenticated = false;
+      }
 
       // Load saved notifications
       try {
@@ -8054,18 +8504,24 @@ public class Solution {
         if (savedVoice) APP.voiceSettings = JSON.parse(savedVoice);
       } catch(e){}
 
-      // Load remembered username into Sign In form
-      try {
-        const rem = localStorage.getItem("ZYNAX_REMEMBERED_USER");
-        if (rem) {
-          const signinUser = document.getElementById("signin-username");
-          const signinRem = document.getElementById("signin-remember");
-          if (signinUser) signinUser.value = rem;
-          if (signinRem) signinRem.checked = true;
-        }
-      } catch(e){}
-
+      // Sync and render accounts
       syncProfileAcrossApp();
+      if (typeof renderSavedAccountsList === "function") {
+        renderSavedAccountsList();
+      }
+
+      // Render base dashboard & academic widgets
+      renderTimetable();
+      renderAttendance();
+      renderGlobalContests();
+      renderHackathons();
+      startLeetCodeContestCountdown();
+      changeCodeTemplate("python");
+      startClassCountdown();
+      updateUnitOptions();
+      renderDocs();
+      updateResumePreview();
+
       renderTopicProblems();
       renderVaultDocuments();
       renderQuestionBank();
@@ -8082,24 +8538,21 @@ public class Solution {
         }
       });
 
-      // Trigger Login Welcome Greeting once per login session
-      if (!sessionStorage.getItem("zynax_welcomed")) {
-        sessionStorage.setItem("zynax_welcomed", "1");
-        setTimeout(() => {
-          triggerLoginWelcome(APP.studentProfile.name);
-        }, 500);
+      // Route to proper tab:
+      // If user is authenticated, open dashboard.
+      // If not authenticated, open auth page so student can log in or create an account.
+      if (!APP.isAuthenticated) {
+        switchTab("auth");
+      } else {
+        switchTab("dashboard");
+        // Trigger Login Welcome Greeting once per active session
+        if (!sessionStorage.getItem("zynax_welcomed")) {
+          sessionStorage.setItem("zynax_welcomed", "1");
+          setTimeout(() => {
+            triggerLoginWelcome(APP.studentProfile.name || "Student");
+          }, 600);
+        }
       }
-      renderTimetable();
-      renderAttendance();
-      renderGlobalContests();
-      renderHackathons();
-      startLeetCodeContestCountdown();
-      changeCodeTemplate("python");
-      startClassCountdown();
-      updateUnitOptions();
-      renderDocs();
-      updateResumePreview();
-      switchTab("dashboard");
     });
   </script>
 
@@ -8137,7 +8590,7 @@ public class Solution {
       <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
         <span>Welcome, </span>
         <span id="welcome-modal-username" class="text-transparent bg-clip-text bg-gradient-to-r from-[#D6B66C] via-[#F0D28B] to-[#51D6A0]">
-          Anurag
+          Student
         </span>!
       </h1>
 

@@ -135,15 +135,18 @@ FLOATING_LIQUID_NAV_HTML = r'''
       <!-- User Profile Pill -->
       <div onclick="switchTab('settings')" class="cursor-pointer flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#141A17] border border-white/[0.08] hover:border-[#D6B66C]/40 transition" title="Personal Profile & Settings">
         <div id="header-avatar-container" class="w-7 h-7 rounded-full bg-[#202938] border border-[#48B8FF]/40 flex items-center justify-center text-[10px] text-[#48B8FF] font-black overflow-hidden">
-          <span id="header-avatar-initials">AB</span>
+          <span id="header-avatar-initials">ST</span>
         </div>
         <div class="text-left hidden sm:block">
           <div class="text-xs font-bold text-white leading-tight flex items-center gap-1">
-            <span id="header-student-name">Yo, Anurag</span>
+            <span id="header-student-name">Student Account</span>
             <span class="text-[9px] text-[#51D6A0]">✓</span>
           </div>
-          <div class="text-[9px] text-[#717D77] leading-tight" id="header-student-sub">CSE (AI/ML) · Sec A</div>
+          <div class="text-[9px] text-[#717D77] leading-tight" id="header-student-sub">Sign In / Switch</div>
         </div>
+        <button type="button" onclick="event.stopPropagation(); logoutCurrentStudent();" class="hidden md:inline-flex px-1.5 py-0.5 rounded-md bg-white/[0.05] hover:bg-red-500/20 text-[9px] text-[#8E9A92] hover:text-red-400 transition ml-1" title="Log Out / Switch Account">
+          Sign Out
+        </button>
       </div>
     </div>
   </header>
